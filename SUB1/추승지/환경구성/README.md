@@ -5,6 +5,7 @@
   * 재부팅 하면 ssh 포트 오류도 해결됨
 
 * HDFS 정상 실행 확인 & 디렉토리 확인
- <img src="img/hadoop_config.JPG">
+ <img src="img/hadoop_config.JPG"/>
+
 * 1강: WordCount 결과
- <img src="img/hadoop_word.JPG">
+ <img src="img/hadoop_word.JPG"/>
