@@ -6,10 +6,10 @@
 
 #### 실행결과
 
-![hadoop환경설정](C:\Users\multicampus\Desktop\hadoop환경설정.PNG)
+![hadoop환경설정](./img/hadoop환경설정.PNG)
 
 
 
-Project 수행을 위한 데이터 및 java 파일 준비
+#### Project 수행을 위한 데이터 및 java 파일 준비
 
-![hadoop환경설정2](C:\Users\multicampus\Desktop\hadoop환경설정2.PNG)
+![hadoop환경설정2](./img/hadoop환경설정2.PNG)
