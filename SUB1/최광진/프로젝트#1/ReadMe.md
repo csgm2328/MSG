@@ -115,6 +115,6 @@ public class Wordcount1char {
 
 ## 결과
 
-![wordcount1char_Result1](./img/wordcount1char00000.JPG)
+![wordcount1char00000](./img/wordcount1char00000.JPG)
 
-![wordcount1char_Result2](./img/wordcount1char00001.JPG)
+![wordcount1char00001](./img/wordcount1char00001.JPG)
