@@ -128,8 +128,8 @@ public class Wordcountsort {
 
 ## 결과
 
-![wordcountsort00000](.\img\wordcountsort00000.JPG)
+![wordcountsort00000](./img/wordcountsort00000.JPG)
 
 
 
-![wordcountsort00001](.\img\wordcountsort00001.JPG)
+![wordcountsort00001](./img/wordcountsort00001.JPG)
