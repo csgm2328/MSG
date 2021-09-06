@@ -8,3 +8,6 @@
 * __기획__
     * 와이어프레임
     * ERD
+* __Reference__
+    * [하둡 유튜브](https://www.youtube.com/playlist?list=PL9mhQYIlKEheGLT1V_PEby_I9pOXr1o3r)
+    * [하둡 링크](https://github.com/hyunjun/bookmarks/blob/master/hadoop.md)
