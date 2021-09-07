@@ -10,7 +10,9 @@
     * ERD
     
     ![image-ERD_v1](./ERD_v1.png)
-
+* 사전학습
+    * [프로젝트 1](./프로젝트1)
+    
 * __Reference__
     * [하둡 유튜브](https://www.youtube.com/playlist?list=PL9mhQYIlKEheGLT1V_PEby_I9pOXr1o3r)
     * [하둡 링크](https://github.com/hyunjun/bookmarks/blob/master/hadoop.md)
