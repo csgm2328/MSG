@@ -8,7 +8,8 @@
 * __기획__
     * 와이어프레임
     * ERD
-        ![image-ERD_v1](./ERD_v1.png)
+    
+    ![image-ERD_v1](./ERD_v1.png)
 
 * __Reference__
     * [하둡 유튜브](https://www.youtube.com/playlist?list=PL9mhQYIlKEheGLT1V_PEby_I9pOXr1o3r)
