@@ -51,7 +51,7 @@
 
 - Client : Name Node를 통해 정보를 받고 이후 직접적으로 Data Node와 통신
 
-  ![출처:https://mapreducer.wordpress.com/2015/04/14/hadoop-architecture/](C:\Users\harrychoe\Desktop\7586356_orig.jpg)
+  ![출처:https://mapreducer.wordpress.com/2015/04/14/hadoop-architecture/](7586356_orig.jpg)
 
   
 
@@ -130,7 +130,7 @@
 
 - 또한 YARN 아키텍처에서는 MR로 구현된 작업이 아니어도 컨테이너를 할당 받아서 동작할 수 있기 때문에 Spark, HBase, Storm 등 다양한 컴포넌트들을 실행할 수 있습니다.
 
-  ![yarn](C:\Users\harrychoe\Desktop\img.jpg)
+  ![yarn](img.jpg)
 
   **리소스 매니저 (Resource Manager, RM)**
 
