@@ -10,4 +10,4 @@
 
 ## 실행결과
 
-![matrixmulti2_capture](README.img/matrixmulti2_capture.PNG)
+![matrixmulti2_capture](img/matrixmulti2_capture.PNG)
