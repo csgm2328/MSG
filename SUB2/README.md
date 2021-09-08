@@ -21,5 +21,5 @@
 * __Reference__
     * [하둡 유튜브](https://www.youtube.com/playlist?list=PL9mhQYIlKEheGLT1V_PEby_I9pOXr1o3r)
     * [하둡 링크](https://github.com/hyunjun/bookmarks/blob/master/hadoop.md)
-    * [빅데이터 - 하둡, 하이브 시작하기] (https://wikidocs.net/22936)
+    * [빅데이터 - 하둡, 하이브 시작하기](https://wikidocs.net/22936)
     
