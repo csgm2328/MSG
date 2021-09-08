@@ -16,7 +16,7 @@
     * [프로젝트 1](./프로젝트1)
     
 * __하둡공부__
-    * [학습](./학습)
+    * [하둡 환경 설정 학습](./학습)
 
 * __Reference__
     * [하둡 유튜브](https://www.youtube.com/playlist?list=PL9mhQYIlKEheGLT1V_PEby_I9pOXr1o3r)
