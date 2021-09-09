@@ -5,6 +5,7 @@ import java.net.MalformedURLException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -13,8 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
 @RestController
+@AllArgsConstructor
 public class FileController {
-    @Autowired
+
     FileService fileService;
 
     @GetMapping("/file/{fileName}")

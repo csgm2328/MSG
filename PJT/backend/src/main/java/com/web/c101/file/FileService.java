@@ -1,5 +1,6 @@
 package com.web.c101.file;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -14,9 +15,9 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@AllArgsConstructor
 public class FileService {
 
-    @Autowired
     ImgFileDao imgFileDao;
 
     public Resource getFile(@PathVariable final String fileName) {
@@ -43,9 +44,7 @@ public class FileService {
                 UUID uuid = UUID.randomUUID();
 
                 fileName = uuid.toString()+"_"+multipartFile.getOriginalFilename();
-                multipartFile.transferTo(new File("C:\\upload"+"\\"+fileName));
-                String base_url = "C:\\upload"+"\\"+fileName;//임시
-
+                multipartFile.transferTo(new File( path +"\\"+fileName));
                 ImgFile file = ImgFile.builder().
                         file_name(fileName).
                         file_size(Long.toString(multipartFile.getSize())).
