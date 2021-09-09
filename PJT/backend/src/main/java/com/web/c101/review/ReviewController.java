@@ -6,10 +6,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @ApiResponses(value = { @ApiResponse(code = 401, message = "Unauthorized", response = BasicResponse.class),
 @ApiResponse(code = 403, message = "Forbidden", response = BasicResponse.class),
@@ -32,6 +29,24 @@ public class ReviewController {
         final BasicResponse result = new BasicResponse();
 
         if(service.addReview(req)) {
+            result.status = true;
+            result.data = "success";
+        } else {
+            result.status = false;
+            result.data = "fail";
+        }
+
+        return result;
+    }
+
+    // 리뷰 삭제
+    @PutMapping("/deleteReply")
+    @ApiOperation(value = "리뷰삭제")
+    public Object delReview(@RequestParam String rid) {
+        log.info("리뷰 삭제");
+        final BasicResponse result = new BasicResponse();
+
+        if(service.delReview(rid)){
             result.status = true;
             result.data = "success";
         } else {
