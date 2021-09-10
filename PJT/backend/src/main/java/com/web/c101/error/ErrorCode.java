@@ -16,6 +16,9 @@ public enum ErrorCode {
     /* 409 CONFLICT : Resource 의 현재 상태와 충돌. 중복된 데이터 존재 */
     MEMBER_DUPLICATE_RESOURCE(HttpStatus.CONFLICT, "이미 가입된 유저입니다."),
 
+    /* 400 BAD_REQUEST : 잘못된 요청 */
+    KAKAO_LOGIN_EXCEPTION(HttpStatus.BAD_REQUEST, "카카오 ")
+
     ;
     private final HttpStatus httpStatus;
     private final String detail;
