@@ -49,16 +49,23 @@ public class ReviewService {
 
     }
 
-    public Object getReview(String uid) {
+    public List<ReviewDto> getReview(String uid) {
 
-        Optional<Member> member = memberdao.findByUserid(uid);
-        List<Review> list;
+        Optional<Member> member = memberdao.findMemberByUserId(uid);
+        List<ReviewDto> list = null;
 
         if(member.isPresent()) {
-           list = reviewdao.findReviewByUid(uid);
-           return list;
-        } else {
-            return null;
+
+            List<Review> reviewList = reviewdao.findReviewByUid(uid);
+            ReviewDto tmp;
+
+            for(Review R : reviewList) {
+               tmp = ReviewAdaptor.entityToDto(R);
+               list.add(tmp);
+            }
+
         }
+
+        return list;
     }
 }
