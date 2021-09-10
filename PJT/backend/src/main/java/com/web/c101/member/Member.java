@@ -25,7 +25,4 @@ public class Member {
 
     @Column(name = "flag")
     private boolean flag;
-
-    @Column(name = "membercol")
-    private String memberCol;
 }
