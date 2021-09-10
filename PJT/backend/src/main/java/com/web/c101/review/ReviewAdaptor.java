@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class ReviewAdaptor {
     public static ReviewDto entityToDto(Review review) {
         return ReviewDto.builder()
-                .mid(review.getMid())
+                .uid(review.getUid())
                 .store(review.getStore())
                 .content(review.getContent())
                 .star_score(review.getStar_score())
@@ -16,7 +16,7 @@ public class ReviewAdaptor {
 
     public static Review dtoToEntity(ReviewDto reviewDto) {
         return Review.builder()
-                .mid(reviewDto.getMid())
+                .uid(reviewDto.getUid())
                 .store(reviewDto.getStore())
                 .content(reviewDto.getContent())
                 .star_score(reviewDto.getStar_score())
