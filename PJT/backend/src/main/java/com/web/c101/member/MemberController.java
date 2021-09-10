@@ -30,13 +30,13 @@ public class MemberController {
     }
 
     @GetMapping("/member")
-    public ResponseEntity<BasicResponse> login(LoginRequest loginRequest) {
+    public ResponseEntity<BasicResponse> login(String authorizeCode) {
         log.info("login request");
-        MemberDto memberDto = memberService.login(loginRequest);
+        String uid = memberService.login(authorizeCode);
         final BasicResponse result = new BasicResponse();
         result.status = true;
         result.data = "Success";
-        result.object = memberDto;
+        result.object = uid;
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
