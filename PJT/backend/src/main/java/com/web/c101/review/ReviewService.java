@@ -1,8 +1,11 @@
 package com.web.c101.review;
 
+import com.web.c101.error.CustomException;
+import com.web.c101.error.ErrorCode;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,15 +52,16 @@ public class ReviewService {
 
     }
 
-    public List<ReviewDto> getReview(String uid) {
+    public List<ReviewDto> getUserReview(String mid) {
 
-        Optional<Member> member = memberdao.findMemberByUserId(uid);
+        Optional<Member> member = memberdao.findMemberByUserId(mid);
         List<ReviewDto> list = null;
 
         if(member.isPresent()) {
 
-            List<Review> reviewList = reviewdao.findReviewByUid(uid);
+            List<Review> reviewList = reviewdao.findReviewByMid(mid);
             ReviewDto tmp;
+            list = new ArrayList<>();
 
             for(Review R : reviewList) {
                tmp = ReviewAdaptor.entityToDto(R);
@@ -68,4 +72,34 @@ public class ReviewService {
 
         return list;
     }
+
+    public List<ReviewDto> getStoreReview(String dong, String store) {
+
+        List<ReviewDto> list = null;
+
+        try{
+
+            List<Review> reviewList;
+
+            if(dong == null){
+                reviewList = reviewdao.findReviewByStore(store);
+            } else {
+                reviewList = reviewdao.findReviewByDongAndStore(dong, store);
+            }
+
+            ReviewDto tmp;
+            list = new ArrayList<>();
+
+            for(Review R  : reviewList) {
+                tmp = ReviewAdaptor.entityToDto(R);
+                list.add(tmp);
+            }
+
+        } catch (Exception e) {
+            throw new CustomException(ErrorCode.KAKAO_LOGIN_EXCEPTION);
+        }
+
+        return list;
+    }
+
 }
