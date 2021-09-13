@@ -17,9 +17,10 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rid;
 
-    private String uid;
+    private Long mid;
 
     // 리뷰 작성한 맛집과 리뷰 내용
+    private String dong;
     private String store;
     private String content;
 
