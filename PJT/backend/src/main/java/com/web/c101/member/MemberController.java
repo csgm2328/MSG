@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
     private MemberService memberService;
 
+    /*
     @PostMapping("/member")
     public ResponseEntity<BasicResponse> signUp(SignUpRequest signUpRequest) {
         log.info("sign up request");
@@ -28,6 +29,7 @@ public class MemberController {
         result.object = memberDto;
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+     */
 
     @GetMapping("/member")
     public ResponseEntity<BasicResponse> login(String authorizeCode) {
@@ -40,6 +42,7 @@ public class MemberController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    /*
     @PutMapping("/member")
     public ResponseEntity<BasicResponse> updateMember(UpdateMemberRequest updateMemberRequest) {
         log.info("update member request");
@@ -50,7 +53,9 @@ public class MemberController {
         result.object = memberDto;
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+     */
 
+    /*
     @DeleteMapping("/member")
     public ResponseEntity<BasicResponse> deleteMember(DeleteMemberRequest deleteMemberRequest) {
         log.info("delete member request");
@@ -61,4 +66,5 @@ public class MemberController {
         result.object = memberDto;
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+    */
 }
