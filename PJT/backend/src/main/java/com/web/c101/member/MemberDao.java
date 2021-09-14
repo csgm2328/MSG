@@ -6,5 +6,5 @@ import java.util.Optional;
 
 
 public interface MemberDao extends JpaRepository<Member, Long> {
-    Optional<Member> findMemberByUserId(String userId);
+    Optional<Member> findMemberByMemberId(long memberId);
 }

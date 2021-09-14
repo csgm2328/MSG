@@ -5,11 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface ReviewDao extends JpaRepository<Review, String> {
+public interface ReviewDao extends JpaRepository<Review, Long> {
 
-    Optional<Review> findReviewByRid(String rid);
+    Optional<Review> findReviewByRid(long rid);
 
-    List<Review> findReviewByMid(String mid);
+    List<Review> findReviewByMid(long mid);
 
     List<Review> findReviewByStore(String store);
 

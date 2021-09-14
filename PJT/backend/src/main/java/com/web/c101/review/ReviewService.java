@@ -33,7 +33,7 @@ public class ReviewService {
 
     }
 
-    public boolean delReview(String rid) {
+    public boolean delReview(long rid) {
 
         Optional<Review> reviewOpt = reviewdao.findReviewByRid(rid);
 
@@ -52,9 +52,9 @@ public class ReviewService {
 
     }
 
-    public List<ReviewDto> getUserReview(String mid) {
+    public List<ReviewDto> getUserReview(long mid) {
 
-        Optional<Member> member = memberdao.findMemberByUserId(mid);
+        Optional<Member> member = memberdao.findMemberByMemberId(mid);
         List<ReviewDto> list = null;
 
         if(member.isPresent()) {

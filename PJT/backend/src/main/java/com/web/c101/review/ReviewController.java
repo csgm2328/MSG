@@ -46,7 +46,7 @@ public class ReviewController {
     // 리뷰 삭제
     @PutMapping("/review/deleteReview")
     @ApiOperation(value = "리뷰삭제")
-    public Object delReview(@RequestParam String rid) {
+    public Object delReview(@RequestParam long rid) {
         log.info("리뷰 삭제");
         final BasicResponse result = new BasicResponse();
 
@@ -64,7 +64,7 @@ public class ReviewController {
     // 사용자가 작성한 리뷰 목록
     @GetMapping("/review/userReviewList")
     @ApiOperation(value = "사용자 리뷰 목록")
-    public Object getUserReview(String mid) {
+    public Object getUserReview(long mid) {
 
         log.info("사용자 작성 리뷰 목록");
         final BasicResponse result = new BasicResponse();
