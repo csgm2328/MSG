@@ -14,11 +14,10 @@ public class Member {
 
     @Id
     @Column(name = "mid")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long memberId;
 
-    @Column(name = "uid")
-    private String userId;
+    @Column(name = "password")
+    private String password;
 
     @Column(name = "nickname")
     private String nickName;
