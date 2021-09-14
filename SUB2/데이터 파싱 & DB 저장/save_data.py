@@ -5,16 +5,13 @@ import json
 import pandas as pd
 import os
 import shutil
+#db 연결 python file
 import config
 
 app = Flask(__name__)
 
-# def hello_world():
-# 	return 'Hello World!'
-
 DATA_DIR = "./data"
 DATA_FILE = os.path.join(DATA_DIR, "data.json")
-# DUMP_FILE = os.path.join(DATA_DIR, "dump.pkl")
 
 store_columns = (
     "id",  # 음식점 고유번호
@@ -44,21 +41,6 @@ def import_data(data_path=DATA_FILE):
     reviews = []  # 리뷰 테이블
 
     for d in data:
-
-        # categories = [c["category"] for c in d["category_list"]]
-        # stores.append(
-        #     [
-        #         d["id"],
-        #         d["name"],
-        #         d["branch"],
-        #         d["area"],
-        #         d["tel"],
-        #         d["address"],
-        #         d["latitude"],
-        #         d["longitude"],
-        #         "|".join(categories),
-        #     ]
-        # )
 
         store = {
             "name" : d["name"],
