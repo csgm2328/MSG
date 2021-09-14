@@ -39,6 +39,7 @@ public class MemberController {
         result.status = true;
         result.data = "Success";
         result.object = uid;
+        // 테스트 커밋
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
