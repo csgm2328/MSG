@@ -14,7 +14,7 @@
 | 소스 저장소 | https://github.com/antirez/redis                         |
 | 기본 명령어 | http://redis.io/commands                                 |
 | 최신버전    | 6.2.5 (latest stable version)                            |
-| 로고        | ![logo-redis](C:\Users\harrychoe\Desktop\logo-redis.jpg) |
+| 로고        | ![logo-redis](./이미지/logo-redis.jpg) |
 
 ### Redis의 주요 특성
 
