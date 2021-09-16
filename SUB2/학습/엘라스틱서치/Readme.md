@@ -32,7 +32,7 @@
 ![kibana](img/kibana.png)
 
 
-
+<br><br>
 
 
 #### CRUD 예제
@@ -105,7 +105,7 @@ gaia 인덱스의 message 타입이 4인 데이터를 삭제한다는 의미이�
 
 
 
-
+<br><br>
 
 #### 외부 접속 허용
 
@@ -115,7 +115,7 @@ gaia 인덱스의 message 타입이 4인 데이터를 삭제한다는 의미이�
 
 elasticsearch.yml 파일의 network.host 를 0.0.0.0으로 변경하고 cluster.initial_master_nodes의 주석을 풀어준다.
 
-![yml](img/yml.png)
+![el_yml](img/el_yml.png)
 
 
 
@@ -130,7 +130,7 @@ http.cors.allow-origin: "*"
 
 
 
-
+<br><br>
 
 #### python & elasticsearch
 
@@ -160,7 +160,7 @@ elastic이 설치된 서버 주소와 포트를 입력하면 python과 연결이
 
 
 
-
+<br><br>
 
 #### spring & elasticsearch
 
