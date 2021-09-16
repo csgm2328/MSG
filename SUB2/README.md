@@ -18,7 +18,8 @@
     * [프로젝트 3](./프로젝트3)
     
 * __이외의 학습__
-    * [하둡 환경 설정 학습](./학습)
+    * [하둡 학습](./학습/하둡)
+    * [Redis 학습](./학습/레디스)
 
 * __Reference__
     * [하둡 유튜브](https://www.youtube.com/playlist?list=PL9mhQYIlKEheGLT1V_PEby_I9pOXr1o3r)
