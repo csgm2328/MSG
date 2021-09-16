@@ -18,7 +18,7 @@
 
 [실행 후 화면 : localhost:9200]
 
-![image-20210916093100184](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210916093100184.png)
+![el접속](img/el접속.png)
 
 ##### 2. kibana
 
@@ -29,7 +29,7 @@
 
 [실행 후 화면 : localhost:5601]
 
-![image-20210916095602525](Readme.assets/image-20210916095602525.png)
+![kibana](img/kibana.png)
 
 
 
@@ -55,7 +55,7 @@
 
 **2. POST**
 
-![image-20210916093641120](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210916093641120.png)
+![el_get](img/el_get.png)
 
 gaia 인덱스의 message 타입에 4라는 아이디로 저장했다는 의미이다.
 
@@ -63,9 +63,9 @@ gaia 인덱스의 message 타입에 4라는 아이디로 저장했다는 의미�
 
 **3. GET**
 
-![image-20210916093822472](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210916093822472.png)
+![el_get2](img/el_get2.png)
 
-![image-20210916093834956](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210916093834956.png)
+![el_get3](img/el_get3.png)
 
 _search로 다음과 같은 결과를 얻을 수 있다.
 
@@ -81,15 +81,15 @@ localhost:9200/gaia/message/_search?q=message:"hello world"
 
 **4. PUT**
 
-![image-20210916094036411](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210916094036411.png)
+![el_put](img/el_put.png)
 
-![image-20210916094056251](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210916094056251.png)
+![el_put2](img/el_put2.png)
 
 PUT을 통해 데이터를 수정하면 다음과 같은 메세지가 나온다.
 
 다시 gaia/message/4 의 데이터를 조회하면
 
-![image-20210916094151988](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210916094151988.png)
+![el_put3](img/el_put3.png)
 
 다음과 같이 message 가 수정된 것을 확인할 수 있다.
 
@@ -97,9 +97,9 @@ PUT을 통해 데이터를 수정하면 다음과 같은 메세지가 나온다.
 
 **5. DELETE**
 
-![image-20210916094300687](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210916094300687.png)
+![el_del](img/el_del.png)
 
-![image-20210916094251788](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210916094251788.png)
+![el_del2](img/el_del2.png)
 
 gaia 인덱스의 message 타입이 4인 데이터를 삭제한다는 의미이다. 성공적으로 데이터를 삭제하면 위와 같은 메세지를 얻을 수 있다.
 
@@ -115,7 +115,7 @@ gaia 인덱스의 message 타입이 4인 데이터를 삭제한다는 의미이�
 
 elasticsearch.yml 파일의 network.host 를 0.0.0.0으로 변경하고 cluster.initial_master_nodes의 주석을 풀어준다.
 
-![image-20210916094733336](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210916094733336.png)
+![yml](img/yml.png)
 
 
 
