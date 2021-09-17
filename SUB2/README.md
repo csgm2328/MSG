@@ -20,6 +20,10 @@
 * __이외의 학습__
     * [하둡 학습](./학습/하둡)
     * [Redis 학습](./학습/레디스)
+    * [네이버 크롤링](./학습/네이버 크롤링)
+    * [트위터 크롤링](./학습/트위터 크롤링)
+    * [감성분류](./학습/리뷰 감성분류)
+    * [Elasticsearch](./학습/엘라스틱서치)
 
 * __Reference__
     * [하둡 유튜브](https://www.youtube.com/playlist?list=PL9mhQYIlKEheGLT1V_PEby_I9pOXr1o3r)
