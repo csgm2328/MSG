@@ -33,7 +33,7 @@
         로그인
       </router-link>
       <router-link
-        to="/"
+        to="/signup"
         tag="div"
         class="
           h-full

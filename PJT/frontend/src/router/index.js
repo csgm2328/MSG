@@ -13,6 +13,11 @@ const routes = [
     component: () => import('@/components/Login.vue'),
   },
   {
+    path: '/signup',
+    name: 'Signup',
+    component: () => import('@/components/Signup.vue'),
+  },
+  {
     path: '/about',
     name: 'About',
     // route level code-splitting
