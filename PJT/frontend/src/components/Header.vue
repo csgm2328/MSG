@@ -10,7 +10,7 @@
         <Search-bar class="w-80" />
       </div>
     </div>
-    <div class="flex">
+    <div class="flex" v-if="!isLogin">
       <button class="h-full mr-7 flex md:hidden items-center justify-center">
         <i class="fas fa-bars font-bold text-2xl" />
       </button>
@@ -51,15 +51,39 @@
         가입하기
       </router-link>
     </div>
+    <div class="flex" v-if="isLogin">
+      <button class="h-full mr-7 flex md:hidden items-center justify-center">
+        <i class="fas fa-bars font-bold text-2xl" />
+      </button>
+      <div
+        to="/login"
+        tag="div"
+        class="h-full w-24 mr-7 hidden md:flex items-center justify-center hover:underline"
+      >
+        <button class="h-full w-full font-bold text-base" @click="logout">로그아웃</button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
 import SearchBar from '@/components/SearchBar.vue';
+
 export default {
   name: 'HEADER',
   components: {
     SearchBar,
+  },
+  methods: {
+    ...mapActions(['toggle_isLogin']),
+    logout() {
+      this.toggle_isLogin(false);
+    },
+  },
+  computed: {
+    ...mapGetters(['isLogin']),
   },
 };
 </script>

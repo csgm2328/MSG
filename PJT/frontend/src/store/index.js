@@ -1,8 +1,14 @@
-import { createStore } from "vuex";
+import Vuex from 'vuex';
+import createPersistedState from 'vuex-persistedstate';
+import user from './user';
 
-export default createStore({
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {},
+export default new Vuex.Store({
+  modules: {
+    user,
+  },
+  plugins: [
+    createPersistedState({
+      paths: ['user'],
+    }),
+  ],
 });
