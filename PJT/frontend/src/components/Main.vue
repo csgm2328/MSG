@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col justify-center items-center flex-grow">
+  <div>
     <div class="h-20 mb-12 mx-auto">
       <img class="h-full w-auto" src="@/images/banner.png" />
     </div>
