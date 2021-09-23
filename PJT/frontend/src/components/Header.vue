@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-between bg-msg-header h-16">
+  <div class="flex justify-between bg-blue-300 h-16">
     <div class="flex ml-5">
       <router-link to="/" class="h-full flex items-center">
         <img class="h-3/5 w-auto flex items-center" src="@/images/logo.png" />
@@ -7,37 +7,7 @@
       </router-link>
 
       <div class="hidden items-center ml-10 md:flex">
-        <div
-          class="
-            flex
-            items-center
-            bg-white
-            w-80
-            h-4/5
-            rounded-lg
-            border-2 border-msg-content
-            focus-within:ring-2 focus-within:ring-indigo-600
-          "
-        >
-          <button class="h-full w-12 border-r-2 border-msg-content">
-            <i class="fas fa-search text-2xl" />
-          </button>
-          <input
-            type="text"
-            class="
-              py-2
-              px-2
-              bg-white
-              w-4/5
-              lg:w-5/6
-              placeholder-gray-400
-              text-gray-900
-              appearance-none
-              focus:outline-none
-            "
-            placeholder="맛집을 입력해주세요."
-          />
-        </div>
+        <Search-bar class="w-80" />
       </div>
     </div>
     <div class="flex">
@@ -85,5 +55,11 @@
 </template>
 
 <script>
-export default {};
+import SearchBar from '@/components/SearchBar.vue';
+export default {
+  name: 'HEADER',
+  components: {
+    SearchBar,
+  },
+};
 </script>
