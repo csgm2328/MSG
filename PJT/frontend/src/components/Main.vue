@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col justify-center items-center flex-grow bg-blue-100 w-auto pt-10 pb-10">
-    <div class="text-2xl sm:text-3xl xl:text-5xl font-bold mb-12">
-      빅데이터 맛집 분석 플랫폼 MSG
+    <div class="h-20 mb-12 mx-auto">
+      <img class="h-full w-auto" src="@/images/banner.png" />
     </div>
     <div class="h-16 w-full mb-10"><Search-bar class="w-8/12 sm:w-7/12 md:6/12 mx-auto" /></div>
     <div class="divide-y-2 divide-indigo-100 divide-solid w-8/12 md:h-80 bg-blue-50 h-auto">
