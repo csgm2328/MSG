@@ -1,9 +1,7 @@
 <template>
-  <div id="nav bg-gray">
+  <div class="flex flex-col h-screen w-auto">
     <Header />
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-    <router-view />
+    <router-view class="" />
     <Footer />
   </div>
 </template>
