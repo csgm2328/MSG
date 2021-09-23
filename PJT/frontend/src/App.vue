@@ -1,7 +1,9 @@
 <template>
   <div class="flex flex-col h-screen w-auto">
     <Header />
-    <router-view class="" />
+    <router-view
+      class="flex flex-col justify-center items-center flex-grow bg-blue-100 w-auto pt-10 pb-10"
+    />
     <Footer />
   </div>
 </template>
