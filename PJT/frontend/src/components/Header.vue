@@ -15,7 +15,7 @@
         <i class="fas fa-bars font-bold text-2xl" />
       </button>
       <router-link
-        to="/"
+        to="/login"
         tag="div"
         class="
           h-full
