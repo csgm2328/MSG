@@ -40,7 +40,7 @@ public class KakaoService {
         params.add("grant_type", "authorization_code");
         // REST api 키 주의!!
         params.add("client_id", kakaoKey);
-        params.add("redirect_url", "http://localhost:8080/kakaoLogin");
+        params.add("redirect_url", "http://localhost:8080/member");
         params.add("code", authorizeCode);
 
         // HttpHeader와 HttpBody를 하나의 오브젝트에 담는다.
@@ -57,13 +57,12 @@ public class KakaoService {
             throw new CustomException(ErrorCode.KAKAO_LOGIN_EXCEPTION);
         }
 
-
         log.info(">>> Kakao Token : " + kakaoDto);
         return getKakaoUidByAccessToken(kakaoDto.getAccess_token());
     }
 
     // AccessToken을 사용하여 유저정보 받기
-    public String getKakaoUidByAccessToken(String accessToken) {
+    private String getKakaoUidByAccessToken(String accessToken) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = null;
 
