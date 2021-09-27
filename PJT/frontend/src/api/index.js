@@ -2,7 +2,7 @@ import axios from 'axios';
 
 function createAxiosService() {
   return axios.create({
-    baseURL: 'localhost: 8080',
+    baseURL: 'https://localhost:8080',
     withCredentials: true,
     headers: {
       'Content-type': 'application/json',
