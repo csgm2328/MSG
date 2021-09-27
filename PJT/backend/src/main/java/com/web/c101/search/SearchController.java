@@ -31,6 +31,7 @@ public class SearchController {
     @GetMapping("/search")
     @ApiOperation(value = "검색하기")
     public Object searchStore(@RequestParam String name) {
+        System.out.println("name : " + name);
 
         log.info("검색하기");
         BasicResponse result = new BasicResponse();
@@ -38,7 +39,7 @@ public class SearchController {
         result.data = "fail";
 
         Map<String, Object> query = new HashMap<>();
-        query.put("name", "*" + name + "*");
+        query.put("name", name);
 
         List<Map<String, Object>> list = elastic.simpleSearch("msg", query);
 

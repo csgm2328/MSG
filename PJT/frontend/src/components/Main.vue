@@ -3,8 +3,8 @@
     <div class="h-20 mb-12 mx-auto">
       <img class="h-full w-auto" src="@/images/banner.png" />
     </div>
-    <div class="h-16 w-full mb-10"><Search-bar class="w-8/12 sm:w-7/12 md:6/12 mx-auto" /></div>
-    <div class="divide-y-2 divide-indigo-100 divide-solid w-8/12 md:h-80 bg-blue-50 h-auto">
+    <div class="h-16 w-full mb-10"><Search-bar class="w-8/12 sm:w-7/12 md:6/12 mx-auto z-10" /></div>
+    <div class="divide-y-2 divide-indigo-100 divide-solid w-8/12 md:h-80 bg-blue-50 h-auto z-0">
       <div class="flex items-center h-14 md:h-1/5 text-xl ml-7 font-semibold">
         실시간 검색어 순위
       </div>

@@ -61,7 +61,7 @@ public class ElasticUtil {
         CredentialsProvider credentialsProvider =
                 new BasicCredentialsProvider();
         credentialsProvider.setCredentials(AuthScope.ANY,
-                new UsernamePasswordCredentials("elastic", "msg!1234"));
+                new UsernamePasswordCredentials("elastic", "msg!234"));
         return credentialsProvider;
     }
 
@@ -77,7 +77,7 @@ public class ElasticUtil {
 
         // query에 있는 셋 쿼리 조건으로 걸기
         for(String key : query.keySet()) {
-            searchSourceBuilder.query(QueryBuilders.matchQuery(key, query.get(key)));
+            searchSourceBuilder.query(QueryBuilders.boolQuery().must(QueryBuilders.wildcardQuery(key, "*" + query.get(key) + "*")));
         }
 
 //        // sort 에 있는 셋을 정렬 조건으로 걸기
