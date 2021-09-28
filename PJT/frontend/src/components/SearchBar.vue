@@ -25,7 +25,8 @@
       </button>
       <input
         type="text"
-        v-model="search"
+        :value="search"
+        @input="changeSearch"
         class="
           py-2
           px-2
@@ -65,8 +66,9 @@ export default {
       searchList: [],
     };
   },
-  watch: {
-    search() {
+  methods:{
+    changeSearch(e){
+      this.search = e.target.value
       if(this.search.length == 0) this.searchList = [];
       else {
         getSearch(
@@ -79,7 +81,7 @@ export default {
           }
         );
       }
-    },
-  },
+    }
+  }
 };
 </script>
