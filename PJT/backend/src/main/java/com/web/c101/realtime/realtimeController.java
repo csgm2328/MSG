@@ -1,5 +1,4 @@
-package com.web.c101.search;
-
+package com.web.c101.realtime;
 
 import com.web.c101.BasicResponse;
 import com.web.c101.util.ElasticUtil;
@@ -10,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -25,26 +23,27 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 @RestController
 @Slf4j
-public class SearchController {
+public class realtimeController {
 
-    ElasticUtil elastic = ElasticUtil.getInstance();
+    ElasticUtil elasticUtil = ElasticUtil.getInstance();
 
-    @GetMapping("/search")
-    @ApiOperation(value = "검색하기")
-    public Object searchStore(@RequestParam String name) {
+    @GetMapping("/realtime")
+    @ApiOperation(value = "실시간 순위")
+    public Object getRealtime(){
 
-        log.info("검색하기");
+        log.info("실시간 검색어 순위");
         BasicResponse result = new BasicResponse();
         result.status = false;
         result.data = "fail";
 
-        Map<String, Object> query = new HashMap<>();
-        query.put("name", name);
+        Map<String,Object> query = new HashMap<>();
 
         Map<String, SortOrder> sort = new HashMap<>();
+        sort.put("cnt", SortOrder.DESC);
 
-        List<Map<String, Object>> list = elastic.ESSearch("msg", query, sort);
 
+        List<Map<String, Object>> list = elasticUtil.ESSearch("realtime", query, sort);
+        System.out.println(list);
         if(list.size() > 0){
             result.status = true;
             result.data = "success";
@@ -53,23 +52,7 @@ public class SearchController {
 
         return result;
 
-    }
 
-    @GetMapping("/search/updateCnt")
-    @ApiOperation(value = "언급량 최신화")
-    public Object updateCnt(@RequestParam String name, @RequestParam String area) {
-
-        log.info("검색어 언급량 최신화");
-        BasicResponse result = new BasicResponse();
-        result.status = false;
-        result.data = "fail";
-
-        if(elastic.updateCnt("realtime", name, area)){
-            result.status = true;
-            result.data = "success";
-        }
-
-        return result;
 
     }
 
