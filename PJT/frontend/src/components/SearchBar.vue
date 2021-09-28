@@ -41,38 +41,45 @@
         placeholder="맛집을 입력해주세요."
       />
     </div>
-    <div v-if="search.length > 0" class="h-full w-full mb-10 mt-1 flex"><Search-List :list="searchList" class="flex w-full sm:w-full md:6/12 mx-auto" /></div>
+    <div v-if="search.length > 0" class="h-full w-full mb-10 mt-1 flex">
+      <Search-List
+        :list="searchList"
+        class="flex w-full sm:w-full md:6/12 mx-auto"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import { getSearch } from '@/api/search.js';
-import SearchList from './SearchList.vue';
+import { getSearch } from "@/api/search.js";
+import SearchList from "./SearchList.vue";
 
 export default {
-  name:"SearchBar",
+  name: "SearchBar",
   components: {
     SearchList,
   },
-  data(){
-    return{
+  data() {
+    return {
       search: "",
       searchList: [],
-    }
+    };
   },
-  watch:{
-    search(){
-      getSearch(
-        this.search,
-        ((res) => {
-          this.searchList = res.object;
-          console.log(this.searchList.object);
-        }),
-        (() => {
-          alert("오류가 발생했습니다.")
-        })
-      )
-    }
-  }
+  watch: {
+    search() {
+      if(this.search.length == 0) this.searchList = [];
+      else {
+        getSearch(
+          this.search,
+          (res) => {
+            this.searchList = res.object;
+          },
+          () => {
+            alert("오류가 발생했습니다.");
+          }
+        );
+      }
+    },
+  },
 };
 </script>

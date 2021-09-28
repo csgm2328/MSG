@@ -46,8 +46,8 @@ public class SearchController {
         if(list.size() > 0){
             result.status = true;
             result.data = "success";
-            result.object = list;
         }
+        result.object = list;
 
         return result;
 
