@@ -21,8 +21,9 @@
               hover:bg-indigo-200
               cursor-pointer
             "
+            @click="go"
           >
-            고래감자탕
+            {{this.top10[0]}}
           </div>
           <div
             class="
@@ -35,8 +36,9 @@
               hover:bg-indigo-200
               cursor-pointer
             "
+            @click="go"
           >
-            광주 미남 조용일
+            {{this.top10[1]}}
           </div>
           <div
             class="
@@ -49,8 +51,9 @@
               hover:bg-indigo-200
               cursor-pointer
             "
+            @click="go"
           >
-            할매순대국
+            {{this.top10[2]}}
           </div>
           <div
             class="
@@ -63,8 +66,9 @@
               hover:bg-indigo-200
               cursor-pointer
             "
+            @click="go"
           >
-            짬뽕의전설
+            {{this.top10[3]}}
           </div>
           <div
             class="
@@ -77,8 +81,9 @@
               hover:bg-indigo-200
               cursor-pointer
             "
+            @click="go"
           >
-            백다방
+            {{this.top10[4]}}
           </div>
         </div>
         <div>
@@ -93,8 +98,9 @@
               hover:bg-indigo-200
               cursor-pointer
             "
+            @click="go"
           >
-            홍콩반점
+            {{this.top10[5]}}
           </div>
           <div
             class="
@@ -107,8 +113,9 @@
               hover:bg-indigo-200
               cursor-pointer
             "
+            @click="go"
           >
-            임시임시
+            {{this.top10[6]}}
           </div>
           <div
             class="
@@ -121,8 +128,9 @@
               hover:bg-indigo-200
               cursor-pointer
             "
+            @click="go"
           >
-            임시임시
+            {{this.top10[7]}}
           </div>
           <div
             class="
@@ -135,8 +143,9 @@
               hover:bg-indigo-200
               cursor-pointer
             "
+            @click="go"
           >
-            임시임시
+            {{this.top10[8]}}
           </div>
           <div
             class="
@@ -149,8 +158,9 @@
               hover:bg-indigo-200
               cursor-pointer
             "
+            @click="go"
           >
-            임시임시
+            {{this.top10[9]}}
           </div>
         </div>
       </div>
@@ -160,11 +170,57 @@
 
 <script>
 import SearchBar from '@/components/SearchBar.vue';
+import { getRealtime } from "@/api/realtime.js";
+import { updateSearch } from '@/api/search.js';
 
 export default {
   name: 'MAIN',
   components: {
     SearchBar,
   },
+  data(){
+    return{
+      top10:[],
+    }
+  },
+  created(){
+    getRealtime(
+      ((res) => {
+        this.top10 = []        
+        var len = res.object.length
+        
+        // 얻어온 데이터는 top10 배열에 push하고 나머지는 -로 채운다.
+        for(var i = 0 ; i < 10 ; i++){
+          if(i < len) {
+            this.top10.push(res.object[i].name + " " + res.object[i].area)
+          } else{
+            this.top10.push("-")
+          }
+        }
+      }),
+      (() => {
+        alert("오류가 발생했습니다!!!")
+      })
+    )
+  },
+  methods:{
+    go(e){
+      var eSplit = e.target.innerText.split(" ")
+      
+      var item = {
+        "name": eSplit[0],
+        "area": eSplit[1]
+      }
+
+      updateSearch(item,
+        (() =>{
+            // console.log("언급량 최신화 성공!")
+        }),
+        (() => {
+            alert("언급량 최신화 실패!")
+        })
+        )
+    }
+  }
 };
 </script>
