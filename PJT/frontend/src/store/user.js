@@ -19,6 +19,11 @@ const actions = {
   toggle_isLogin(context, data) {
     context.commit('TOGGLE_ISLOGIN', data);
   },
+  toggle_isLoginToSideBar(context, data) {
+    setTimeout(function () {
+      context.commit('TOGGLE_ISLOGIN', data);
+    }, 350);
+  },
 };
 
 export default {
