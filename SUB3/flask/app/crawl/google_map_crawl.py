@@ -8,7 +8,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from bs4 import BeautifulSoup
-from tqdm.notebook import tqdm
+from tqdm import tqdm
 import pandas as pd
 import ijson
 import numpy as np
@@ -16,9 +16,13 @@ import time
 
 #options = Options()
 #options.binary_location = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe'
-chromedriver='/app/chromedriver.exe'
+chromedriver='/app/chromedriver'
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--disable-dev-shm-usage')
 #chromedriver = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe'
-driver = webdriver.Chrome(chromedriver)
+driver = webdriver.Chrome(chromedriver,chrome_options=chrome_options)
 time.sleep(1)
 
 # 파일 읽기
@@ -26,9 +30,9 @@ time.sleep(1)
 # objects = ijson.items(f, 'item')
 # df = pd.DataFrame(objects)
 
-df = pd.read_csv('./2021-09-24_부분_55391행.csv', sep=',', encoding='utf-8')
-start = 8000
-end = start + 10000
+df = pd.read_csv('/app/crawl/google_map_data/2021-09-24_부분_55391행.csv', sep=',', encoding='utf-8')
+start = 18001
+end = 55391
 # df = df[['업소명', '소재지도로명', '업태명', '주된음식', '행정동명', '소재지전화번호']]
 # df.columns = ['name', 'address', 'cate1', 'cate2', 'dong', 'phone']
 # df = df.drop_duplicates(['name'], keep='first')
@@ -36,8 +40,7 @@ end = start + 10000
 # df['cate_mix'] = df['cate1'] + df['cate2']
 df = df[start:end]
 #print(df)
-
-df = df[3:10]
+#df = df[3:10]
 
 df.rename(columns={"naver_keyword":"google_keyword"},inplace=True)
 df.rename(columns={"naver_keyword":"google_map_url"},inplace=True)
@@ -117,7 +120,7 @@ df['google_review_txt'] = blog_review_list  # 네이버 상세페이지에 나�
 
 len(blog_review_list)
 
-%cd outputs/BERT용 data
+#%cd outputs/BERT용 data
 # Bert용
 import os
 from datetime import datetime
