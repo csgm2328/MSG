@@ -1,12 +1,12 @@
 <template>
   <div class="flex justify-between bg-blue-300 h-16">
-    <div class="flex ml-5">
+    <div class="flex items-center ml-5">
       <router-link to="/" class="h-full flex items-center">
         <img class="h-3/5 w-auto flex items-center" src="@/images/logo.png" />
         <span class="font-extrabold text-3xl items-center flex">MSG</span>
       </router-link>
 
-      <div class="hidden items-center ml-10 md:flex">
+      <div class="hidden ml-10 md:flex items-center">
         <Search-bar class="w-80" />
       </div>
     </div>
