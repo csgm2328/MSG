@@ -26,8 +26,6 @@ public class Review {
 
     // 별점
     private float star_score;
-    // 리뷰 이미지
-    private String img;
 
     @Column(insertable = false)
     private LocalDateTime reg_date;

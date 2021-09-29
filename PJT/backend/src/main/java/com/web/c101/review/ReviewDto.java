@@ -1,8 +1,11 @@
 package com.web.c101.review;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Setter
 @Getter
@@ -24,11 +27,11 @@ public class ReviewDto {
 
     // 별점
     private float star_score;
-    // 리뷰 이미지
-    private String img;
 
     // 리뷰 삭제 확인 변수
     private boolean flag;
+
+    MultipartFile[] multipartFiles;
 
     public boolean getFlag() {
         return this.flag;

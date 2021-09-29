@@ -10,7 +10,6 @@ public class ReviewAdaptor {
                 .store(review.getStore())
                 .content(review.getContent())
                 .star_score(review.getStar_score())
-                .img(review.getImg())
                 .flag(review.getFlag())
                 .build();
     }
@@ -22,7 +21,6 @@ public class ReviewAdaptor {
                 .store(reviewDto.getStore())
                 .content(reviewDto.getContent())
                 .star_score(reviewDto.getStar_score())
-                .img(reviewDto.getImg())
                 .reg_date(LocalDateTime.now())
                 .flag(reviewDto.getFlag())
                 .build();
