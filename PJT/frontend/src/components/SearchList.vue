@@ -47,6 +47,10 @@ export default {
   },
   watch: {
     idx: function (val, oldVal) {
+      if (!this.list || this.list.length <= 0) {
+        return;
+      }
+
       if (oldVal >= 0) {
         this.$refs[oldVal].classList.remove('bg-gray-300');
       }
