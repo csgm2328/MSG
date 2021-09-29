@@ -62,14 +62,15 @@ import { mapActions } from 'vuex';
 export default {
   name: 'SIDEBAR',
   methods: {
-    ...mapActions(['toggle_isLogin']),
+    ...mapActions(['toggle_isLoginToSideBar', 'toggle_isOpen']),
     logout() {
-      this.toggle_isLogin(false);
+      this.toggle_isOpen(false);
+      this.toggle_isLoginToSideBar(false);
       this.$router.push('/');
     },
   },
   computed: {
-    ...mapGetters(['isLogin']),
+    ...mapGetters(['isLogin', 'isOpen']),
   },
 };
 </script>

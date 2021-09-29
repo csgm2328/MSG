@@ -95,27 +95,26 @@ export default {
   },
   data() {
     return {
-      isOpen: false,
       immediate: false,
     };
   },
   methods: {
-    ...mapActions(['toggle_isLogin']),
+    ...mapActions(['toggle_isLogin', 'toggle_isOpen']),
     logout() {
       this.toggle_isLogin(false);
       this.$router.push('/');
     },
     toggleSideBar() {
-      this.isOpen = !this.isOpen;
+      this.toggle_isOpen(true);
     },
     onClickOutside() {
       if (this.isOpen) {
-        this.isOpen = !this.isOpen;
+        this.toggle_isOpen(false);
       }
     },
   },
   computed: {
-    ...mapGetters(['isLogin']),
+    ...mapGetters(['isLogin', 'isOpen']),
   },
   watch: {
     isOpen: {
@@ -131,7 +130,7 @@ export default {
     },
     $route(to, from) {
       if (to.path != from.path) {
-        this.isOpen = false;
+        this.toggle_isOpen(false);
       }
     },
   },
