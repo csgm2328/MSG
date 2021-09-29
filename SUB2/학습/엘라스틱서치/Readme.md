@@ -180,3 +180,16 @@ List<Map<String, Object>> list = elastic.simpleSearch(index, query);
 ```
 
 ElasticUtil을 통해 elastic 서버와 연결하고 적절한 index와 쿼리문(쿼리문이 없을 시 index에 있는 모든 데이터를 반환한다.)을 simpleSearch에 넘겨주면 조건에 해당하는 데이터를 반환한다.
+
+<br><br>
+
+### 테스트 예제
+
+---
+
+```
+localhost:9200/msg/test/_count?q=name:롯데리아
+localhost:9200/msg/test/_search?q=name:*데리*
+localhost:9200/realtime/top/_search?sort=cnt:desc
+```
+<br><br>
