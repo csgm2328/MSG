@@ -5,11 +5,13 @@ import java.time.LocalDateTime;
 public class ReviewAdaptor {
     public static ReviewDto entityToDto(Review review) {
         return ReviewDto.builder()
+                .rid(review.getRid())
                 .mid(review.getMid())
                 .dong(review.getDong())
                 .store(review.getStore())
                 .content(review.getContent())
                 .star_score(review.getStar_score())
+                .reg_date(review.getReg_date())
                 .flag(review.getFlag())
                 .build();
     }
