@@ -1,7 +1,6 @@
 package com.web.c101.review;
 
 import com.web.c101.BasicResponse;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -9,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @ApiResponses(value = { @ApiResponse(code = 401, message = "Unauthorized", response = BasicResponse.class),
@@ -28,7 +26,8 @@ public class ReviewController {
     // 리뷰 작성
     @PostMapping("/review/addReview")
     @ApiOperation(value = "리뷰등록")
-    public Object addReview(@RequestBody ReviewDto req){
+    public Object addReview(ReviewDto req){
+        System.out.println(req.getContent());
         log.info("리뷰 등록");
         final BasicResponse result = new BasicResponse();
 

@@ -2,15 +2,19 @@ package com.web.c101.review;
 
 import com.web.c101.error.CustomException;
 import com.web.c101.error.ErrorCode;
+import com.web.c101.file.ImgFile;
+import com.web.c101.file.ImgFileDao;
+import com.web.c101.member.Member;
+import com.web.c101.member.MemberDao;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import com.web.c101.member.Member;
-import com.web.c101.member.MemberDao;
+import java.util.UUID;
 
 
 @Service
@@ -19,6 +23,7 @@ public class ReviewService {
 
     ReviewDao reviewdao;
     MemberDao memberdao;
+    ImgFileDao imgFileDao;
 
     public boolean addReview(ReviewDto req) {
 
@@ -26,8 +31,37 @@ public class ReviewService {
 
         try{
             reviewdao.save(review);
+
+            String path = "//home//ubuntu//upload";
+            File Folder = new File(path);
+            if(!Folder.exists()) Folder.mkdir();
+
+            String fileName;
+            MultipartFile[] multipartFiles;
+
+            if(req.getMultipartFiles() != null) {//파일이 존재할 때에만,
+                multipartFiles = req.getMultipartFiles();
+
+                for (int i = 0; i < multipartFiles.length; i++) {
+
+                    MultipartFile multipartFile = multipartFiles[i];
+                    UUID uuid = UUID.randomUUID();
+
+                    fileName = uuid.toString()+"_"+multipartFile.getOriginalFilename();
+                    multipartFile.transferTo(new File("//home//ubuntu//upload"+"//"+fileName));
+
+                    ImgFile file = new ImgFile();//이미지 파일 세팅
+                    file.setFile_name(fileName);
+                    file.setFile_size(Long.toString(multipartFile.getSize()));
+                    file.setRid(review.getRid());
+
+                    imgFileDao.save(file);
+                }
+            }
+
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
 
