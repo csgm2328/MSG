@@ -20,6 +20,7 @@ from kobert.pytorch_kobert import get_pytorch_kobert_model
 from transformers import AdamW
 from transformers.optimization import get_cosine_schedule_with_warmup
 
+device = torch.device('cpu')
 bertmodel, vocab = get_pytorch_kobert_model()
 tokenizer = get_tokenizer()
 tok = nlp.data.BERTSPTokenizer(tokenizer, vocab, lower=False)
@@ -78,7 +79,7 @@ class BERTClassifier(nn.Module):
         return self.classifier(out)
 
 model = BERTClassifier(bertmodel,  dr_rate=0.5).to(device)
-model.load_state_dict(torch.load('./drive/MyDrive/관통/model1st.pth'))
+model.load_state_dict(torch.load('./drive/MyDrive/특화/model1st.pt',map_location=device))
 
 #no_decay = ['bias', 'LayerNorm.weight']
 #optimizer_grouped_parameters = [
@@ -112,7 +113,7 @@ def predict(predict_sentence):
     dataset_another = [data]
 
     another_test = BERTDataset(dataset_another, 0, 1, tok, max_len, True, False)
-    test_dataloader = torch.utils.data.DataLoader(another_test, batch_size=batch_size, num_workers=5)
+    test_dataloader = torch.utils.data.DataLoader(another_test, batch_size=batch_size, num_workers=2)
     
     model.eval()
 
