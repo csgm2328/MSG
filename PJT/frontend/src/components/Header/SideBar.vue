@@ -43,13 +43,39 @@
       </div>
     </div>
     <div class="" v-if="isLogin">
-      <div class="h-full w-full items-center justify-center">
-        <button
-          class="h-full w-full font-bold text-base hover:underline hover:bg-gray-300 p-5"
-          @click="logout"
-        >
-          로그아웃
-        </button>
+      <router-link
+        to="/"
+        tag="div"
+        class="
+          flex
+          items-center
+          justify-center
+          h-full
+          w-full
+          font-bold
+          text-base
+          hover:underline hover:bg-gray-300
+          p-5
+        "
+      >
+        마이페이지
+      </router-link>
+      <div
+        class="
+          flex
+          items-center
+          justify-center
+          h-full
+          w-full
+          font-bold
+          text-base
+          hover:underline hover:bg-gray-300
+          p-5
+          cursor-pointer
+        "
+        @click="logout"
+      >
+        로그아웃
       </div>
     </div>
   </div>
