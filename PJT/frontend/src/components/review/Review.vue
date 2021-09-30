@@ -24,6 +24,7 @@
     <div
       class="
         flex
+        flex-col
         justify-center
         w-11/12
         h-4/6
@@ -46,7 +47,7 @@
         maxlength="500"
         @input="checkByte(this)"
       ></textarea>
-      <div>
+      <div class="flex justify-end">
         (<span id="nowByte">{{ wordCnt }}</span
         >/500)
       </div>
@@ -242,7 +243,7 @@ export default {
       formData.append("mid", 123123);
       formData.append("dong", "상무대점");
       formData.append("store", "맥도날드");
-      formData.append("star-score", this.rating);
+      formData.append("star_score", this.rating);
       formData.append("content", this.content);
       formData.append("flag", true);
       this.files.forEach((element) => {

@@ -4,7 +4,6 @@ import com.web.c101.error.CustomException;
 import com.web.c101.error.ErrorCode;
 import com.web.c101.file.ImgFile;
 import com.web.c101.file.ImgFileDao;
-import com.web.c101.member.Member;
 import com.web.c101.member.MemberDao;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,7 @@ public class ReviewService {
         try{
             reviewdao.save(review);
 
-            String path = "//home//ubuntu//upload";
+            String path = "C:\\Users\\multicampus\\Desktop\\upload";
             File Folder = new File(path);
             if(!Folder.exists()) Folder.mkdir();
 
@@ -48,7 +47,7 @@ public class ReviewService {
                     UUID uuid = UUID.randomUUID();
 
                     fileName = uuid.toString()+"_"+multipartFile.getOriginalFilename();
-                    multipartFile.transferTo(new File("//home//ubuntu//upload"+"//"+fileName));
+                    multipartFile.transferTo(new File(path+"\\"+fileName));
 
                     ImgFile file = new ImgFile();//이미지 파일 세팅
                     file.setFile_name(fileName);
@@ -67,7 +66,7 @@ public class ReviewService {
 
     }
 
-    public boolean delReview(long rid) {
+    public boolean delReview(Long rid) {
 
         Optional<Review> reviewOpt = reviewdao.findReviewByRid(rid);
 
@@ -86,23 +85,29 @@ public class ReviewService {
 
     }
 
-    public List<ReviewDto> getUserReview(long mid) {
+    public List<ReviewDto> getUserReview(Long mid) {
 
-        Optional<Member> member = memberdao.findMemberByMemberId(mid);
+//        Optional<Member> member = memberdao.findMemberByMemberId(mid);
         List<ReviewDto> list = null;
 
-        if(member.isPresent()) {
-
+//        if(member.isPresent()) {
+            System.out.println("hihi");
             List<Review> reviewList = reviewdao.findReviewByMid(mid);
+            System.out.println(reviewList);
             ReviewDto tmp;
             list = new ArrayList<>();
 
-            for(Review R : reviewList) {
-               tmp = ReviewAdaptor.entityToDto(R);
-               list.add(tmp);
-            }
+//        List<Review> reviewList = reviewdao.findAll();
 
-        }
+            for(Review R : reviewList) {
+                System.out.println(R);
+                // flag값이 true(삭제가 안된 리뷰)인 리뷰만 가져온다.
+                if(R.getFlag()) {
+                    tmp = ReviewAdaptor.entityToDto(R);
+                    list.add(tmp);
+                }
+            }
+//        }
 
         return list;
     }
