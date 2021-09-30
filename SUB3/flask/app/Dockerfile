@@ -6,6 +6,7 @@ RUN pip3 install flask
 RUN pip3 install uwsgi
 RUN pip3 install numpy
 RUN pip3 install pandas
+RUN pip3 install tqdm
 RUN pip3 install ijson
 RUN pip3 install selenium
 RUN pip3 install bs4
