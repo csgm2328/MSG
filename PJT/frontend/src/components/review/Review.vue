@@ -43,7 +43,13 @@
           border-2 border-blue-800 border-opacity-30
           rounded-lg
         "
+        maxlength="500"
+        @input="checkByte(this)"
       ></textarea>
+      <div>
+        (<span id="nowByte">{{ wordCnt }}</span
+        >/500)
+      </div>
     </div>
     <!-- 이미지 업로드 -->
     <div
@@ -63,10 +69,7 @@
       "
     >
       <div
-        class="
-          whitespace-nowrap
-          overflow-x-auto overflow-y-hidden
-        "
+        class="whitespace-nowrap overflow-x-auto overflow-y-hidden"
         v-if="uploadImgCnt > 0"
       >
         <div
@@ -80,7 +83,7 @@
           >
             <i class="fas fa-times-circle red"></i>
           </div>
-          <img v-bind:src="file.preview" style="width:90px; height: 90px" />
+          <img v-bind:src="file.preview" style="width: 90px; height: 90px" />
         </div>
       </div>
     </div>
@@ -141,6 +144,7 @@
 </template>
 <script>
 import StarRating from "vue-star-rating";
+import { addReview } from "@/api/review.js";
 
 export default {
   name: "Review",
@@ -151,6 +155,7 @@ export default {
     return {
       rating: 0,
       content: "",
+      wordCnt: 0,
       files: [],
       filesSize: 0,
       uploadImgCnt: 0,
@@ -162,8 +167,39 @@ export default {
     },
   },
   methods: {
+    checkByte(obj) {
+      // console.log(obj)
+      const maxByte = 500; //최대 500바이트
+      const text_val = obj.content; //입력한 문자
+      const text_len = text_val.length; //입력한 문자수
+
+      let totalByte = 0;
+      for (let i = 0; i < text_len; i++) {
+        const each_char = text_val.charAt(i);
+        const uni_char = escape(each_char); //유니코드 형식으로 변환
+        if (uni_char.length > 4) {
+          // 한글 : 2Byte
+          totalByte += 2;
+        } else {
+          // 영문,숫자,특수문자 : 1Byte
+          totalByte += 1;
+        }
+      }
+
+      if (totalByte > maxByte) {
+        alert("최대 500자까지만 입력가능합니다.");
+        this.content = this.content.substring(0, 250);
+        totalByte = 500;
+      }
+      this.wordCnt = totalByte;
+    },
     fileChange(fileList) {
       let num = -1;
+
+      if (fileList.length + this.uploadImgCnt > 5) {
+        alert("파일은 5개까지만 업로드할 수 있습니다.");
+        return false;
+      }
 
       fileList.forEach((file, index) => {
         // 전체 이미지의 용량이 5MB를 초과한다면
@@ -203,9 +239,12 @@ export default {
     registReview() {
       let formData = new FormData();
 
-      //   formData.append("uid", this.uid);
-      formData.append("content", this.boardContent);
-
+      formData.append("mid", 123123);
+      formData.append("dong", "상무대점");
+      formData.append("store", "맥도날드");
+      formData.append("star-score", this.rating);
+      formData.append("content", this.content);
+      formData.append("flag", true);
       this.files.forEach((element) => {
         formData.append("multipartFiles", element.file);
       });
@@ -214,9 +253,15 @@ export default {
         console.log(`${key}`);
       }
 
-      //   this.setBoardContent("");
-
-      //   this.addBoard(formData);
+      addReview(
+        formData,
+        (res) => {
+          console.log(res);
+        },
+        () => {
+          alert("리뷰 등록 오류가 발생했습니다.");
+        }
+      );
     },
   },
   watch: {},

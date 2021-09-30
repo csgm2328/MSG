@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 public class Review {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rid;
 
     private Long mid;
