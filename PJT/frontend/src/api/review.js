@@ -1,8 +1,7 @@
 import { axiosService } from '@/api/index.js';
 
 function addReview(review, callback, errorCallback) {
-    console.log("review")
-    console.log(review)
+  
     axiosService
         .post('/review/addReview', review, {
             headers: {
