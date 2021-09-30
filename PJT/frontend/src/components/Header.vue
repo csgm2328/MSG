@@ -74,8 +74,39 @@
       </router-link>
     </div>
     <div class="md:flex hidden" v-if="isLogin">
-      <div class="h-full w-24 mr-7 items-center justify-center hover:underline">
-        <button class="h-full w-full font-bold text-base" @click="logout">로그아웃</button>
+      <router-link
+        to="/"
+        tag="div"
+        class="
+          h-full
+          w-28
+          mr-2
+          flex
+          items-center
+          justify-center
+          font-bold
+          text-base
+          hover:underline
+        "
+      >
+        마이페이지
+      </router-link>
+      <div
+        class="
+          h-full
+          w-28
+          mr-7
+          flex
+          items-center
+          justify-center
+          font-bold
+          text-base
+          hover:underline
+          cursor-pointer
+        "
+        @click="logout"
+      >
+        로그아웃
       </div>
     </div>
   </div>
