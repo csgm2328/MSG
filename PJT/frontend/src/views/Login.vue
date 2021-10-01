@@ -72,7 +72,7 @@ export default {
             this.$router.push('Main');
           }
         );
-      }, 2000);
+      }, 1000);
     },
   },
   computed: {
