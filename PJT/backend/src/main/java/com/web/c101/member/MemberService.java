@@ -162,27 +162,31 @@ public class MemberService {
      * @return
      */
     @Transactional
-    public boolean logout(String at) {
-        Authentication authentication = tokenProvider.getAuthentication(at);
-        String key = authentication.getName();
+    public boolean logout(String mid, String at) {
+        String key = mid;
 
-        // 권한이 없는 경우
-        if (!tokenProvider.validateToken(at)) {
-            return false;
+        try {
+            // 권한이 없는 경우
+            if (!tokenProvider.validateToken(at)) {
+                return false;
+            }
+
+            String getRefreshToken = (String)redisTemplate.opsForValue().get(key);
+
+            // 이미 로그아웃된 사용자
+            if (getRefreshToken == null || getRefreshToken.length() <= 0
+                    || getRefreshToken.equals("") || redisTemplate.opsForValue().get(at) != null) {
+                return false;
+            }
+
+            Date expireDate = tokenProvider.getExpireDate(at);
+            redisTemplate.opsForValue().set(at, "logout");
+            // 액세스 토큰의 남은 시간만큼 logout blacklist에 추가하여 로그아웃이 된 토큰임을 저장한다.
+            redisTemplate.expire(at, expireDate.getTime() - System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new CustomException(ErrorCode.ERROR);
         }
-
-        String getRefreshToken = (String)redisTemplate.opsForValue().get(key);
-
-        // 이미 로그아웃된 사용자
-        if (getRefreshToken == null || getRefreshToken.length() <= 0
-                || getRefreshToken.equals("") || redisTemplate.opsForValue().get(at) != null) {
-            return false;
-        }
-
-        Date expireDate = tokenProvider.getExpireDate(at);
-        redisTemplate.opsForValue().set(at, "logout");
-        // 액세스 토큰의 남은 시간만큼 logout blacklist에 추가하여 로그아웃이 된 토큰임을 저장한다.
-        redisTemplate.expire(at, expireDate.getTime() - System.currentTimeMillis(), TimeUnit.MILLISECONDS);
 
         return true;
     }
@@ -197,6 +201,7 @@ public class MemberService {
         return false;
     }
 
+    @Transactional
     public Member getMemberByMid(String mid) {
         Member member = null;
 
