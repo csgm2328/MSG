@@ -44,4 +44,15 @@ async function loginUser(userData, callback, errorCallback) {
     });
 }
 
-export { kakaoLoginUser, loginUser, signUpUser, nicknameCheck };
+async function logoutUser(userData, callback, errorCallback) {
+  await axiosService
+    .post('/member/logout', userData)
+    .then((res) => {
+      callback(res.data);
+    })
+    .catch((err) => {
+      errorCallback(err);
+    });
+}
+
+export { kakaoLoginUser, loginUser, logoutUser, signUpUser, nicknameCheck };

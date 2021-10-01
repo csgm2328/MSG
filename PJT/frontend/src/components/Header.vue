@@ -16,6 +16,7 @@
     </div>
     <div class="flex md:hidden" v-click-away="onClickOutside">
       <SideBar
+        v-on:goLogout="goLogout"
         class="
           transform
           top-0
@@ -33,7 +34,7 @@
         :class="isOpen ? 'translate-x-0' : 'translate-x-full'"
       />
 
-      <button class="h-full mr-7 items-center justify-center" @click="toggleSideBar">
+      <button class="h-full mr-7 items-center justify-center" @click="toggleSideBarTrue">
         <i class="fas fa-bars font-bold text-2xl" />
       </button>
     </div>
@@ -104,7 +105,7 @@
           hover:underline
           cursor-pointer
         "
-        @click="logout"
+        @click="goLogout"
       >
         로그아웃
       </div>
@@ -114,6 +115,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import { logout } from '@/common/logout.js';
 import SearchBar from '@/components/SearchBar.vue';
 import SideBar from '@/components/Header/SideBar.vue';
 
@@ -126,16 +128,51 @@ export default {
   data() {
     return {
       immediate: false,
+      code: '',
+      logout: '',
     };
   },
+  created() {
+    this.code = this.$route.query.code;
+  },
+  mounted() {
+    this.toggleSideBarFalse();
+    this.processing();
+  },
   methods: {
-    ...mapActions(['toggle_isLogin', 'toggle_isOpen']),
-    logout() {
-      this.toggle_isLogin(false);
-      this.$router.push('/');
+    ...mapActions([
+      'toggle_isLogin',
+      'toggle_isOpen',
+      'set_id',
+      'set_nickname',
+      'toggle_isLoading',
+      'set_type',
+    ]),
+    processing() {
+      if (this.type === 'login' && !this.code) {
+        this.toggle_isLoading(false);
+        this.set_type('');
+      } else if (this.type === 'logout' && this.code) {
+        this.logoutAfterProcessing();
+        this.set_type('');
+      }
     },
-    toggleSideBar() {
+    goLogout() {
+      this.toggle_isLoading(true);
+      this.set_type('logout');
+      logout(this.id);
+    },
+    logoutAfterProcessing() {
+      this.toggle_isLogin(false);
+      this.set_id('');
+      this.set_nickname('');
+      this.toggle_isLoading(false);
+    },
+    toggleSideBarTrue() {
       this.toggle_isOpen(true);
+    },
+    toggleSideBarFalse() {
+      this.toggle_isOpen(false);
     },
     onClickOutside() {
       if (this.isOpen) {
@@ -144,7 +181,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['isLogin', 'isOpen']),
+    ...mapGetters(['isLogin', 'isOpen', 'id', 'type']),
   },
   watch: {
     isOpen: {
@@ -158,11 +195,11 @@ export default {
         }
       },
     },
-    $route(to, from) {
-      if (to.path != from.path) {
-        this.toggle_isOpen(false);
-      }
-    },
+    // $route(to, from) {
+    //   if (to.path != from.path) {
+    //     this.toggle_isOpen(false);
+    //   }
+    // },
   },
 };
 </script>
