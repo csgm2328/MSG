@@ -308,5 +308,23 @@ def search():
     temp = [int(temp) for temp in temp]
     return jsonify(temp)
 
-if __name__ == '__main__':
-    app.run(debug=False,host='0.0.0.0',port=5000)
+app.run(debug=False)
+
+
+# In[ ]:
+
+
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+
+datelist = dictionary_now['맥도날드']['날짜'][:-1]
+
+x=datelist.tolist()
+y=temp
+
+
+plt.figure(figsize=(10,7))
+plt.plot(x,y,marker="o")
+plt.xticks(rotation=45)
+plt.show()
+
