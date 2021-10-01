@@ -1,10 +1,14 @@
 const state = {
   isLogin: false,
+  signupNickname: '',
 };
 
 const getters = {
   isLogin(state) {
     return state.isLogin;
+  },
+  signupNickname(state) {
+    return state.signupNickname;
   },
   // get_id: (state) => state.id,
 };
@@ -12,6 +16,9 @@ const getters = {
 const mutations = {
   TOGGLE_ISLOGIN(state, payload) {
     state.isLogin = payload;
+  },
+  SET_SIGNUPNICKNAME(state, payload) {
+    state.signupNickname = payload;
   },
 };
 
@@ -23,6 +30,9 @@ const actions = {
     setTimeout(function () {
       context.commit('TOGGLE_ISLOGIN', data);
     }, 350);
+  },
+  set_signupnickname(context, data) {
+    context.commit('SET_SIGNUPNICKNAME', data);
   },
 };
 

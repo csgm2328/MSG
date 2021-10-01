@@ -54,7 +54,7 @@ public class ReviewService {
 
     public List<ReviewDto> getUserReview(long mid) {
 
-        Optional<Member> member = memberdao.findMemberByMemberId(mid);
+        Optional<Member> member = memberdao.findMemberById(mid);
         List<ReviewDto> list = null;
 
         if(member.isPresent()) {
