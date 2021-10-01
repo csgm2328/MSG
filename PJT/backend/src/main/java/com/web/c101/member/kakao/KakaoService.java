@@ -43,6 +43,8 @@ public class KakaoService {
         params.add("redirect_url", "http://localhost:8080/member");
         params.add("code", authorizeCode);
 
+        System.out.println("??? " + authorizeCode);
+
         // HttpHeader와 HttpBody를 하나의 오브젝트에 담는다.
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
 
