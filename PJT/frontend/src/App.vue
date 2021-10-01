@@ -1,23 +1,21 @@
 <template>
-  <div class="flex flex-col h-screen w-auto">
-    <Header />
-    <router-view
-      class="flex flex-col justify-center items-center flex-grow bg-blue-100 w-auto pt-10 pb-10"
-    />
-    <Footer />
+  <div>
+    <router-view />
+    <Loading v-if="isLoading" />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import Header from '@/components/Header.vue';
-import Footer from '@/components/Footer.vue';
+import Loading from '@/components/Loading.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'APP',
   components: {
-    Header,
-    Footer,
+    Loading,
+  },
+  computed: {
+    ...mapGetters(['isLoading']),
   },
 };
 </script>

@@ -73,7 +73,7 @@
           p-5
           cursor-pointer
         "
-        @click="logout"
+        @click="goLogout"
       >
         로그아웃
       </div>
@@ -82,21 +82,18 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import { mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'SIDEBAR',
   methods: {
-    ...mapActions(['toggle_isLoginToSideBar', 'toggle_isOpen']),
-    logout() {
-      this.toggle_isOpen(false);
-      this.toggle_isLoginToSideBar(false);
-      this.$router.push('/');
+    ...mapActions(['toggle_isLoading']),
+    goLogout() {
+      this.$emit('goLogout', this.id);
     },
   },
   computed: {
-    ...mapGetters(['isLogin', 'isOpen']),
+    ...mapGetters(['isLogin', 'id']),
   },
 };
 </script>
