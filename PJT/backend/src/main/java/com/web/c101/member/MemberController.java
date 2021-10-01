@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
@@ -98,6 +99,38 @@ public class MemberController {
         result.status = true;
         result.data = "success";
         result.object = memberService.nicknameCheck(nickname);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/logout")
+    public Object logout(@RequestBody String mid, HttpServletRequest request, HttpServletResponse response) {
+        log.info("logout >>> " + mid);
+        BasicResponse result = new BasicResponse();
+
+        String accessToken = "";
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("accessToken".equals(cookie.getName())) {
+                    accessToken = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        Cookie cookie = new Cookie("accessToken", "");
+        // 일주일로 설정
+        cookie.setMaxAge(0);
+        cookie.setSecure(true);
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+
+        response.addCookie(cookie);
+
+        result.data = "success";
+        result.status = true;
+        result.object = memberService.logout(mid, accessToken);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
