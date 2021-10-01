@@ -113,8 +113,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import { mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import SearchBar from '@/components/SearchBar.vue';
 import SideBar from '@/components/Header/SideBar.vue';
 

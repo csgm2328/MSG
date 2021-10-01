@@ -6,8 +6,9 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Builder
 public class SignUpRequest {
-    String uid;
-    String nickName;
+    String authorizeCode;
+    String nickname;
 }

@@ -14,11 +14,13 @@
     "@toast-ui/editor-plugin-code-syntax-highlight": "^3.0.0",
     "@toast-ui/editor-plugin-table-merged-cell": "^3.0.0",
     "@toast-ui/vue-editor": "^3.1.0",
+    "@vee-validate/rules": "^4.5.0",
     "autoprefixer": "^9",
     "axios": "^0.21.4",
     "core-js": "^3.6.5",
     "postcss": "^7",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
+    "vee-validate": "^4.5.1",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
     "vue-star-rating": "^2.1.0",
@@ -26,7 +28,8 @@
     "vue3-star-ratings": "^1.0.7",
     "vuex": "^4.0.0-0",
     "vuex-persistedstate": "^4.1.0",
-    "yarn": "^1.22.11"
+    "yarn": "^1.22.11",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
