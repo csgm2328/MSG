@@ -38,7 +38,7 @@ public class JwtFilter extends OncePerRequestFilter {
      * 또한, 로그아웃한 키가 유효기간이 끝나 사라져도 로그인한 키에도 없으므로
      * 이를 검사하게함
      * 
-     * 요청이 정상적으로 Controller까지 도착했다면 SecurityContest에 Member uid가 존재한다는 것이 보장
+     * 요청이 정상적으로 Controller까지 도착했다면 SecurityContest에 Member id가 존재한다는 것이 보장
      * 
      * 대신 직접 DB를 조회한 것이 아니기 때문에 DB에 없는 경우와 같은 예외 상황은 Service 단에서 처리가 필요
      * 
@@ -68,7 +68,7 @@ public class JwtFilter extends OncePerRequestFilter {
 //                System.out.println("request cookie token : " + jwt);
             }
         }
-        
+
         filterChain.doFilter(request, response);
     }
     
