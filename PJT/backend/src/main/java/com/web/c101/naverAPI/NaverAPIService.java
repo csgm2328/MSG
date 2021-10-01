@@ -19,7 +19,7 @@ import java.util.List;
 public class NaverAPIService {
     public List<Integer> getSearchAmount(String keyword) {
         List<Integer> result = new ArrayList<>();
-        String flaskUrl = "http://j5c101.p.ssafy.io:5050/searchAPI?keyword=" + keyword;
+        String flaskUrl = "http://j5c101.p.ssafy.io:5000/searchAPI?keyword=" + keyword;
         try{
             HttpURLConnection conn = (HttpURLConnection) new URL(flaskUrl).openConnection();
             //dataframe 읽기
