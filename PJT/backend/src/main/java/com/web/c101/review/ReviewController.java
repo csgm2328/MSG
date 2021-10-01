@@ -1,7 +1,6 @@
 package com.web.c101.review;
 
 import com.web.c101.BasicResponse;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -9,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @ApiResponses(value = { @ApiResponse(code = 401, message = "Unauthorized", response = BasicResponse.class),
@@ -28,7 +26,8 @@ public class ReviewController {
     // 리뷰 작성
     @PostMapping("/review/addReview")
     @ApiOperation(value = "리뷰등록")
-    public Object addReview(@RequestBody ReviewDto req){
+    public Object addReview(ReviewDto req){
+        System.out.println(req.getContent());
         log.info("리뷰 등록");
         final BasicResponse result = new BasicResponse();
 
@@ -44,9 +43,9 @@ public class ReviewController {
     }
 
     // 리뷰 삭제
-    @PutMapping("/review/deleteReview")
+    @PutMapping("/review/deleteReview/{rid}")
     @ApiOperation(value = "리뷰삭제")
-    public Object delReview(@RequestParam long rid) {
+    public Object delReview(@PathVariable(name = "rid") Long rid) {
         log.info("리뷰 삭제");
         final BasicResponse result = new BasicResponse();
 
@@ -64,7 +63,7 @@ public class ReviewController {
     // 사용자가 작성한 리뷰 목록
     @GetMapping("/review/userReviewList")
     @ApiOperation(value = "사용자 리뷰 목록")
-    public Object getUserReview(long mid) {
+    public Object getUserReview(@RequestParam Long mid) {
 
         log.info("사용자 작성 리뷰 목록");
         final BasicResponse result = new BasicResponse();
@@ -92,7 +91,7 @@ public class ReviewController {
     // dong이 ""이 아니라면 dong에 해당하는 지역의 맛집 리뷰를 반환한다.
     @GetMapping("/review/storeReviewList")
     @ApiOperation(value = "지역에 따른 맛집 리뷰 목록")
-    public Object getStoreReview(String dong, String store) {
+    public Object getStoreReview(@RequestParam String dong, @RequestParam String store) {
 
         log.info("지역에 따른 맛집 리뷰 목록");
         final BasicResponse result = new BasicResponse();

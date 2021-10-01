@@ -3,9 +3,8 @@ package com.web.c101.review;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -15,7 +14,6 @@ import javax.persistence.Id;
 @AllArgsConstructor
 public class ReviewDto {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rid;
 
     private Long mid;
@@ -30,6 +28,8 @@ public class ReviewDto {
 
     // 리뷰 삭제 확인 변수
     private boolean flag;
+
+    private LocalDateTime reg_date;
 
     MultipartFile[] multipartFiles;
 

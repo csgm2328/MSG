@@ -7,9 +7,9 @@ import java.util.Optional;
 
 public interface ReviewDao extends JpaRepository<Review, Long> {
 
-    Optional<Review> findReviewByRid(long rid);
+    Optional<Review> findReviewByRid(Long rid);
 
-    List<Review> findReviewByMid(long mid);
+    List<Review> findReviewByMid(Long mid);
 
     List<Review> findReviewByStore(String store);
 
