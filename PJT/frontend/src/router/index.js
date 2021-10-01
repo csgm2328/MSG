@@ -28,6 +28,11 @@ const routes = [
     name: 'Mypage',
     component: () => import('@/views/Mypage.vue'),
   },
+  {
+    path: '/keyword',
+    name: 'Keyword',
+    component: () => import('@/views/Keyword.vue'),
+  },
 ];
 
 const router = createRouter({
