@@ -28,12 +28,17 @@ const routes = [
   {
     path: '/review',
     name: 'Review',
-    component: () => import(/* webpackChunkName: "about" */ '@/components/review/Review.vue'),
+    component: () => import( '@/components/review/Review.vue'),
   },
   {
     path: '/mypage',
     name: 'Mypage',
-    component: () => import(/* webpackChunkName: "about" */ '@/components/Mypage.vue'),
+    component: () => import('@/components/Mypage.vue'),
+  },
+  {
+    path: '/analysis',
+    name: 'Analysis',
+    component: () => import('@/components/analysis/Analysis.vue'),
   },
 ];
 
