@@ -14,7 +14,7 @@ RUN pip3 install ijson
 RUN pip3 install selenium
 RUN pip3 install bs4
 
-RUN pip3 apscheduler
+RUN pip3 install apscheduler
 
 RUN pip3 install powernad
 RUN pip3 install jsonpickle
