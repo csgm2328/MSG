@@ -36,7 +36,8 @@ from dotenv import load_dotenv
 ##############################NAVER API######################################
 
 sched = BackgroundScheduler(daemon=True)
-sched.add_job(crawling,'cron', day_of_week='thu',hour='0')
+sched.add_job(crawling,'cron', minutes=5)
+#sched.add_job(crawling,'cron', day_of_week='thu',hour='0')
 sched.start()
 
 load_dotenv()
@@ -389,13 +390,14 @@ def crawling():
 
     df = pd.read_csv('./crawl/google_map_data/GoogleMap용_가게정보_part_3.csv', sep=',', encoding='utf-8')
     start = 0
-    end = start + 100
+    end = start + 10
 
     df = df[start:end]
 
     review_stars_list = [] # 개별 평점
     review_time_list = [] # 개별 리뷰 작성 시간
     review_list = []
+    review_emot = []
     star_avg_list = []
     
     for i, keyword in enumerate(tqdm(df['google_keyword'])):
@@ -430,7 +432,8 @@ def crawling():
             rev_dict = {'Review Rate': [],
                 'Review Time': [],
                 'Review Text' : [],
-                'Review Emotion' : []'}
+                'Review Emotion' : []
+                }
             
             for result in result_set:
                 review_rate = result.find('span', class_='ODSEW-ShBeI-H1e3jb')["aria-label"]
@@ -447,6 +450,7 @@ def crawling():
             review_time_list.append(rev_dict['Review Time'])
     #         review_text = ','.join(review_text_list)
             review_list.append(rev_dict['Review Text']) # 일단 join 하지말고 list로
+            review_emot.append(rev_dict['Review Emotion'])
             star_avg_list.append(star_review_stars)
 
         # 리뷰가 없는 업체는 크롤링에 오류가 뜨므로 표기해둡니다.
@@ -457,6 +461,7 @@ def crawling():
             review_stars_list.append('null')
             review_time_list.append('null')
             review_list.append('null')
+            review_emot.append('null')
             star_avg_list.append('null')
             
     # driver.quit()
@@ -464,6 +469,7 @@ def crawling():
     df['google_stars'] = review_stars_list
     df['google_star_avg'] = star_avg_list  # 상세페이지에서 평가한 별점 평균
     df['google_review_txt'] = review_list  # 상세페이지에 나온 리뷰 텍스트들
+    df['google_emotion'] = review_emot
     
     # ElasticSearch용
     import os
@@ -471,7 +477,7 @@ def crawling():
 
     temp = df[['name','area', 'address','latitude','longitude']]
     today = str(datetime.date(datetime.today()))
-    folder = './crawl/outputs/ES/'
+    folder = './crawl/outputs/test/'
     file = 'ES_' + str(start) + '~' + str(end) + '행_' + today + '.csv'
 
     if os.path.isfile(file):
@@ -482,9 +488,9 @@ def crawling():
 
     # Bert용
 
-    temp = df[['google_keyword', 'google_review_date','google_stars','google_star_avg','google_review_txt']]
+    temp = df[['google_keyword', 'google_review_date','google_stars','google_star_avg','google_review_txt','google_emotion']]
     today = str(datetime.date(datetime.today()))
-    folder = './crawl/outputs/google/'
+    folder = './crawl/outputs/test/'
     file = 'BERT_' + str(start) + '~' + str(end) + '행_' + today + '.csv'
 
     if os.path.isfile(file):
