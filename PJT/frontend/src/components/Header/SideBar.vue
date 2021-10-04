@@ -44,7 +44,7 @@
     </div>
     <div class="" v-if="isLogin">
       <router-link
-        to="/"
+        to="/mypage"
         tag="div"
         class="
           flex

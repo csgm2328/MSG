@@ -55,4 +55,15 @@ async function logoutUser(userData, callback, errorCallback) {
     });
 }
 
-export { kakaoLoginUser, loginUser, logoutUser, signUpUser, nicknameCheck };
+async function reissuUser(userData, callback, errorCallback) {
+  await axiosService
+    .post('/member/reissu', userData)
+    .then((res) => {
+      callback(res.data);
+    })
+    .catch((err) => {
+      errorCallback(err);
+    });
+}
+
+export { kakaoLoginUser, loginUser, logoutUser, signUpUser, nicknameCheck, reissuUser };
