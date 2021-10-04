@@ -94,7 +94,9 @@ public class MemberService {
             Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
             tokenDto = tokenProvider.generateTokenDto(authentication);
             key = authentication.getName();
-            redisTemplate.opsForValue().set(key, tokenDto.getRefreshToken());
+
+            redisTemplate.opsForHash().put(key, "rt", tokenDto.getRefreshToken());
+            redisTemplate.opsForHash().put(key, "at", tokenDto.getAccessToken());
 
             long diffTime = tokenDto.getRefreshTokenExpiresIn() - (new Date()).getTime();
             redisTemplate.expire(key, diffTime, TimeUnit.SECONDS);
@@ -126,16 +128,18 @@ public class MemberService {
         String key = mid;
         TokenDto tokenDto = null;
         try {
-            // 저장소에서 Member mid를 기반으로 Refresh token 값을 가져온다.
-            String getRefreshToken = (String)redisTemplate.opsForValue().get(key);
-
-            if (getRefreshToken == null || getRefreshToken.equals("")
-                    || getRefreshToken.length() == 0 || redisTemplate.opsForValue().get(at) != null) {
+            boolean hasKey = redisTemplate.hasKey(key);
+            if (!hasKey || redisTemplate.opsForValue().get(at) != null) {
                 return Optional.empty();
             }
 
-            // Refresh Token 검증
-            if (!tokenProvider.validateToken(getRefreshToken)) {
+            // 저장소에서 Member mid를 기반으로 Refresh token 값을 가져온다.
+            String getRefreshToken = (String)redisTemplate.opsForHash().get(key, "rt");
+            String getAccessToken = (String)redisTemplate.opsForHash().get(key, "at");
+
+            // Token 검증
+            if (!tokenProvider.validateToken(getRefreshToken) || !tokenProvider.validateToken(getAccessToken)
+                    || !getAccessToken.equals(at)) {
                 return Optional.empty();
             }
 
@@ -143,7 +147,8 @@ public class MemberService {
             tokenDto = tokenProvider.generateTokenDto(authentication);
 
             // 저장소 정보 업데이트
-            redisTemplate.opsForValue().set(key, tokenDto.getRefreshToken());
+            redisTemplate.opsForHash().put(key, "rt", tokenDto.getRefreshToken());
+            redisTemplate.opsForHash().put(key, "at", tokenDto.getAccessToken());
             long diffTime = tokenDto.getRefreshTokenExpiresIn() - (new Date()).getTime();
 
             redisTemplate.expire(key, diffTime, TimeUnit.SECONDS);
@@ -173,16 +178,10 @@ public class MemberService {
         String key = mid;
 
         try {
-            // 권한이 없는 경우
-            if (!tokenProvider.validateToken(at)) {
-                return false;
-            }
-
-            String getRefreshToken = (String)redisTemplate.opsForValue().get(key);
-
-            // 이미 로그아웃된 사용자
-            if (getRefreshToken == null || getRefreshToken.length() <= 0
-                    || getRefreshToken.equals("") || redisTemplate.opsForValue().get(at) != null) {
+            // 권한이 없거나 이미 로그아웃된 유저라면
+            boolean hasKey = redisTemplate.hasKey(key);
+            if (!tokenProvider.validateToken(at) || !hasKey
+                    || redisTemplate.opsForValue().get(at) != null) {
                 return false;
             }
 
