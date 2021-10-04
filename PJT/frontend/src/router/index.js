@@ -29,9 +29,9 @@ const routes = [
     component: () => import('@/views/Mypage.vue'),
   },
   {
-    path: '/keyword',
-    name: 'Keyword',
-    component: () => import('@/views/Keyword.vue'),
+    path: '/analysis',
+    name: 'Analysis',
+    component: () => import('@/views/Analysis.vue'),
   },
 ];
 
