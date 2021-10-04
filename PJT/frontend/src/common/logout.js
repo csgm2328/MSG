@@ -1,12 +1,8 @@
 import { logoutUser } from '@/api/auth.js';
 
 function logout(id) {
-  const userData = {
-    mid: id,
-  };
-
   logoutUser(
-    userData,
+    id,
     (res) => {
       if (res.data) {
         const CLIENT_ID = process.env.VUE_APP_KAKAO_ID;

@@ -1,5 +1,7 @@
 package com.web.c101.config.security;
 
+import com.web.c101.error.CustomException;
+import com.web.c101.error.ErrorCode;
 import com.web.c101.jwt.TokenDto;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -32,11 +34,11 @@ public class TokenProvider {
 
     // 30분
     // 1000ms * 60s * 30m
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30L;
 
     // 7일
     // 1000ms * 60s * 60m * 24h * 7
-    private  static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;
+    private  static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7L;
 
     private final Key key;
 
@@ -67,7 +69,6 @@ public class TokenProvider {
 
         // Access Token 생성
         Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
-//        Date accessTokenExpiresIn = new Date(now + (1000 * 15));
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
@@ -102,7 +103,7 @@ public class TokenProvider {
         Claims claims = parerClaims(accessToken);
 
         if (claims.get(AUTHORITIES_KEY) == null) {
-            throw new RuntimeException("권한 정보가 없는 토큰입니다.");
+            throw new CustomException(ErrorCode.VALIDATION_FAIL);
         }
 
         // 클레임에서 권한 정보 가져오기

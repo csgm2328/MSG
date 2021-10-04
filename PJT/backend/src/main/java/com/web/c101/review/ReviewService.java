@@ -25,7 +25,6 @@ public class ReviewService {
     ImgFileDao imgFileDao;
 
     public boolean addReview(ReviewDto req) {
-
         Review review = ReviewAdaptor.dtoToEntity(req);
 
         try{

@@ -71,7 +71,7 @@
           취소
         </button>
         <button class="bg-green-400 hover:bg-green-500 text-white font-bold mr-4 py-2 px-4 rounded">
-          <label for="chooseFile">파일 업로드</label>
+          <label for="chooseFile">이미지 업로드</label>
           <input
             v-on:change="fileChange($event.target.files)"
             type="file"
@@ -98,6 +98,7 @@ import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 import StarRating from 'vue-star-rating';
 import { addReview } from '@/api/review.js';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Review',
@@ -117,6 +118,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(['id']),
     currentText() {
       return this.rating;
     },
@@ -190,7 +192,7 @@ export default {
     registReview() {
       let formData = new FormData();
 
-      formData.append('mid', 123123);
+      formData.append('mid', this.id);
       formData.append('dong', '상무대점');
       formData.append('store', '맥도날드');
       formData.append('star_score', this.rating);
