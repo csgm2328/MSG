@@ -58,12 +58,12 @@ public class JwtFilter extends OncePerRequestFilter {
         // 정상 토큰이면 해당 토큰으로 Authentication 을 가져와서 SecurityContext에 저장
         // 로그아웃 처리가 안된 토큰인지도 검사
         if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)
-                && redisTemplate.opsForValue().get(jwt) == null) {
+                && !redisTemplate.hasKey(jwt)) {
             Authentication authentication = tokenProvider.getAuthentication(jwt);
             String key = authentication.getName();
 
             // 로그인을 한 유저일 경우에만
-            if (redisTemplate.opsForValue().get(key) != null) {
+            if (redisTemplate.hasKey(key)) {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 //                System.out.println("request cookie token : " + jwt);
             }
