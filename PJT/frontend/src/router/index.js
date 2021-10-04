@@ -34,9 +34,9 @@ const routes = [
     meta: { auth: true },
   },
   {
-    path: '/keyword',
-    name: 'Keyword',
-    component: () => import('@/views/Keyword.vue'),
+    path: '/analysis',
+    name: 'Analysis',
+    component: () => import('@/views/Analysis.vue'),
   },
 ];
 
