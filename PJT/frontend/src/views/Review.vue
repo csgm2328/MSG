@@ -176,8 +176,6 @@ export default {
         num = index;
       });
 
-      console.log(this.files);
-
       if (num > -1) {
         this.uploadImgCnt = this.uploadImgCnt + num + 1;
       }

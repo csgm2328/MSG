@@ -28,7 +28,7 @@ function getReview(mid, callback, errorCallback) {
 }
 
 function delReview(rid, callback, errorCallback) {
-  console.log("rid : ", rid)
+    
   axiosService
       .put('/review/deleteReview/' + rid)
       .then((res) => {
