@@ -25,6 +25,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 @AllArgsConstructor
 public class MemberService {
+
     private AuthenticationManagerBuilder authenticationManagerBuilder;
     private PasswordEncoder passwordEncoder;
     private TokenProvider tokenProvider;
@@ -67,6 +68,7 @@ public class MemberService {
         try {
             memberDao.save(member);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new CustomException(ErrorCode.MEMBER_FAIL);
         }
 
@@ -93,7 +95,9 @@ public class MemberService {
             tokenDto = tokenProvider.generateTokenDto(authentication);
             key = authentication.getName();
             redisTemplate.opsForValue().set(key, tokenDto.getRefreshToken());
-            redisTemplate.expire(key, tokenDto.getRefreshTokenExpiresIn(), TimeUnit.SECONDS);
+
+            long diffTime = tokenDto.getRefreshTokenExpiresIn() - (new Date()).getTime();
+            redisTemplate.expire(key, diffTime, TimeUnit.SECONDS);
         } catch (Exception e) {
             e.printStackTrace();
             throw new CustomException(ErrorCode.ERROR);
@@ -115,24 +119,24 @@ public class MemberService {
      * @return
      */
     @Transactional
-    public Optional<TokenDto> reissuance(String at) {
+    public Optional<TokenDto> reissuance(String mid, String at) {
         // Access Token에서 Member ID 가져오기
         Authentication authentication = tokenProvider.getAuthentication(at);
 
-        // 저장소에서 Member nickname을 기반으로 Refresh token 값을 가져온다.
-        String key = authentication.getName();
+        String key = mid;
         TokenDto tokenDto = null;
         try {
+            // 저장소에서 Member mid를 기반으로 Refresh token 값을 가져온다.
             String getRefreshToken = (String)redisTemplate.opsForValue().get(key);
 
             if (getRefreshToken == null || getRefreshToken.equals("")
                     || getRefreshToken.length() == 0 || redisTemplate.opsForValue().get(at) != null) {
-                throw new CustomException(ErrorCode.MEMBER_LOGOUT);
+                return Optional.empty();
             }
 
             // Refresh Token 검증
             if (!tokenProvider.validateToken(getRefreshToken)) {
-                throw new CustomException(ErrorCode.VALIDATION_FAIL);
+                return Optional.empty();
             }
 
             // 새로운 토큰 생성
@@ -140,8 +144,11 @@ public class MemberService {
 
             // 저장소 정보 업데이트
             redisTemplate.opsForValue().set(key, tokenDto.getRefreshToken());
-            redisTemplate.expire(key, tokenDto.getRefreshTokenExpiresIn(), TimeUnit.SECONDS);
+            long diffTime = tokenDto.getRefreshTokenExpiresIn() - (new Date()).getTime();
+
+            redisTemplate.expire(key, diffTime, TimeUnit.SECONDS);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new CustomException(ErrorCode.ERROR);
         }
 
@@ -179,10 +186,12 @@ public class MemberService {
                 return false;
             }
 
-            Date expireDate = tokenProvider.getExpireDate(at);
+            redisTemplate.delete(mid);
             redisTemplate.opsForValue().set(at, "logout");
             // 액세스 토큰의 남은 시간만큼 logout blacklist에 추가하여 로그아웃이 된 토큰임을 저장한다.
-            redisTemplate.expire(at, expireDate.getTime() - System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+            long diffTime = tokenProvider.getExpireDate(at).getTime() - (new Date()).getTime();
+
+            redisTemplate.expire(at, diffTime, TimeUnit.SECONDS);
         } catch (Exception e) {
             e.printStackTrace();
             throw new CustomException(ErrorCode.ERROR);

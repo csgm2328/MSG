@@ -25,6 +25,9 @@ import java.util.Optional;
 public class MemberController {
     private MemberService memberService;
     private KakaoService kakaoService;
+    
+    private static final String ACCESS_TOKEN = "accessToken";
+    private static final String SUCCESS = "success";
 
     @PostMapping("/signup")
     public ResponseEntity<BasicResponse> signUp(@RequestBody SignUpRequest signUpRequest) {
@@ -46,7 +49,7 @@ public class MemberController {
         LoginResponse loginResponse;
 
         result.status = true;
-        result.data = "success";
+        result.data = SUCCESS;
 
         String mid = kakaoService.kakaoLogin(authorizeCode);
 
@@ -76,18 +79,8 @@ public class MemberController {
         // 로그인을 처리하기 위한 토큰을 발급받고 쿠키에 담는다.
         Optional<TokenDto> tokenDtoOptional = memberService.login(mid, member.getNickname());
 
-        if (tokenDtoOptional.isPresent()) {
-            TokenDto token = tokenDtoOptional.get();
-
-            Cookie cookie = new Cookie("accessToken", token.getAccessToken());
-            // 일주일로 설정
-            cookie.setMaxAge(60 * 60 * 24 * 7);
-            cookie.setSecure(true);
-            cookie.setHttpOnly(true);
-            cookie.setPath("/");
-
-            response.addCookie(cookie);
-        }
+        Cookie cookie = getAuthCookie(tokenDtoOptional);
+        response.addCookie(cookie);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -97,7 +90,7 @@ public class MemberController {
         BasicResponse result = new BasicResponse();
 
         result.status = true;
-        result.data = "success";
+        result.data = SUCCESS;
         result.object = memberService.nicknameCheck(nickname);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -108,19 +101,9 @@ public class MemberController {
         log.info("logout >>> " + mid);
         BasicResponse result = new BasicResponse();
 
-        String accessToken = "";
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("accessToken".equals(cookie.getName())) {
-                    accessToken = cookie.getValue();
-                    break;
-                }
-            }
-        }
+        String accessToken = getAccessTokenToCookie(request);
+        Cookie cookie = new Cookie(ACCESS_TOKEN, "");
 
-        Cookie cookie = new Cookie("accessToken", "");
-        // 일주일로 설정
         cookie.setMaxAge(0);
         cookie.setSecure(true);
         cookie.setHttpOnly(true);
@@ -128,10 +111,71 @@ public class MemberController {
 
         response.addCookie(cookie);
 
-        result.data = "success";
+        result.data = SUCCESS;
         result.status = true;
         result.object = memberService.logout(mid, accessToken);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/reissu")
+    @ApiOperation(value = "토큰 재발급")
+    public Object reissuance(@RequestBody String mid, HttpServletRequest request, HttpServletResponse response) {
+        BasicResponse result = new BasicResponse();
+
+        result.status = true;
+        result.data = SUCCESS;
+
+        String accessToken = getAccessTokenToCookie(request);
+        
+        if (accessToken == null || "".equals(accessToken) || accessToken.length() <= 0) {
+            result.object = false;
+        }
+        else {
+            result.object = true;
+
+            Optional<TokenDto> getToken = memberService.reissuance(mid, accessToken);
+
+            Cookie cookie = getAuthCookie(getToken);
+            response.addCookie(cookie);
+        }
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+    
+    private String getAccessTokenToCookie(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (ACCESS_TOKEN.equals(cookie.getName())) {
+                    return cookie.getValue();
+                }
+            }
+        }
+        
+        return "";
+    }
+    
+    private Cookie getAuthCookie(Optional<TokenDto> optionalTokenDto) {
+        Cookie cookie = null;
+        
+        if (optionalTokenDto.isPresent()) {
+            TokenDto tokenDto = optionalTokenDto.get();
+
+            cookie = new Cookie(ACCESS_TOKEN, tokenDto.getAccessToken());
+            // 일주일로 설정
+            cookie.setMaxAge(60 * 60 * 24 * 7);
+        }
+        else {
+            cookie = new Cookie(ACCESS_TOKEN, "logout");
+            // 일주일로 설정
+            cookie.setMaxAge(0);
+        }
+
+        cookie.setSecure(true);
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        
+        return cookie;
     }
 }

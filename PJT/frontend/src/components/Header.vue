@@ -5,7 +5,7 @@
       class="fixed top-0 left-0 right-0 bottom-0 w-full h-screen z-30 bg-gray-700 opacity-75"
     ></div>
     <div class="flex items-center ml-5">
-      <router-link to="/" class="h-full flex items-center">
+      <router-link to="/Main" class="h-full flex items-center">
         <img class="h-3/5 w-auto flex items-center" src="@/images/logo.png" />
         <span class="font-extrabold text-3xl items-center flex">MSG</span>
       </router-link>
@@ -76,7 +76,7 @@
     </div>
     <div class="md:flex hidden" v-if="isLogin">
       <router-link
-        to="/"
+        to="/mypage"
         tag="div"
         class="
           h-full
@@ -155,6 +155,9 @@ export default {
       } else if (this.type === 'logout' && this.code) {
         this.logoutAfterProcessing();
         this.set_type('');
+        this.$router.replace({
+          path: '/main',
+        });
       }
     },
     goLogout() {

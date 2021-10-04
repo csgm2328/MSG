@@ -62,7 +62,8 @@
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 import StarRating from 'vue-star-rating';
-import { getReview, delReview } from '@/api/review.js';
+import { mapGetters } from 'vuex';
+import { getReviewInMypage, delReview } from '@/api/review.js';
 
 export default {
   name: 'Mypage',
@@ -78,22 +79,16 @@ export default {
     };
   },
   created() {
-    getReview(
-      123123,
+    getReviewInMypage(
+      this.id,
       (res) => {
         console.log(res);
 
         res.object.forEach((element) => {
           this.reviewList.push(element);
         });
-        //   res.object.forEach((element) => {
-        //     this.reviewList.push(element)
-        //   });
 
         console.log(this.reviewList);
-
-        //   this.reviewList = arr
-        // this.reviewList = JSON.parse(res.object)
       },
       () => {
         alert('리뷰를 가져오는데에 실패했습니다.');
@@ -114,6 +109,9 @@ export default {
         }
       );
     },
+  },
+  computed: {
+    ...mapGetters(['id']),
   },
 };
 </script>
