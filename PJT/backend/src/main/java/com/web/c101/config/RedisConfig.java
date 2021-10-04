@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
@@ -13,7 +14,10 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -21,6 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.stream.Stream;
 
 @Slf4j
 @Configuration
@@ -69,10 +74,10 @@ public class RedisConfig {
         ClassPathResource resource = new ClassPathResource("SentiWord_Dict.txt");
 
         try {
-            Path path = Paths.get(resource.getURI());
-            List<String> content = Files.readAllLines(path);
-            for(String line: content){
-                StringTokenizer st = new StringTokenizer(line, "\t");
+            InputStream inputStream = resource.getInputStream();
+            BufferedReader input = new BufferedReader(new InputStreamReader(inputStream));
+            while(input.ready()){
+                StringTokenizer st = new StringTokenizer(input.readLine(), "\t");
                 map.put(st.nextToken(), Integer.parseInt(st.nextToken()));
             }
         } catch (IOException e) {
