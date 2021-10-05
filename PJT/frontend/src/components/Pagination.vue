@@ -4,9 +4,9 @@
       <li
         class="px-3 py-2 border-r-2 h-full w-full"
         :class="{
-          'opacity-50': curPage === 1,
-          'hover:bg-indigo-200': curPage !== 1,
-          ' cursor-pointer': curPage !== 1,
+          'opacity-50': curPage === 1 || totalPageCnt === 0 || totalOffset === 0,
+          'hover:bg-indigo-200': curPage !== 1 && totalPageCnt !== 0 && totalOffset !== 0,
+          ' cursor-pointer': curPage !== 1 && totalPageCnt !== 0 && totalOffset !== 0,
         }"
         @click="goFirst"
       >
@@ -46,9 +46,10 @@
       <li
         class="px-3 py-2 h-full w-full"
         :class="{
-          'opacity-50': curPage === totalPageCnt,
-          'hover:bg-indigo-200': curPage !== totalPageCnt,
-          ' cursor-pointer': curPage !== totalPageCnt,
+          'opacity-50': curPage === totalPageCnt || totalPageCnt === 0 || totalOffset === 0,
+          'hover:bg-indigo-200':
+            curPage !== totalPageCnt && totalPageCnt !== 0 && totalOffset !== 0,
+          ' cursor-pointer': curPage !== totalPageCnt && totalPageCnt !== 0 && totalOffset !== 0,
         }"
         @click="goLast"
       >
@@ -86,11 +87,15 @@ export default {
       this.totalPageCnt = Math.ceil(this.totalReviewCnt / this.pageSize);
       this.totalOffset = Math.ceil(this.totalPageCnt / this.pageCnt);
 
-      if (this.offset >= this.totalOffset - 1) {
+      if (
+        this.offset >= this.totalOffset - 1 ||
+        this.totalPageCnt === 0 ||
+        this.totalOffset === 0
+      ) {
         this.isLast = true;
       }
 
-      if (this.offset < 1) {
+      if (this.offset < 1 || this.totalPageCnt === 0 || this.totalOffset === 0) {
         this.isFirst = true;
       }
 
@@ -105,7 +110,6 @@ export default {
     },
     prevOffset() {
       if (this.offset < 1) {
-        this.isFirst = true;
         return;
       }
 
@@ -115,7 +119,6 @@ export default {
     },
     nextOffset() {
       if (this.offset >= this.totalOffset - 1) {
-        this.isLast = true;
         return;
       }
 
@@ -124,11 +127,17 @@ export default {
       this.getPageList();
     },
     goFirst() {
+      if (this.totalPageCnt === 0 || this.totalOffset === 0) {
+        return;
+      }
       this.sendPage(1);
       this.set_offset(0);
       this.getPageList();
     },
     goLast() {
+      if (this.totalPageCnt === 0 || this.totalOffset === 0) {
+        return;
+      }
       this.sendPage(this.totalPageCnt);
       this.set_offset(this.totalOffset - 1);
       this.getPageList();
