@@ -41,9 +41,8 @@ public class realtimeController {
         Map<String, SortOrder> sort = new HashMap<>();
         sort.put("cnt", SortOrder.DESC);
 
+        List<Map<String, Object>> list = elasticUtil.ESSearch("realtime", query, sort, 2);
 
-        List<Map<String, Object>> list = elasticUtil.ESSearch("realtime", query, sort);
-        System.out.println(list);
         if(list.size() > 0){
             result.status = true;
             result.data = "success";

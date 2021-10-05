@@ -12,7 +12,7 @@ public class NewStoreService {
     public boolean addNewStore(NewStoreDto newStoreDto){
 
         NewStore newStore = NewStoreAdaptor.dtoToEntity(newStoreDto);
-
+        System.out.println(newStore);
         try{
             newStoreDao.save(newStore);
         } catch (Exception e){

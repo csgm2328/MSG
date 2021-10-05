@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,10 +24,10 @@ public class NewStoreController {
 
     NewStoreService newStoreService;
 
-    @GetMapping("/newStore/add")
+    @PostMapping("/newStore/add")
     @ApiOperation(value = "맛집 추가")
     public Object addNewStore(@RequestBody NewStoreDto newStoreDto){
-
+        System.out.println(newStoreDto);
         log.info("맛집 추가");
         final BasicResponse result = new BasicResponse();
         result.status = false;

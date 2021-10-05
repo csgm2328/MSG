@@ -38,6 +38,11 @@ const routes = [
     name: 'Analysis',
     component: () => import('@/views/Analysis.vue'),
   },
+  {
+    path: '/addstore',
+    name: 'AddStore',
+    component: () => import('@/views/AddStore.vue'),
+  },
 ];
 
 const router = createRouter({
