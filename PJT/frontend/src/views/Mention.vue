@@ -36,7 +36,7 @@
       >
         <div flex items-stretch>
           <div class="py-4 text-center text-lg text-gray-400">NAVER 데이터랩 오늘의 언급량</div>
-          <div class="py-4 text-center text-3xl font-bold text-red-400">{{ today }} 회</div>
+          <div class="py-4 text-center text-3xl font-bold text-red-400">{{ today }}</div>
         </div>
       </div>
       <div
@@ -172,9 +172,9 @@ export default {
       keyword: "",
       types: { "area-spline": areaSpline() },
       mention: [],
-      today: "",
-      period: "",
-      maxdate: "",
+      today: "API 호출 중..",
+      period: "API 호출 중..",
+      maxdate: "API 호출 중..",
       preMonth: "",
     };
   },
@@ -223,7 +223,7 @@ export default {
   },
   methods: {
     setValue(obj) {
-      this.today = obj[29];
+      this.today = obj[29] + " 회";
       var max = 0;
       var maxidx = -1;
       for (let i = 0; i < obj.length; i++) {
