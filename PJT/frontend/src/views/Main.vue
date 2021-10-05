@@ -50,9 +50,9 @@
                 hover:bg-indigo-200
                 cursor-pointer
               "
-              @click="go"
+              @click="go(0)"
             >
-              {{ this.top10[0] }}
+              {{ this.show[0] }}
             </div>
             <div
               class="
@@ -65,9 +65,9 @@
                 hover:bg-indigo-200
                 cursor-pointer
               "
-              @click="go"
+              @click="go(1)"
             >
-              {{ this.top10[1] }}
+              {{ this.show[1] }}
             </div>
             <div
               class="
@@ -80,9 +80,9 @@
                 hover:bg-indigo-200
                 cursor-pointer
               "
-              @click="go"
+              @click="go(2)"
             >
-              {{ this.top10[2] }}
+              {{ this.show[2] }}
             </div>
             <div
               class="
@@ -95,9 +95,9 @@
                 hover:bg-indigo-200
                 cursor-pointer
               "
-              @click="go"
+              @click="go(3)"
             >
-              {{ this.top10[3] }}
+              {{ this.show[3] }}
             </div>
             <div
               class="
@@ -110,9 +110,9 @@
                 hover:bg-indigo-200
                 cursor-pointer
               "
-              @click="go"
+              @click="go(4)"
             >
-              {{ this.top10[4] }}
+              {{ this.show[4] }}
             </div>
           </div>
           <div>
@@ -127,9 +127,9 @@
                 hover:bg-indigo-200
                 cursor-pointer
               "
-              @click="go"
+              @click="go(5)"
             >
-              {{ this.top10[5] }}
+              {{ this.show[5] }}
             </div>
             <div
               class="
@@ -142,9 +142,9 @@
                 hover:bg-indigo-200
                 cursor-pointer
               "
-              @click="go"
+              @click="go(6)"
             >
-              {{ this.top10[6] }}
+              {{ this.show[6] }}
             </div>
             <div
               class="
@@ -157,9 +157,9 @@
                 hover:bg-indigo-200
                 cursor-pointer
               "
-              @click="go"
+              @click="go(7)"
             >
-              {{ this.top10[7] }}
+              {{ this.show[7] }}
             </div>
             <div
               class="
@@ -172,9 +172,9 @@
                 hover:bg-indigo-200
                 cursor-pointer
               "
-              @click="go"
+              @click="go(8)"
             >
-              {{ this.top10[8] }}
+              {{ this.show[8] }}
             </div>
             <div
               class="
@@ -187,9 +187,9 @@
                 hover:bg-indigo-200
                 cursor-pointer
               "
-              @click="go"
+              @click="go(9)"
             >
-              {{ this.top10[9] }}
+              {{ this.show[9] }}
             </div>
           </div>
         </div>
@@ -206,7 +206,6 @@ import SearchBar from "@/components/SearchBar.vue";
 import { getRealtime } from "@/api/realtime.js";
 import { updateSearch } from "@/api/search.js";
 import { mapActions } from "vuex";
-import { getSearchWithDong } from "@/api/search.js";
 
 export default {
   name: "MAIN",
@@ -218,20 +217,25 @@ export default {
   data() {
     return {
       top10: [],
+      show: [],
     };
   },
   created() {
     getRealtime(
       (res) => {
         this.top10 = [];
+        this.show = [];
+
         var len = res.object.length;
 
         // 얻어온 데이터는 top10 배열에 push하고 나머지는 -로 채운다.
         for (var i = 0; i < 10; i++) {
           if (i < len) {
-            this.top10.push(res.object[i].name + " " + res.object[i].area);
+            this.top10.push(res.object[i]);
+            this.show.push(res.object[i].name + " " + res.object[i].area);
           } else {
             this.top10.push("-");
+            this.show.push("-");
           }
         }
       },
@@ -242,17 +246,25 @@ export default {
   },
   methods: {
     ...mapActions(["set_store"]),
-    go(e) {
-      var eSplit = e.target.innerText.split(" ");
+    go(idx) {
 
+      if(this.show[idx] == '-') {
+        return;
+      }
+      
       var item = {
-        name: eSplit[0],
-        area: eSplit[1],
-      };
+        name: this.top10[idx].name,
+        area: this.top10[idx].area,
+        address: this.top10[idx].address,
+        latitude: this.top10[idx].latitude,
+        longitude: this.top10[idx].longitude
+      }
 
       updateSearch(
         item,
         () => {
+          this.set_store(this.top10[idx]);
+          this.$router.push("Analysis");
         },
         () => {
           alert("언급량 최신화 실패!");
@@ -260,21 +272,6 @@ export default {
         }
       );
 
-      getSearchWithDong(
-        item,
-        (res) => {
-          var store = res.object;
-          this.set_store(store);
-          // if(document.location.href == "http://localhost:8081/Analysis") {
-          //   this.$router.go(0);
-          // } else {
-            this.$router.push("Analysis");
-          // }
-        },
-        () => {
-          alert("오류가 발생했습니다.");
-        }
-      );
     },
   },
 };
