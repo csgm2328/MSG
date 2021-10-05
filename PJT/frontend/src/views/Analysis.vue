@@ -76,6 +76,7 @@
       </div>
       <keyword v-if="btn[0]" />
       <compare v-if="btn[1]" />
+      <info v-if="btn[3]" />
     </div>
     <Footer />
   </div>
@@ -86,6 +87,7 @@ import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 import Keyword from "@/views/Keyword.vue";
 import Compare from "@/views/Compare.vue";
+import Info from "@/views/Info.vue";
 
 export default {
   name: "Analysis",
@@ -94,6 +96,7 @@ export default {
     Footer,
     Keyword,
     Compare,
+    Info
   },
   data() {
     return {
