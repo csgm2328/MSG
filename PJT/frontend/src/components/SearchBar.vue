@@ -10,6 +10,7 @@
         rounded
         focus-within:ring-1 focus-within:ring-indigo-600
       "
+      v-click-away="onClickOutside"
     >
       <button
         class="
@@ -42,7 +43,6 @@
           focus:outline-none
         "
         @focus="focusSearchBar = true"
-        
         placeholder="맛집을 입력해주세요."
       />
     </div>
@@ -93,6 +93,9 @@ export default {
           }
         );
       }
+    },
+    onClickOutside() {
+      this.focusSearchBar = false;
     },
     pressDown() {
       if (this.searchList.length == 0) {
