@@ -15,6 +15,7 @@ import javax.persistence.*;
 public class NewStore {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long sid;
 
     private String name;

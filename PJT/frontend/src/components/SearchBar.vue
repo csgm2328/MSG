@@ -42,13 +42,14 @@
           focus:outline-none
         "
         @focus="focusSearchBar = true"
-        @blur="focusSearchBar = false"
+        
         placeholder="맛집을 입력해주세요."
       />
     </div>
     <Search-List
       :list="searchList"
       :idx="idx"
+      :store="search"
       v-if="focusSearchBar"
       ref="refSearchList"
       class="h-auto w-full sm:w-full md:6/12 mx-auto relative"

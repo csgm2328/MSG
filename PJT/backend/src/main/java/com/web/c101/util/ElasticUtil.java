@@ -120,20 +120,30 @@ public class ElasticUtil {
             SearchResponse response = client.search(searchRequest, RequestOptions.DEFAULT);
             SearchHits searchHits = response.getHits();
 
-            System.out.println(searchHits.getHits()[0].getId());
-            id = searchHits.getHits()[0].getId();
-            int cnt = (int) searchHits.getHits()[0].getSourceAsMap().get("cnt");
+            if(searchHits.getHits().length == 0) {
+                System.out.println("처음 검색된 맛집");
 
-            // 해당 id의 doc를 update
-            Map<String, Object> body = new HashMap<>();
-            body.put("name", name);
-            body.put("area", area);
-            body.put("cnt", cnt + 1);
-            UpdateRequest updateRequest = new UpdateRequest("realtime", id).doc(body);
+                Map<String, Object> body = new HashMap<>();
+                body.put("name", name);
+                body.put("area", area);
+                body.put("cnt", 1);
 
-            client.update(updateRequest, RequestOptions.DEFAULT);
+                insert("realtime", body);
+            } else {
 
+                System.out.println(searchHits.getHits()[0].getId());
+                id = searchHits.getHits()[0].getId();
+                int cnt = (int) searchHits.getHits()[0].getSourceAsMap().get("cnt");
 
+                // 해당 id의 doc를 update
+                Map<String, Object> body = new HashMap<>();
+                body.put("name", name);
+                body.put("area", area);
+                body.put("cnt", cnt + 1);
+                UpdateRequest updateRequest = new UpdateRequest("realtime", id).doc(body);
+
+                client.update(updateRequest, RequestOptions.DEFAULT);
+            }
         } catch (IOException e) {
             return false;
         }
