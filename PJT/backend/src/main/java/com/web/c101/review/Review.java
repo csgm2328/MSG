@@ -1,6 +1,7 @@
 package com.web.c101.review;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -26,10 +27,10 @@ public class Review {
     private String content;
 
     // 별점
-    private float star_score;
+    private float starScore;
 
     @Column(insertable = false)
-    private LocalDateTime reg_date;
+    private LocalDateTime regDate;
 
     // 리뷰 삭제 확인 변수
     private boolean flag;
