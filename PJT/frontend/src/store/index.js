@@ -4,6 +4,7 @@ import user from './user';
 import header from './header';
 import loading from './loading';
 import store from './store';
+import analysis from './analysis';
 
 export default new Vuex.Store({
   modules: {
@@ -11,10 +12,11 @@ export default new Vuex.Store({
     header,
     loading,
     store,
+    analysis,
   },
   plugins: [
     createPersistedState({
-      paths: ['user', 'header', 'loading', 'store'],
+      paths: ['user', 'header', 'loading', 'store', 'analysis'],
     }),
   ],
 });
