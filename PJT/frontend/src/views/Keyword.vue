@@ -34,19 +34,50 @@
         리뷰
       </div>
     </div>
+    <div class="flex w-full h-80 mt-2 mb-2 justify-start">
+      <div
+        class="
+          w-3/5
+          h-80
+          bg-white
+          border-2 border-blue-500 border-opacity-50
+          rounded-lg
+          pt-2
+          mr-2
+          flex
+          justify-center
+        "
+      >
+        파이차트
+      </div>
+      <div
+        class="
+          w-2/5
+          h-80
+          bg-white
+          border-2 border-blue-500 border-opacity-50
+          rounded-lg
+          pt-2
+          flex
+          justify-center
+        "
+      >
+        키워드 순위표
+      </div>
+    </div>
     <!-- 차트 -->
-    <chart />
+    <!-- <chart /> -->
   </div>
 </template>
 
 <script>
-import Chart from "@/components/Analysis/Chart.vue";
+// import Chart from "@/components/Analysis/Chart.vue";
 import Wordcloud from "@/components/Analysis/Wordcloud.vue";
 
 export default {
   name: "Keyword",
   components:{
-    Chart,
+    // Chart,
     Wordcloud
   },
 };
