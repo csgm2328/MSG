@@ -11,11 +11,15 @@ import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
-import org.elasticsearch.client.*;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestClientBuilder;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.Strings;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
@@ -64,20 +68,29 @@ public class ElasticUtil {
         return credentialsProvider;
     }
 
+    // type
+    // 1 : 검색어 포함 맛집
+    // 2 : 검색어에 해당하는 맛집
     public List<Map<String,Object>> ESSearch(
             String index
             , Map<String,Object> query
             , Map<String,SortOrder> sort
+            , int type
     ){
 
         // search에 index 조건 걸기
         SearchRequest searchRequest = new SearchRequest(index);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-
+        BoolQueryBuilder query2 = new BoolQueryBuilder();
         // query에 있는 셋 쿼리 조건으로 걸기
         for(String key : query.keySet()) {
-            searchSourceBuilder.query(QueryBuilders.boolQuery().must(QueryBuilders.wildcardQuery(key, "*" + query.get(key) + "*")));
+            if(type == 1) {
+                searchSourceBuilder.query(QueryBuilders.boolQuery().must(QueryBuilders.wildcardQuery(key, "*" + query.get(key) + "*")));
+            } else {
+                query2.must(QueryBuilders.termQuery(key, query.get(key)));
+            }
         }
+        if(type == 2) searchSourceBuilder.query(query2);
 
         // sort 에 있는 셋을 정렬 조건으로 걸기
         for(String key : sort.keySet()) {
