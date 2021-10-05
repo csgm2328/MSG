@@ -89,6 +89,8 @@
         </div>
       </div>
     </div>
+    <!-- 차트 -->
+    <!-- <chart /> -->
   </div>
 </template>
 
@@ -97,7 +99,7 @@
 import Wordcloud from "@/components/Analysis/Wordcloud.vue";
 import Chart from "../components/Analysis/Chart.vue";
 import { getKeywords } from "@/api/search.js";
-import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Keyword",
   components: {
@@ -156,6 +158,9 @@ export default {
       this.get_words(res.object);
     });
   },
+  computed:{
+    ...mapGetters(['store'])
+  }
 };
 </script>
 

@@ -49,27 +49,54 @@
 </template>
 
 <script>
-import { updateSearch } from '@/api/search.js';
+import { updateSearch } from "@/api/search.js";
+import { mapActions, mapGetters } from "vuex";
+import { getSearchWithDong } from "@/api/search.js";
 
 export default {
-  name: 'SearchList',
-  props: ['list', 'idx'],
+  name: "SearchList",
+  props: ["list", "idx", "searchType"],
   methods: {
+    ...mapActions(["set_store", "set_vsStore"]),
     go(item) {
-      console.log("item",item);
+      
       updateSearch(
         item,
         () => {
-          console.log("언급량 최신화 성공!")
         },
         () => {
-          alert('언급량 최신화 실패!');
+          alert("언급량 최신화 실패!");
+          return;
+        }
+      );
+      
+      getSearchWithDong(
+        {
+          name : item.name,
+          area : item.area
+        },
+        () => {
+          
+          if(this.searchType == 1){
+            this.set_store(item);
+            this.$router.push("Analysis");
+          } else if(this.searchType == 2){
+            this.set_vsStore(item);
+          }
+          
+          
+        },
+        () => {
+          alert("오류가 발생했습니다.");
         }
       );
     },
-    addStore(){
+    addStore() {
       this.$router.push("AddStore");
-    }
+    },
+  },
+  computed:{
+    ...mapGetters(['store','vsStore'])
   },
   watch: {
     idx: function (val, oldVal) {
@@ -78,9 +105,9 @@ export default {
       }
 
       if (oldVal >= 0) {
-        this.$refs[oldVal].classList.remove('bg-gray-300');
+        this.$refs[oldVal].classList.remove("bg-gray-300");
       }
-      this.$refs[val].classList.add('bg-gray-300');
+      this.$refs[val].classList.add("bg-gray-300");
     },
   },
 };

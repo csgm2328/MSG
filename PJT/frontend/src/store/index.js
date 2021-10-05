@@ -3,18 +3,20 @@ import createPersistedState from "vuex-persistedstate";
 import user from "./user";
 import header from "./header";
 import loading from "./loading";
-import keyword from "./keyword";
+import store from './store';
+import analysis from './analysis';
 
 export default new Vuex.Store({
   modules: {
     user,
     header,
     loading,
-    keyword,
+    store,
+    analysis,
   },
   plugins: [
     createPersistedState({
-      paths: ["user", "header", "loading", "keyword"],
+      paths: ['user', 'header', 'loading', 'store', 'analysis'],
     }),
   ],
 });
