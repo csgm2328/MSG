@@ -34,6 +34,7 @@ import Footer from "@/components/Footer.vue";
 import Keyword from "@/views/Keyword.vue";
 import Compare from "@/views/Compare.vue";
 import Mention from "@/views/Mention.vue";
+import { mapActions } from "vuex";
 
 export default {
   name: "Analysis",
@@ -51,14 +52,16 @@ export default {
   },
   created() {
     this.btn = [true, false, false, false];
+    this.set_analysisType(1);
   },
   methods: {
+    ...mapActions(['set_analysisType']),
     key() {
       if (!this.btn[0]) {
         for (var i = 0; i < 4; i++) {
           this.btn[i] = false;
         }
-
+        this.set_analysisType(1);
         this.btn[0] = true;
       }
     },
@@ -67,7 +70,7 @@ export default {
         for (var i = 0; i < 4; i++) {
           this.btn[i] = false;
         }
-
+        this.set_analysisType(2);
         this.btn[1] = true;
       }
     },
@@ -76,7 +79,7 @@ export default {
         for (var i = 0; i < 4; i++) {
           this.btn[i] = false;
         }
-
+        this.set_analysisType(3);
         this.btn[2] = true;
       }
     },
@@ -85,7 +88,7 @@ export default {
         for (var i = 0; i < 4; i++) {
           this.btn[i] = false;
         }
-
+        this.set_analysisType(4);
         this.btn[3] = true;
       }
     },
