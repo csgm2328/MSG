@@ -102,8 +102,6 @@ public class ElasticUtil {
 
     public boolean updateCnt(String index, String name, String area) {
 
-        System.out.println(name + " : " + area);
-
         // 해당 doc의 version 가져오기
         String id;
         // search에 index 조건 걸기
@@ -121,7 +119,6 @@ public class ElasticUtil {
             SearchHits searchHits = response.getHits();
 
             if(searchHits.getHits().length == 0) {
-                System.out.println("처음 검색된 맛집");
 
                 Map<String, Object> body = new HashMap<>();
                 body.put("name", name);
@@ -131,7 +128,6 @@ public class ElasticUtil {
                 insert("realtime", body);
             } else {
 
-                System.out.println(searchHits.getHits()[0].getId());
                 id = searchHits.getHits()[0].getId();
                 int cnt = (int) searchHits.getHits()[0].getSourceAsMap().get("cnt");
 
