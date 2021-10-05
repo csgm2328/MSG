@@ -50,7 +50,7 @@ public class SearchController {
 
         List<Map<String, Object>> list = elastic.ESSearch("msg", query, sort);
 
-        if(!list.isEmpty(){
+        if(!list.isEmpty()){
             result.status = true;
             result.data = "success";
         }
