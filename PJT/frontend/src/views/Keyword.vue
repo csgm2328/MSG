@@ -63,6 +63,7 @@
         "
       >
         키워드 순위표
+        {{store}}
       </div>
     </div>
     <!-- 차트 -->
@@ -73,6 +74,7 @@
 <script>
 // import Chart from "@/components/Analysis/Chart.vue";
 import Wordcloud from "@/components/Analysis/Wordcloud.vue";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Keyword",
@@ -80,6 +82,9 @@ export default {
     // Chart,
     Wordcloud
   },
+  computed:{
+    ...mapGetters(['store'])
+  }
 };
 </script>
 

@@ -70,14 +70,24 @@ export default {
           return;
         }
       );
-
+      var data = {
+          name : item.name,
+          area : item.area
+        };
+        console.log("data",data);
       getSearchWithDong(
-        item,
+        {
+          name : item.name,
+          area : item.area
+        },
         (res) => {
-          this.set_store(res.object);
-          console.log(res.object)
-          console.log("vuex", this.store);
-          this.$router.push("Analysis");
+          console.log("here ", res.object)
+          this.set_store(item);
+          // if(document.location.href == "http://localhost:8081/Analysis") {
+          //   this.$router.go(0);
+          // } else {
+            this.$router.push("Analysis");
+          // }
         },
         () => {
           alert("오류가 발생했습니다.");

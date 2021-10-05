@@ -16,7 +16,7 @@ function getSearch(search, callback, errorCallback) {
 function getSearchWithDong(data, callback, errorCallback) {
     
     axiosService
-        .get('/search', { params: data })
+        .get('/search/spec', { params: data })
         .then((res) => {
             callback(res.data);
         })
