@@ -13,6 +13,19 @@ function getSearch(search, callback, errorCallback) {
 
 }
 
+function getSearchWithDong(data, callback, errorCallback) {
+    
+    axiosService
+        .get('/search', { params: data })
+        .then((res) => {
+            callback(res.data);
+        })
+        .catch((err) => {
+            errorCallback(err);
+        });
+
+}
+
 function updateSearch(search, callback, errorCallback) {
     axiosService
         .get('/search/updateCnt', { params: { name: search.name, area: search.area } })
@@ -24,4 +37,4 @@ function updateSearch(search, callback, errorCallback) {
         });
 }
 
-export { getSearch, updateSearch };
+export { getSearch, getSearchWithDong, updateSearch };
