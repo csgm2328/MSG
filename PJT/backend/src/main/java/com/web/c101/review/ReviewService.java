@@ -5,7 +5,9 @@ import com.web.c101.error.ErrorCode;
 import com.web.c101.file.ImgFile;
 import com.web.c101.file.ImgFileDao;
 import com.web.c101.member.MemberDao;
+import com.web.c101.review.response.ReviewResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -65,6 +67,19 @@ public class ReviewService {
 
     }
 
+    public long getReviewCnt(Long mid) {
+        long cnt = 0l;
+
+        try {
+            cnt = reviewdao.countReviewByMidAndFlagIsTrue(mid);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new CustomException(ErrorCode.ERROR);
+        }
+
+        return cnt;
+    }
+
     public boolean delReview(Long rid) {
 
         Optional<Review> reviewOpt = reviewdao.findReviewByRid(rid);
@@ -82,6 +97,19 @@ public class ReviewService {
             return false;
         }
 
+    }
+
+    public Slice<Review> getReviewListByPages(Pageable pageable) {
+        Slice<Review> reviewPage = null;
+
+        try {
+            reviewPage = reviewdao.findAllByFlag(true, pageable);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new CustomException(ErrorCode.ERROR);
+        }
+
+        return reviewPage;
     }
 
     public List<ReviewDto> getUserReview(Long mid) {
