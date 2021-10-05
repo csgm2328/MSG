@@ -3,7 +3,7 @@
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
-import crawl_sender
+#import crawl_sender
 import pandas as pd 
 import collections
 from datetime import timedelta
@@ -35,10 +35,6 @@ from dotenv import load_dotenv
 
 ##############################NAVER API######################################
 
-sched = BackgroundScheduler(daemon=True)
-sched.add_job(crawling,'cron', minutes=5)
-#sched.add_job(crawling,'cron', day_of_week='thu',hour='0')
-sched.start()
 
 load_dotenv()
 
@@ -254,6 +250,9 @@ def API(lists):
 ##############################NAVER API######################################
 
 ##############################koBERT######################################
+
+import os
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 import torch
 from torch import nn
@@ -506,6 +505,11 @@ def crawling():
 
 ##############################Sender ########################################
 
+
+sched = BackgroundScheduler(daemon=True)
+sched.add_job(crawling,'cron', minutes=5)
+#sched.add_job(crawling,'cron', day_of_week='thu',hour='0')
+sched.start()
 
 import flask
 from flask import request, jsonify
