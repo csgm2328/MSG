@@ -162,6 +162,7 @@
 import bb, { areaSpline } from "billboard.js";
 import { getMention } from "@/api/mention.js";
 import "billboard.js/dist/theme/insight.css";
+import { mapGetters } from "vuex";
 
 export default {
   name: "MentionAmount",
@@ -177,8 +178,11 @@ export default {
       preMonth: "",
     };
   },
+  computed: {
+    ...mapGetters(["store"]),
+  },
   mounted() {
-    (this.keyword = "롯데리아"),
+    (this.keyword = this.store.name),
       (this.mention = getMention(
         this.keyword,
         (res) => {
@@ -201,6 +205,7 @@ export default {
             axis: {
               x: {
                 type: "category",
+                label: "NAVER SEARCH AD API",
                 tick: {
                   rotate: -75,
                   multiline: false,

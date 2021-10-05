@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[4]:
+# In[ ]:
 
 
 #pip install powernad
@@ -9,7 +9,7 @@
 #pip install python-dotenv
 
 
-# In[2]:
+# In[87]:
 
 
 import pandas as pd 
@@ -39,28 +39,24 @@ from tqdm.notebook import tqdm
 import os
 
 
-# In[5]:
+# In[ ]:
 
 from dotenv import load_dotenv
-
 load_dotenv()
+# In[89]:
 
-# get_ipython().run_line_magic('load_ext', 'dotenv')
-# get_ipython().run_line_magic('dotenv', '')
-
-# In[6]:
 
 BASE_URL = 'https://api.naver.com'
 
-CUSTOMER_ID = os.environ.get("NAVER_AD_CUSTOMER_ID")
-API_KEY = os.environ.get("NAVER_AD_API_KEY")
-SECRET_KEY = os.environ.get("NAVER_AD_SECRET_KEY")
+CUSTOMER_ID = os.getenv("NAVER_AD_CUSTOMER_ID")
+API_KEY = os.getenv("NAVER_AD_API_KEY")
+SECRET_KEY = os.getenv("NAVER_AD_SECRET_KEY")
 
-client_id = os.environ.get("NAVER_CLIENT_ID")
-client_secret = os.environ.get("NAVER_CLIENT_SECRET")
+client_id = os.getenv("NAVER_CLIENT_ID")
+client_secret = os.getenv("NAVER_CLIENT_SECRET")
 
 
-# In[3]:
+# In[122]:
 
 
 toda = datetime.now()
@@ -76,7 +72,13 @@ yesterday = str(yesterday)
 today = str(datetime.now().date())
 
 
-# In[4]:
+# In[98]:
+
+
+print(time_month + " ~ " +yesterday)
+
+
+# In[91]:
 
 
 dt_index = pd.date_range(start=time_month, end = yesterday)
@@ -84,7 +86,7 @@ dt_index = pd.date_range(start=time_month, end = yesterday)
 date = pd.DataFrame(data=dt_index, columns=['날짜'])
 
 
-# In[7]:
+# In[123]:
 
 
 rel = RelKwdStat(BASE_URL, API_KEY, SECRET_KEY, CUSTOMER_ID)
@@ -107,20 +109,18 @@ dictionary_yester={}
 dictionary_now={}
 
 
-# In[20]:
+# In[ ]:
 
 
 # lis = ['검색하고자 하는 키워드 입력']
-lis = ['맥도날드']
 
 
-# In[43]:
+# In[125]:
 
 
-def API(list):
+def API(keys):
     error=[]
-    for i in tqdm(lis):  
-        sleep(1)
+    for i in tqdm(keys):  
         try:
             if type(search_keyword(i)) !=str : 
                 searchword = i.replace(" ","")
@@ -279,7 +279,7 @@ def API(list):
         except :
             print('API 에러',i)
             error.append(i)
-
+    return dictionary_now
 #     sleep(3)
 
 
@@ -297,34 +297,19 @@ app.config['JSON_AS_ASCII'] =False #한글이 깨져서 아스키코드가 아�
 def home():
     return "<h1>My first Flask!</h1>"
 
-@app.route('/searchAPI')
+@app.route('/mentionAPI')
 def search():
     param = request.args.get('keyword')
     print("검색량 키워드: " + param)
-    lis = []
-    lis.append(param)
-    API(lis)
-    temp = dictionary_now[param][param].tolist()
+    keys = []
+    keys.append(param)
+    df = API(keys)
+#     print(df)
+    temp = df[param][param].tolist()
     temp = [int(temp) for temp in temp]
+    print(temp)
     return jsonify(temp)
 
-app.run(debug=False)
-
-
-# In[ ]:
-
-
-import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
-
-datelist = dictionary_now['맥도날드']['날짜'][:-1]
-
-x=datelist.tolist()
-y=temp
-
-
-plt.figure(figsize=(10,7))
-plt.plot(x,y,marker="o")
-plt.xticks(rotation=45)
-plt.show()
+if __name__ == '__main__':
+    app.run(debug=False,host='0.0.0.0',port=5000)
 
