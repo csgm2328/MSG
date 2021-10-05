@@ -1,11 +1,13 @@
 package com.web.c101.keyword;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.*;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class KeywordService {
@@ -16,8 +18,9 @@ public class KeywordService {
     private final Map<String, Integer> sentimentDict;
 
     public List<AnalyzedKeyword> getKeywords(String store) {
+        log.info("keyword 가져오기");
         List<KeywordDto> keywords = keywordRepository.getKeywords(store);
-
+        log.info("keywords " + keywords.size() + " 개 발견");
         if (keywords.size() > 20) {
             keywords = reduceKeywords(keywords);
             keywordRepository.replaceKeywords(store, keywords);
@@ -25,7 +28,7 @@ public class KeywordService {
 
         List<AnalyzedKeyword> analyzedKeywords = new ArrayList<>();
         for (KeywordDto keyword : keywords) {
-            String sentiment = "없음";
+            String sentiment = "중립";
             if (sentimentDict.containsKey(keyword.getWord())) {
                 sentiment = sentimentToString(sentimentDict.get(keyword.getWord()));
             }
@@ -38,7 +41,7 @@ public class KeywordService {
     private String sentimentToString(int senti) {
         String sentiment = "";
         if (senti == 2)
-            sentiment = "매우 긍정";
+            sentiment = "매우긍정";
         else if (senti == 1)
             sentiment = "긍정";
         else if (senti == 0)
@@ -46,7 +49,7 @@ public class KeywordService {
         else if (senti == -1)
             sentiment = "부정";
         else if (senti == -2)
-            sentiment = "매우 부정";
+            sentiment = "매우부정";
 
         return sentiment;
     }

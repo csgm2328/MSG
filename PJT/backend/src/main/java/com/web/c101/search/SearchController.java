@@ -2,12 +2,14 @@ package com.web.c101.search;
 
 
 import com.web.c101.BasicResponse;
+import com.web.c101.keyword.KeywordService;
 import com.web.c101.util.ElasticUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.search.sort.SortOrder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +31,9 @@ public class SearchController {
 
     ElasticUtil elastic = ElasticUtil.getInstance();
 
+    @Autowired
+    private KeywordService keywordService;
+
     @GetMapping("/search")
     @ApiOperation(value = "검색하기")
     public Object searchStore(@RequestParam String name) {
@@ -45,7 +50,7 @@ public class SearchController {
 
         List<Map<String, Object>> list = elastic.ESSearch("msg", query, sort);
 
-        if(list.size() > 0){
+        if(!list.isEmpty(){
             result.status = true;
             result.data = "success";
         }
@@ -71,6 +76,19 @@ public class SearchController {
 
         return result;
 
+    }
+
+    @GetMapping("/search/keyword")
+    @ApiOperation(value = "키워드 분석")
+    public Object getKeywords(@RequestParam String name, @RequestParam String area){
+        String store = area + "_" + name.replace(" ", "_");
+        log.info("키워드 분석 :" + store);
+        BasicResponse result = new BasicResponse();
+        result.status = true;
+        result.data = "success";
+        result.object = keywordService.getKeywords(store);
+
+        return result;
     }
 
 }
