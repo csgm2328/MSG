@@ -8,10 +8,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.search.sort.SortOrder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +40,7 @@ public class SearchController {
 
         Map<String, SortOrder> sort = new HashMap<>();
 
-        List<Map<String, Object>> list = elastic.ESSearch("msg", query, sort, 1);
+        List<Map<String, Object>> list = elastic.ESSearch("msg", query, sort);
 
         if(list.size() > 0){
             result.status = true;
@@ -55,44 +52,15 @@ public class SearchController {
 
     }
 
-    @GetMapping("/search/spec")
-    @ApiOperation(value = "이름과 동으로 검색하기")
-    public Object searchStoreWithDong(@RequestParam String name, @RequestParam String area) {
-
-        log.info("이름과 동으로 검색하기");
-
-        BasicResponse result = new BasicResponse();
-        result.status = false;
-        result.data = "fail";
-
-        Map<String, Object> query = new HashMap<>();
-        query.put("name", name);
-        query.put("area", area);
-
-        Map<String, SortOrder> sort = new HashMap<>();
-
-        List<Map<String, Object>> list = elastic.ESSearch("msg", query, sort, 2);
-
-        if(list.size() > 0){
-            result.status = true;
-            result.data = "success";
-        }
-        result.object = list;
-
-        return result;
-
-    }
-
-    @GetMapping("/search/updateCnt")
+    @PutMapping("/search/updateCnt")
     @ApiOperation(value = "언급량 최신화")
-    public Object updateCnt(@RequestParam String name, @RequestParam String area) {
-
+    public Object updateCnt(@RequestBody StoreDto storeDto) {
         log.info("검색어 언급량 최신화");
         BasicResponse result = new BasicResponse();
         result.status = false;
         result.data = "fail";
 
-        if(elastic.updateCnt("realtime", name, area)){
+        if(elastic.updateCnt("realtime", storeDto)){
             result.status = true;
             result.data = "success";
         }
