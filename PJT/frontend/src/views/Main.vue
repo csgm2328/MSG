@@ -17,7 +17,7 @@
         <img class="h-full w-auto" src="@/images/banner.png" />
       </div>
       <div class="h-16 w-full mb-10">
-        <Search-bar class="w-8/12 sm:w-7/12 md:6/12 mx-auto z-10" />
+        <Search-bar class="w-8/12 sm:w-7/12 md:6/12 mx-auto z-10" :searchType="1"/>
       </div>
       <div
         class="
@@ -253,7 +253,6 @@ export default {
       updateSearch(
         item,
         () => {
-          // console.log("언급량 최신화 성공!")
         },
         () => {
           alert("언급량 최신화 실패!");
