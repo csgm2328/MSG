@@ -266,7 +266,11 @@ export default {
         (res) => {
           var store = res.object;
           this.set_store(store);
-          this.$router.push("Analysis");
+          // if(document.location.href == "http://localhost:8081/Analysis") {
+          //   this.$router.go(0);
+          // } else {
+            this.$router.push("Analysis");
+          // }
         },
         () => {
           alert("오류가 발생했습니다.");
