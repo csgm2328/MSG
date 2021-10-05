@@ -23,6 +23,7 @@
       <keyword v-if="btn[0]" />
       <compare v-if="btn[1]" />
       <mention v-if="btn[2]" />
+      <info v-if="btn[3]" />
     </div>
     <Footer />
   </div>
@@ -33,6 +34,7 @@ import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 import Keyword from "@/views/Keyword.vue";
 import Compare from "@/views/Compare.vue";
+import Info from "@/views/Info.vue";
 import Mention from "@/views/Mention.vue";
 
 export default {
@@ -42,6 +44,7 @@ export default {
     Footer,
     Keyword,
     Compare,
+    Info,
     Mention,
   },
   data() {
