@@ -24,6 +24,28 @@
       </div>
     </div>
   </div>
+  <div v-else class="rounded-lg z-10 relative">
+    <div
+      class="
+        absolute
+        bg-blue-50
+        w-full
+        h-auto
+        flex flex-col
+        border-2
+        top-px
+        rounded
+        border-msg-content
+      "
+    >
+      <div
+        class="flex pl-10 py-2 h-full w-full hover:bg-gray-300 cursor-pointer"
+        @click="addStore"
+      >
+        추가하기
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -34,16 +56,20 @@ export default {
   props: ['list', 'idx'],
   methods: {
     go(item) {
+      console.log("item",item);
       updateSearch(
         item,
         () => {
-          // console.log("언급량 최신화 성공!")
+          console.log("언급량 최신화 성공!")
         },
         () => {
           alert('언급량 최신화 실패!');
         }
       );
     },
+    addStore(){
+      this.$router.push("AddStore");
+    }
   },
   watch: {
     idx: function (val, oldVal) {
