@@ -55,39 +55,36 @@ import { getSearchWithDong } from "@/api/search.js";
 
 export default {
   name: "SearchList",
-  props: ["list", "idx"],
+  props: ["list", "idx", "searchType"],
   methods: {
-    ...mapActions(["set_store"]),
+    ...mapActions(["set_store", "set_vsStore"]),
     go(item) {
-      console.log("item", item);
+      
       updateSearch(
         item,
         () => {
-          console.log("언급량 최신화 성공!");
         },
         () => {
           alert("언급량 최신화 실패!");
           return;
         }
       );
-      var data = {
-          name : item.name,
-          area : item.area
-        };
-        console.log("data",data);
+      
       getSearchWithDong(
         {
           name : item.name,
           area : item.area
         },
-        (res) => {
-          console.log("here ", res.object)
-          this.set_store(item);
-          // if(document.location.href == "http://localhost:8081/Analysis") {
-          //   this.$router.go(0);
-          // } else {
+        () => {
+          
+          if(this.searchType == 1){
+            this.set_store(item);
             this.$router.push("Analysis");
-          // }
+          } else if(this.searchType == 2){
+            this.set_vsStore(item);
+          }
+          
+          
         },
         () => {
           alert("오류가 발생했습니다.");
@@ -98,8 +95,8 @@ export default {
       this.$router.push("AddStore");
     },
   },
-  computed: {
-    ...mapGetters(['store']),
+  computed:{
+    ...mapGetters(['store','vsStore'])
   },
   watch: {
     idx: function (val, oldVal) {

@@ -50,6 +50,7 @@
       :list="searchList"
       :idx="idx"
       :store="search"
+      :searchType="searchType"
       v-if="focusSearchBar"
       ref="refSearchList"
       class="h-auto w-full sm:w-full md:6/12 mx-auto relative"
@@ -63,6 +64,7 @@ import SearchList from './SearchList.vue';
 
 export default {
   name: 'SearchBar',
+  props: ['searchType'],
   components: {
     SearchList,
   },
