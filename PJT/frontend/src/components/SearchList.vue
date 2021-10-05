@@ -51,7 +51,6 @@
 <script>
 import { updateSearch } from "@/api/search.js";
 import { mapActions, mapGetters } from "vuex";
-import { getSearchWithDong } from "@/api/search.js";
 
 export default {
   name: "SearchList",
@@ -59,10 +58,16 @@ export default {
   methods: {
     ...mapActions(["set_store", "set_vsStore"]),
     go(item) {
-      
+      console.log("item", item)
       updateSearch(
         item,
         () => {
+          if(this.searchType == 1){
+            this.set_store(item);
+            this.$router.push("Analysis");
+          } else if(this.searchType == 2){
+            this.set_vsStore(item);
+          }
         },
         () => {
           alert("언급량 최신화 실패!");
@@ -70,26 +75,6 @@ export default {
         }
       );
       
-      getSearchWithDong(
-        {
-          name : item.name,
-          area : item.area
-        },
-        () => {
-          
-          if(this.searchType == 1){
-            this.set_store(item);
-            this.$router.push("Analysis");
-          } else if(this.searchType == 2){
-            this.set_vsStore(item);
-          }
-          
-          
-        },
-        () => {
-          alert("오류가 발생했습니다.");
-        }
-      );
     },
     addStore() {
       this.$router.push("AddStore");

@@ -1,5 +1,6 @@
 package com.web.c101.util;
 
+import com.web.c101.search.StoreDto;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -75,7 +76,6 @@ public class ElasticUtil {
             String index
             , Map<String,Object> query
             , Map<String,SortOrder> sort
-            , int type
     ){
 
         // search에 index 조건 걸기
@@ -84,13 +84,8 @@ public class ElasticUtil {
         BoolQueryBuilder query2 = new BoolQueryBuilder();
         // query에 있는 셋 쿼리 조건으로 걸기
         for(String key : query.keySet()) {
-            if(type == 1) {
                 searchSourceBuilder.query(QueryBuilders.boolQuery().must(QueryBuilders.wildcardQuery(key, "*" + query.get(key) + "*")));
-            } else {
-                query2.must(QueryBuilders.termQuery(key, query.get(key)));
-            }
         }
-        if(type == 2) searchSourceBuilder.query(query2);
 
         // sort 에 있는 셋을 정렬 조건으로 걸기
         for(String key : sort.keySet()) {
@@ -113,7 +108,7 @@ public class ElasticUtil {
 
     }
 
-    public boolean updateCnt(String index, String name, String area) {
+    public boolean updateCnt(String index, StoreDto storeDto) {
 
         // 해당 doc의 version 가져오기
         String id;
@@ -122,8 +117,8 @@ public class ElasticUtil {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
         // query에 있는 셋 쿼리 조건으로 걸기
-        searchSourceBuilder.query(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("name", name)));
-        searchSourceBuilder.query(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("area", area)));
+        searchSourceBuilder.query(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("name", storeDto.getName())));
+        searchSourceBuilder.query(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("area", storeDto.getArea())));
 
         searchRequest.source(searchSourceBuilder);
 
@@ -134,8 +129,11 @@ public class ElasticUtil {
             if(searchHits.getHits().length == 0) {
 
                 Map<String, Object> body = new HashMap<>();
-                body.put("name", name);
-                body.put("area", area);
+                body.put("name", storeDto.getName());
+                body.put("area", storeDto.getArea());
+                body.put("address", storeDto.getArea());
+                body.put("latitude", storeDto.getLatitude());
+                body.put("longitude", storeDto.getLongitude());
                 body.put("cnt", 1);
 
                 insert("realtime", body);
@@ -146,8 +144,11 @@ public class ElasticUtil {
 
                 // 해당 id의 doc를 update
                 Map<String, Object> body = new HashMap<>();
-                body.put("name", name);
-                body.put("area", area);
+                body.put("name", storeDto.getName());
+                body.put("area", storeDto.getArea());
+                body.put("address", storeDto.getArea());
+                body.put("latitude", storeDto.getLatitude());
+                body.put("longitude", storeDto.getLongitude());
                 body.put("cnt", cnt + 1);
                 UpdateRequest updateRequest = new UpdateRequest("realtime", id).doc(body);
 
