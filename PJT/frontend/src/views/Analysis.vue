@@ -1,81 +1,28 @@
 <template>
   <div class="flex flex-col h-screen w-auto">
     <Header />
-    <div
-      class="
-        flex flex-col
-        justify-center
-        items-center
-        flex-grow
-        bg-blue-100
-        w-auto
-        pt-10
-        pb-10
-      "
-    >
-      <div class="w-11/12 bg-white
-          border-2 border-blue-500 border-opacity-50
-          rounded-lg mb-6">
-        <button
-          class="
-            bg-white
-            hover:bg-blue-200
-            font-bold
-            py-2
-            px-4
-            rounded
-            mr-2
-          "
-          @click="key"
-        >
+    <div class="flex flex-col justify-center items-center flex-grow bg-blue-100 w-auto pt-10 pb-10">
+      <div class="w-11/12 bg-white border-2 border-blue-500 border-opacity-50 rounded-lg mb-6">
+        <button class="bg-white hover:bg-blue-200 font-bold py-2 px-4 rounded mr-2" @click="key">
           키워드 분석
         </button>
-        <button
-          class="
-            bg-white
-            hover:bg-blue-200
-            font-bold
-            py-2
-            px-4
-            rounded
-            mr-2
-          "
-          @click="comp"
-        >
+        <button class="bg-white hover:bg-blue-200 font-bold py-2 px-4 rounded mr-2" @click="comp">
           비교 분석
         </button>
         <button
-          class="
-            bg-white
-            hover:bg-blue-200
-            font-bold
-            py-2
-            px-4
-            rounded
-            mr-2
-          "
+          class="bg-white hover:bg-blue-200 font-bold py-2 px-4 rounded mr-2"
           @click="mention"
         >
           언급량 분석
         </button>
-        <button
-          class="
-            bg-white
-            hover:bg-blue-200
-            font-bold
-            py-2
-            px-4
-            rounded
-            mr-2
-          "
-          @click="info"
-        >
+        <button class="bg-white hover:bg-blue-200 font-bold py-2 px-4 rounded mr-2" @click="info">
           맛집 정보
         </button>
         <!-- <button>키워드 분석</button> -->
       </div>
       <keyword v-if="btn[0]" />
       <compare v-if="btn[1]" />
+      <mention v-if="btn[2]" />
       <info v-if="btn[3]" />
     </div>
     <Footer />
@@ -88,6 +35,7 @@ import Footer from "@/components/Footer.vue";
 import Keyword from "@/views/Keyword.vue";
 import Compare from "@/views/Compare.vue";
 import Info from "@/views/Info.vue";
+import Mention from "@/views/Mention.vue";
 
 export default {
   name: "Analysis",
@@ -96,7 +44,8 @@ export default {
     Footer,
     Keyword,
     Compare,
-    Info
+    Info,
+    Mention,
   },
   data() {
     return {

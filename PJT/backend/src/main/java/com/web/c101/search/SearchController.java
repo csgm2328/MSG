@@ -43,7 +43,35 @@ public class SearchController {
 
         Map<String, SortOrder> sort = new HashMap<>();
 
-        List<Map<String, Object>> list = elastic.ESSearch("msg", query, sort);
+        List<Map<String, Object>> list = elastic.ESSearch("msg", query, sort, 1);
+
+        if(list.size() > 0){
+            result.status = true;
+            result.data = "success";
+        }
+        result.object = list;
+
+        return result;
+
+    }
+
+    @GetMapping("/search/spec")
+    @ApiOperation(value = "이름과 동으로 검색하기")
+    public Object searchStoreWithDong(@RequestParam String name, @RequestParam String area) {
+
+        log.info("이름과 동으로 검색하기");
+
+        BasicResponse result = new BasicResponse();
+        result.status = false;
+        result.data = "fail";
+
+        Map<String, Object> query = new HashMap<>();
+        query.put("name", name);
+        query.put("area", area);
+
+        Map<String, SortOrder> sort = new HashMap<>();
+
+        List<Map<String, Object>> list = elastic.ESSearch("msg", query, sort, 2);
 
         if(list.size() > 0){
             result.status = true;
