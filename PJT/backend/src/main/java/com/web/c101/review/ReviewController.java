@@ -6,6 +6,9 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,12 +22,13 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @Slf4j
+@RequestMapping("/review")
 public class ReviewController {
 
     ReviewService service;
 
     // 리뷰 작성
-    @PostMapping("/review/addReview")
+    @PostMapping("/addReview")
     @ApiOperation(value = "리뷰등록")
     public Object addReview(ReviewDto req){
         System.out.println(req.getContent());
@@ -43,7 +47,7 @@ public class ReviewController {
     }
 
     // 리뷰 삭제
-    @PutMapping("/review/deleteReview/{rid}")
+    @PutMapping("/deleteReview/{rid}")
     @ApiOperation(value = "리뷰삭제")
     public Object delReview(@PathVariable(name = "rid") Long rid) {
         log.info("리뷰 삭제");
@@ -61,35 +65,77 @@ public class ReviewController {
     }
 
     // 사용자가 작성한 리뷰 목록
-    @GetMapping("/review/userReviewList")
+//    @GetMapping("/review/userReviewList")
+//    @ApiOperation(value = "사용자 리뷰 목록")
+//    public Object getUserReview(@RequestParam Long mid) {
+//
+//        log.info("사용자 작성 리뷰 목록");
+//        final BasicResponse result = new BasicResponse();
+//
+//        List<ReviewDto> list = service.getUserReview(mid);
+//
+//        if(list != null) {
+//
+//            result.status = true;
+//            result.data = "success";
+//            result.object = list;
+//
+//        } else {
+//
+//            result.status = false;
+//            result.data = "fail";
+//
+//        }
+//
+//        return result;
+//    }
+
+    @GetMapping("/userReviewList")
     @ApiOperation(value = "사용자 리뷰 목록")
-    public Object getUserReview(@RequestParam Long mid) {
+    public Object getUserReview(final Pageable pageable) {
+        System.out.println(pageable.toString());
 
         log.info("사용자 작성 리뷰 목록");
         final BasicResponse result = new BasicResponse();
+        result.status = true;
+        result.data = "success";
 
-        List<ReviewDto> list = service.getUserReview(mid);
+        Slice<Review> reviewPages = service.getReviewListByPages(pageable);
 
-        if(list != null) {
-
-            result.status = true;
-            result.data = "success";
-            result.object = list;
-
-        } else {
-
-            result.status = false;
-            result.data = "fail";
-
+        if (reviewPages.isEmpty()) {
+            result.object = false;
+        }
+        else {
+            result.object = reviewPages;
         }
 
         return result;
     }
 
+    @GetMapping("/getReviewCnt")
+    @ApiOperation(value="현재 멤버가 작성한 리뷰의 개수를 반환")
+    public Object getReviewCnt(String mid) {
+        final BasicResponse result = new BasicResponse();
+        result.status = true;
+        result.data = "success";
+
+        long reviewCnt = service.getReviewCnt(Long.parseLong(mid));
+
+        if (reviewCnt == 0) {
+            result.object = false;
+        }
+        else {
+            result.object = reviewCnt;
+        }
+
+        return result;
+    }
+
+
     // 사용자가 작성한 리뷰 목록
     // dong이 ""라면 해당 맛집에 달린 모든 리뷰를 반환한다.
     // dong이 ""이 아니라면 dong에 해당하는 지역의 맛집 리뷰를 반환한다.
-    @GetMapping("/review/storeReviewList")
+    @GetMapping("/storeReviewList")
     @ApiOperation(value = "지역에 따른 맛집 리뷰 목록")
     public Object getStoreReview(@RequestParam String dong, @RequestParam String store) {
 

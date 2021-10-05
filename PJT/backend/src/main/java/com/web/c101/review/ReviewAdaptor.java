@@ -10,8 +10,8 @@ public class ReviewAdaptor {
                 .dong(review.getDong())
                 .store(review.getStore())
                 .content(review.getContent())
-                .star_score(review.getStar_score())
-                .reg_date(review.getReg_date())
+                .star_score(review.getStarScore())
+                .reg_date(review.getRegDate())
                 .flag(review.getFlag())
                 .build();
     }
@@ -22,8 +22,8 @@ public class ReviewAdaptor {
                 .dong(reviewDto.getDong())
                 .store(reviewDto.getStore())
                 .content(reviewDto.getContent())
-                .star_score(reviewDto.getStar_score())
-                .reg_date(LocalDateTime.now())
+                .starScore(reviewDto.getStar_score())
+                .regDate(LocalDateTime.now())
                 .flag(reviewDto.getFlag())
                 .build();
     }

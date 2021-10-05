@@ -1,5 +1,7 @@
 package com.web.c101.review;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -14,5 +16,9 @@ public interface ReviewDao extends JpaRepository<Review, Long> {
     List<Review> findReviewByStore(String store);
 
     List<Review> findReviewByDongAndStore(String dong, String store);
+
+    Slice<Review> findAllByFlag(boolean flag, Pageable pageable);
+
+    long countReviewByMidAndFlagIsTrue(Long mid);
 
 }
