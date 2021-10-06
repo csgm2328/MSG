@@ -73,13 +73,15 @@ export default {
         console.log(this.vsWords[i].sentiment);
         label[this.vsWords[i].sentiment]++;
       }
-      let vsWords_columns = [this.vsStore.name];
-      vsWords_columns.push(label["매우긍정"]);
-      vsWords_columns.push(label["긍정"]);
-      vsWords_columns.push(label["중립"]);
-      vsWords_columns.push(label["부정"]);
-      vsWords_columns.push(label["매우부정"]);
-
+      let vsWords_columns = [];
+      if (this.vsStore) {
+        vsWords_columns.push(this.vsStore.name);
+        vsWords_columns.push(label["매우긍정"]);
+        vsWords_columns.push(label["긍정"]);
+        vsWords_columns.push(label["중립"]);
+        vsWords_columns.push(label["부정"]);
+        vsWords_columns.push(label["매우부정"]);
+      }
       columns.push(word_columns);
       columns.push(vsWords_columns);
 

@@ -11,6 +11,7 @@
       mr-2
       flex
       justify-center
+      overflow-hidden
     "
     ref="inbox"
   >

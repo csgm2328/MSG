@@ -21,7 +21,9 @@
             >
           </div>
           <div v-else>
-            <span style="color: red; font-weight: 1000">부정적인 평가 {{ wordPercent }}%</span>
+            <span style="color: red; font-weight: 1000"
+              >부정적인 평가 {{ wordPercent }}%</span
+            >
           </div>
           <div style="font-size: small; opacity: 0.8; color: black">
             {{ store.name }} 의 대표 긍,부정
@@ -40,10 +42,82 @@
           rounded-lg
           pt-2
           flex
+          flex-col
+          items-center
           justify-center
         "
       >
-        리뷰
+      <div
+          class="
+            flex
+            justify-center
+            items-center
+            w-36
+            p-2
+            font-bold
+            ml-10
+            mb-2
+            bg-gray-100
+            rounded
+          "
+        >
+          구글 리뷰
+        </div>
+        <div
+          class="w-full overflow-auto flex justify-center mb-2"
+          v-if="words.length != 0"
+        >
+          <div class="w-11/12 text-center">
+            <div class="flex w-full bg-gray-200">
+              <div class="w-2/3 px-6 py-2 font-bold text-xs text-gray-500">
+                구글 리뷰
+              </div>
+              <div class="w-1/3 px-6 py-2 font-bold text-xs text-gray-500">
+                긍, 부정
+              </div>
+            </div>
+            <div v-for="(review, index) in Greview" v-bind:key="index">
+              <div class="flex" v-if="review.google_review_txt.length > 0">
+                <div
+                  class="w-2/3 text-sm text-gray-500 border-t-2 border-gray-200"
+                >
+                  {{ review.google_review_txt }}
+                </div>
+                <div
+                  v-if="review.google_emotion == 2"
+                  class="
+                    w-1/3
+                    h-full
+                    text-sm text-blue-500
+                    border-t-2 border-gray-200
+                    inline-block
+                    align-middle
+                  "
+                >
+                  긍정
+                </div>
+                <div
+                  v-else-if="review.google_emotion == 1"
+                  class="w-1/3 text-sm text-gray-500 border-t-2 border-gray-200"
+                >
+                  중립
+                </div>
+                <div
+                  v-else
+                  class="
+                    w-1/3
+                    text-sm text-red-500
+                    border-t-2 border-gray-200
+                    inline-block
+                    align-middle
+                  "
+                >
+                  부정
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="flex w-full h-80 mt-2 mb-2 justify-start">
@@ -60,7 +134,21 @@
           justify-center
         "
       >
-        <div>키워드 감성 통계</div>
+        <div
+          class="
+            flex
+            justify-center
+            items-center
+            w-36
+            p-2
+            font-bold
+            ml-10
+            bg-gray-100
+            rounded
+          "
+        >
+          키워드 감성 통계
+        </div>
         <chart v-bind:words="words" />
       </div>
       <div
@@ -71,25 +159,92 @@
           border-2 border-blue-500 border-opacity-50
           rounded-lg
           pt-2
-          flex
+          flex flex-col
           justify-center
+          items-center
         "
       >
-        <div class="overflow-auto" v-if="words.length != 0">
-          <table class="w-32 md:w-48 lg:w-60 table-fixed">
-            <thead>
-              <tr style="border-bottom: darkgrey solid 1px; border-top: black solid 1px">
-                <th class="w-3/6" style="text-align: center; boarder-bottom">단어</th>
-                <th class="w-1/6" style="text-align: center">수</th>
-                <th class="w-2/6" style="text-align: center">긍.부정</th>
-              </tr>
-            </thead>
-            <tr v-for="(word, index) in words" v-bind:key="index">
-              <td style="text-align: center">{{ word.keyword }}</td>
-              <td style="text-align: center">{{ word.count }}</td>
-              <td style="text-align: center">{{ word.sentiment }}</td>
-            </tr>
-          </table>
+        <div
+          class="
+            flex
+            justify-center
+            items-center
+            w-36
+            p-2
+            font-bold
+            ml-10
+            mb-2
+            bg-gray-100
+            rounded
+          "
+        >
+          키워드 순위
+        </div>
+        <div class="w-full overflow-auto flex justify-center mb-2" v-if="words.length != 0">
+          <div class="w-11/12 table-fixed text-center">
+            <div class="flex w-full bg-gray-200">
+              <div class="w-2/12 px-6 py-2 font-bold text-xs text-gray-500">
+                순위
+              </div>
+              <div class="w-5/12 px-6 py-2 font-bold text-xs text-gray-500">
+                키워드
+              </div>
+              <div class="w-2/12 px-6 py-2 font-bold text-xs text-gray-500">
+                언급 수
+              </div>
+              <div class="w-3/12 px-6 py-2 font-bold text-xs text-gray-500">
+                긍, 부정
+              </div>
+            </div>
+            <div class="flex w-full" v-for="(word, index) in words" v-bind:key="index">
+              <div
+                class="w-2/12 text-sm text-gray-500 border-t-2 border-gray-200"
+              >
+                {{ index }}
+              </div>
+              <div
+                class="w-5/12 text-sm text-gray-500 border-t-2 border-gray-200"
+              >
+                {{ word.keyword }}
+              </div>
+              <div
+                class="w-2/12 text-sm text-gray-500 border-t-2 border-gray-200"
+              >
+                {{ word.count }}
+              </div>
+              <div
+                v-if="word.sentiment == '매우긍정'"
+                class="w-3/12 text-sm text-blue-500 border-t-2 border-gray-200"
+              >
+                {{ word.sentiment }}
+              </div>
+              <div
+                v-if="word.sentiment == '긍정'"
+                class="w-3/12 text-sm text-blue-300 border-t-2 border-gray-200"
+              >
+                {{ word.sentiment }}
+              </div>
+              <div
+                v-if="word.sentiment == '중립'"
+                class="w-3/12 text-sm text-gray-500 border-t-2 border-gray-200"
+              >
+                {{ word.sentiment }}
+              </div>
+              <div
+                v-if="word.sentiment == '부정'"
+                class="w-3/12 text-sm text-red-300 border-t-2 border-gray-200"
+              >
+                {{ word.sentiment }}
+              </div>
+              
+              <div
+                v-if="word.sentiment == '매우부정'"
+                class="w-3/12 text-sm text-red-500 border-t-2 border-gray-200"
+              >
+                {{ word.sentiment }}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -102,6 +257,7 @@
 // import Chart from "@/components/Analysis/Chart.vue";
 import Wordcloud from "@/components/Analysis/Wordcloud.vue";
 import Chart from "../components/Analysis/Chart.vue";
+import { getGoogleReview } from "@/api/review.js";
 import { getKeywords } from "@/api/search.js";
 import { mapGetters, mapActions } from "vuex";
 export default {
@@ -117,6 +273,7 @@ export default {
       waitForWords: true,
       isPos: true,
       wordPercent: 0,
+      Greview: [],
     };
   },
   computed: {
@@ -130,10 +287,16 @@ export default {
       let total = 0;
       for (let i = 0; i < this.words.length; i++) {
         total += this.words[i].count;
-        if (this.words[i].sentiment == "긍정" || this.words[i].sentiment == "매우긍정") {
+        if (
+          this.words[i].sentiment == "긍정" ||
+          this.words[i].sentiment == "매우긍정"
+        ) {
           pos += this.words[i].count;
           continue;
-        } else if (this.words[i].sentiment == "부정" || this.words[i].sentiment == "매우부정") {
+        } else if (
+          this.words[i].sentiment == "부정" ||
+          this.words[i].sentiment == "매우부정"
+        ) {
           neg += this.words[i].count;
           continue;
         }
@@ -157,6 +320,16 @@ export default {
       this.countPosNeg();
       this.set_words(res.object);
     });
+
+    getGoogleReview(
+      this.store.area + this.store.name,
+      (res) => {
+        this.Greview = res.object;
+      },
+      () => {
+        alert("구글 리뷰 가져오기 실패");
+      }
+    );
   },
 };
 </script>

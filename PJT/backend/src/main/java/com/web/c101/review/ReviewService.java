@@ -5,9 +5,9 @@ import com.web.c101.error.ErrorCode;
 import com.web.c101.file.ImgFile;
 import com.web.c101.file.ImgFileDao;
 import com.web.c101.member.MemberDao;
-import com.web.c101.review.response.ReviewResponse;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -48,7 +48,7 @@ public class ReviewService {
                     UUID uuid = UUID.randomUUID();
 
                     fileName = uuid.toString()+"_"+multipartFile.getOriginalFilename();
-                    multipartFile.transferTo(new File(path+"\\"+fileName));
+                    multipartFile.transferTo(new File(path+"//"+fileName));
 
                     ImgFile file = new ImgFile();//이미지 파일 세팅
                     file.setFile_name(fileName);
