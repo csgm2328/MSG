@@ -61,4 +61,15 @@ async function getReviewCnt(userData, callback, errorCallback) {
     });
 }
 
-export { addReview, getReview, delReview, getReviewInMypage, getReviewCnt };
+async function getReviewImg(userData, callback, errorCallback) {
+  await axiosServiceWithAuth
+    .get(`/file/getImgName?rid=${userData}`)
+    .then((res) => {
+      callback(res.data);
+    })
+    .catch((err) => {
+      errorCallback(err);
+    });
+}
+
+export { addReview, getReview, delReview, getReviewInMypage, getReviewCnt, getReviewImg };
