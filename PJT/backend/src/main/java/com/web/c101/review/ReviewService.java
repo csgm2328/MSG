@@ -32,7 +32,7 @@ public class ReviewService {
         try{
             reviewdao.save(review);
 
-            String path = "//home//ubuntu//upload";
+            String path = "C:\\upload";
             File Folder = new File(path);
             if(!Folder.exists()) Folder.mkdir();
 

@@ -15,11 +15,13 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: () => import('@/views/Login.vue'),
+    meta: { limit: true },
   },
   {
     path: '/signup',
     name: 'Signup',
     component: () => import('@/views/Signup.vue'),
+    meta: { limit: true },
   },
   {
     path: '/review',
@@ -52,6 +54,14 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  if (to.meta.limit) {
+    if (store.getters.isLogin && store.getters.type !== 'login') {
+      alert('이미 로그인한 회원입니다.');
+      next('Main');
+      return;
+    }
+  }
+
   if (to.meta.auth) {
     if (!store.getters.isLogin) {
       alert('로그인이 필요한 서비스입니다.');
