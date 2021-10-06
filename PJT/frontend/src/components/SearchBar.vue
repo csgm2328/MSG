@@ -13,14 +13,7 @@
       v-click-away="onClickOutside"
     >
       <button
-        class="
-          h-full
-          w-12
-          border-r-2
-          rounded-tl-lg rounded-bl-lg
-          border-msg-content
-          hover:bg-gray-300
-        "
+        class="h-12 w-12 border-r-2 rounded-tl rounded-bl border-msg-content hover:bg-gray-300"
       >
         <i class="fas fa-search text-2xl" />
       </button>
