@@ -9,6 +9,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@fawmi/vue-google-maps": "^0.9.3",
     "@googlemaps/js-api-loader": "^1.12.4",
     "@tailwindcss/postcss7-compat": "^2.0.2",
     "@toast-ui/editor": "^3.1.0",

@@ -61,6 +61,18 @@ async function getReviewCnt(userData, callback, errorCallback) {
     });
 }
 
+
+async function getReviewStore(param, callback, errorCallback) {
+  await axiosServiceWithAuth
+    .get(`/review/storeReviewList?dong=${param.dong}&store=${param.storeName}`)
+    .then((res) => {
+      callback(res.data);
+    })
+    .catch((err) => {
+      errorCallback(err);
+    });
+}
+
 async function getReviewImg(userData, callback, errorCallback) {
   await axiosServiceWithAuth
     .get(`/file/getImgName?rid=${userData}`)
@@ -72,4 +84,4 @@ async function getReviewImg(userData, callback, errorCallback) {
     });
 }
 
-export { addReview, getReview, delReview, getReviewInMypage, getReviewCnt, getReviewImg };
+export { addReview, getReview, delReview, getReviewInMypage, getReviewCnt, getReviewImg, getReviewStore};
