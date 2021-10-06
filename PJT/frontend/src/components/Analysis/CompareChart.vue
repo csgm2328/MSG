@@ -58,7 +58,6 @@ export default {
       let columns = [];
       let label = { 매우긍정: 0, 긍정: 0, 중립: 0, 부정: 0, 매우부정: 0 };
       for (let i = 0; i < this.words.length; i++) {
-        console.log(this.words[i].sentiment);
         label[this.words[i].sentiment]++;
       }
       let word_columns = [this.store.name];
@@ -70,7 +69,6 @@ export default {
 
       label = { 매우긍정: 0, 긍정: 0, 중립: 0, 부정: 0, 매우부정: 0 };
       for (let i = 0; i < this.vsWords.length; i++) {
-        console.log(this.vsWords[i].sentiment);
         label[this.vsWords[i].sentiment]++;
       }
       let vsWords_columns = [];
@@ -85,7 +83,7 @@ export default {
       columns.push(word_columns);
       columns.push(vsWords_columns);
 
-      console.log(columns);
+      // console.log(columns);
       return columns;
     },
   },

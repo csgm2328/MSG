@@ -24,7 +24,7 @@ export default {
   },
   watch: {
     words: function () {
-      console.log(this.words);
+      // console.log(this.words);
       this.genChart();
     },
   },
@@ -45,7 +45,7 @@ export default {
       let label = { 매우긍정: 0, 긍정: 0, 중립: 0, 부정: 0, 매우부정: 0 };
 
       for (let i = 0; i < this.words.length; i++) {
-        console.log(this.words[i].sentiment);
+        // console.log(this.words[i].sentiment);
         label[this.words[i].sentiment]++;
       }
 
@@ -56,7 +56,7 @@ export default {
       columns.push(["부정", label["부정"]]);
       columns.push(["매우부정", label["매우부정"]]);
 
-      console.log(columns);
+      // console.log(columns);
       return columns;
     },
   },
