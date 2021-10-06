@@ -3,19 +3,32 @@
     <Header />
     <div class="flex flex-col justify-center items-center flex-grow bg-blue-100 w-auto pt-10 pb-10">
       <div class="w-11/12 bg-white border-2 border-blue-500 border-opacity-50 rounded-lg mb-6">
-        <button class="bg-white hover:bg-blue-200 font-bold py-2 px-4 rounded mr-2" @click="key">
+        <button
+          class="bg-white hover:bg-blue-200 font-bold py-2 px-4 rounded mr-2"
+          @click="key"
+          v-bind:class="keywordClasses"
+        >
           키워드 분석
         </button>
-        <button class="bg-white hover:bg-blue-200 font-bold py-2 px-4 rounded mr-2" @click="comp">
+        <button
+          class="bg-white hover:bg-blue-200 font-bold py-2 px-4 rounded mr-2"
+          @click="comp"
+          v-bind:class="compClasses"
+        >
           비교 분석
         </button>
         <button
           class="bg-white hover:bg-blue-200 font-bold py-2 px-4 rounded mr-2"
           @click="mention"
+          v-bind:class="mentionClasses"
         >
           언급량 분석
         </button>
-        <button class="bg-white hover:bg-blue-200 font-bold py-2 px-4 rounded mr-2" @click="info">
+        <button
+          class="bg-white hover:bg-blue-200 font-bold py-2 px-4 rounded mr-2"
+          @click="info"
+          v-bind:class="infoClasses"
+        >
           맛집 정보
         </button>
         <!-- <button>키워드 분석</button> -->
@@ -51,7 +64,33 @@ export default {
   data() {
     return {
       btn: [],
+      // selected: false,
+      // classStyle: {
+      //   "background-color": "rgba(59, 130, 246, 0.5)",
+      // },
     };
+  },
+  computed: {
+    keywordClasses: function () {
+      return {
+        blue: this.btn[0],
+      };
+    },
+    compClasses: function () {
+      return {
+        blue: this.btn[1],
+      };
+    },
+    mentionClasses: function () {
+      return {
+        blue: this.btn[2],
+      };
+    },
+    infoClasses: function () {
+      return {
+        blue: this.btn[3],
+      };
+    },
   },
   created() {
     this.btn = [true, false, false, false];
@@ -99,4 +138,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.blue {
+  background-color: rgba(74, 140, 247, 0.5);
+}
+</style>

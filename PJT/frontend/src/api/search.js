@@ -11,16 +11,6 @@ function getSearch(search, callback, errorCallback) {
     });
 }
 
-function getSearchWithDong(data, callback, errorCallback) {
-  axiosService
-    .get("/search/spec", { params: data })
-    .then((res) => {
-      callback(res.data);
-    })
-    .catch((err) => {
-      errorCallback(err);
-    });
-}
 
 function updateSearch(search, callback, errorCallback) {
   axiosService
@@ -44,4 +34,5 @@ function getKeywords(search, callback, errorCallback) {
     });
 }
 
-export { getSearch, getSearchWithDong, updateSearch, getKeywords };
+export { getSearch, updateSearch, getKeywords };
+

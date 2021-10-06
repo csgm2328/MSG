@@ -36,7 +36,7 @@
       >
         <div flex items-stretch>
           <div class="py-4 text-center text-lg text-gray-400">NAVER 데이터랩 오늘의 언급량</div>
-          <div class="py-4 text-center text-3xl font-bold text-red-400">{{ today }} 회</div>
+          <div class="py-4 text-center text-3xl font-bold text-red-400">{{ today }}</div>
         </div>
       </div>
       <div
@@ -162,6 +162,7 @@
 import bb, { areaSpline } from "billboard.js";
 import { getMention } from "@/api/mention.js";
 import "billboard.js/dist/theme/insight.css";
+import { mapGetters } from "vuex";
 
 export default {
   name: "MentionAmount",
@@ -171,14 +172,17 @@ export default {
       keyword: "",
       types: { "area-spline": areaSpline() },
       mention: [],
-      today: "",
-      period: "",
-      maxdate: "",
+      today: "API 호출 중..",
+      period: "API 호출 중..",
+      maxdate: "API 호출 중..",
       preMonth: "",
     };
   },
+  computed: {
+    ...mapGetters(["store"]),
+  },
   mounted() {
-    (this.keyword = "롯데리아"),
+    (this.keyword = this.store.name),
       (this.mention = getMention(
         this.keyword,
         (res) => {
@@ -201,6 +205,7 @@ export default {
             axis: {
               x: {
                 type: "category",
+                label: "NAVER SEARCH AD API",
                 tick: {
                   rotate: -75,
                   multiline: false,
@@ -218,7 +223,7 @@ export default {
   },
   methods: {
     setValue(obj) {
-      this.today = obj[29];
+      this.today = obj[29] + " 회";
       var max = 0;
       var maxidx = -1;
       for (let i = 0; i < obj.length; i++) {
