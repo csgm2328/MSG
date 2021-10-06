@@ -223,7 +223,6 @@ export default {
     };
   },
   created() {
-    this.isFirst = true;
     this.curImg = 0;
     this.getImg();
   },
@@ -240,6 +239,13 @@ export default {
         this.review.rid,
         (res) => {
           this.imgNameList = res.object.fileNameList;
+
+          if (this.imgNameList.length === 1) {
+            this.isLast = true;
+          } else {
+            this.isLast = false;
+          }
+          this.isFirst = true;
         },
         (error) => {
           alert('문제가 발생했습니다. 다시 시도해주세요.');
