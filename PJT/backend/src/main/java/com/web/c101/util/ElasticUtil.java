@@ -131,7 +131,7 @@ public class ElasticUtil {
                 Map<String, Object> body = new HashMap<>();
                 body.put("name", storeDto.getName());
                 body.put("area", storeDto.getArea());
-                body.put("address", storeDto.getArea());
+                body.put("address", storeDto.getAddress());
                 body.put("latitude", storeDto.getLatitude());
                 body.put("longitude", storeDto.getLongitude());
                 body.put("cnt", 1);
@@ -151,7 +151,7 @@ public class ElasticUtil {
                 Map<String, Object> body = new HashMap<>();
                 body.put("name", storeDto.getName());
                 body.put("area", storeDto.getArea());
-                body.put("address", storeDto.getArea());
+                body.put("address", storeDto.getAddress());
                 body.put("latitude", storeDto.getLatitude());
                 body.put("longitude", storeDto.getLongitude());
                 body.put("cnt", cnt + 1);
