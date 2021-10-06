@@ -1,6 +1,7 @@
 <template>
   <div class="flex flex-col h-screen w-auto">
     <Header />
+    <Loading v-if="isLoading" />
     <div class="flex flex-col justify-center items-center flex-grow bg-blue-100 w-auto pt-10 pb-10">
       <div class="w-11/12 bg-white border-2 border-blue-500 border-opacity-50 rounded-lg mb-6">
         <button
@@ -34,10 +35,10 @@
         <!-- <button>키워드 분석</button> -->
       </div>
       <div class="w-full h-full flex items-center justify-center">
-      <keyword v-if="btn[0]" />
-      <compare v-if="btn[1]" />
-      <mention v-if="btn[2]" />
-      <info v-if="btn[3]" />
+        <keyword v-if="btn[0]" />
+        <compare v-if="btn[1]" />
+        <mention v-if="btn[2]" />
+        <info v-if="btn[3]" />
       </div>
     </div>
     <Footer />
@@ -51,7 +52,8 @@ import Keyword from "@/views/Keyword.vue";
 import Compare from "@/views/Compare.vue";
 import Info from "@/views/Info.vue";
 import Mention from "@/views/Mention.vue";
-import { mapActions } from "vuex";
+import Loading from "@/components/Loading.vue";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Analysis",
@@ -62,6 +64,7 @@ export default {
     Compare,
     Info,
     Mention,
+    Loading,
   },
   data() {
     return {
@@ -73,6 +76,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["isLoading"]),
     keywordClasses: function () {
       return {
         blue: this.btn[0],
@@ -99,7 +103,7 @@ export default {
     this.set_analysisType(1);
   },
   methods: {
-    ...mapActions(['set_analysisType']),
+    ...mapActions(["set_analysisType"]),
     key() {
       if (!this.btn[0]) {
         for (var i = 0; i < 4; i++) {

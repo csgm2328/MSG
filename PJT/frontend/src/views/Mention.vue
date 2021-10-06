@@ -162,7 +162,7 @@
 import bb, { areaSpline } from "billboard.js";
 import { getMention } from "@/api/mention.js";
 import "billboard.js/dist/theme/insight.css";
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "MentionAmount",
@@ -179,11 +179,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["store"]),
+    ...mapGetters(["store", "isLoading"]),
   },
   mounted() {
+    this.loadingAPI();
     (this.keyword = this.store.name),
-      (this.mention = getMention(
+      getMention(
         this.keyword,
         (res) => {
           this.setValue(res.object);
@@ -219,9 +220,18 @@ export default {
         () => {
           alert("네이버 API 호출 중 오류가 발생했습니다.");
         }
-      ));
+      );
+    setTimeout(() => {
+      // 차트 로딩되기전까지 로딩화면으로 행동막기
+      this.toggle_isLoading(false);
+    }, 2000);
   },
   methods: {
+    ...mapActions(["set_type", "toggle_isLoading"]),
+    loadingAPI() {
+      this.toggle_isLoading(true);
+      this.set_type("mention");
+    },
     setValue(obj) {
       this.today = obj[29] + " 회";
       var max = 0;
