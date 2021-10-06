@@ -39,6 +39,7 @@
       "
     >
       <div
+        v-if="this.searchStore.length > 0"
         class="flex pl-10 py-2 h-full w-full hover:bg-gray-300 cursor-pointer"
         @click="addStore"
       >
@@ -54,7 +55,7 @@ import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "SearchList",
-  props: ["list", "idx", "searchType"],
+  props: ["list", "idx", "searchStore", "searchType"],
   methods: {
     ...mapActions(["set_store", "set_vsStore"]),
     go(item) {

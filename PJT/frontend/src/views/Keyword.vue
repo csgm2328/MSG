@@ -34,6 +34,7 @@
     <div class="flex w-full h-80 mt-2 mb-2 justify-start">
       <wordcloud />
       <div
+        v-if="this.Greview.length > 0"
         class="
           w-2/5
           h-80
@@ -41,13 +42,12 @@
           border-2 border-blue-500 border-opacity-50
           rounded-lg
           pt-2
-          flex
-          flex-col
+          flex flex-col
           items-center
           justify-center
         "
       >
-      <div
+        <div
           class="
             flex
             justify-center
@@ -119,6 +119,23 @@
           </div>
         </div>
       </div>
+      <div
+        class="
+          w-2/5
+          h-80
+          bg-white
+          border-2 border-blue-500 border-opacity-50
+          rounded-lg
+          pt-2
+          flex flex-col
+          items-center
+          justify-center
+          text-gray-500
+        "
+        v-else
+      >
+        리뷰가 없습니다.
+      </div>
     </div>
     <div class="flex w-full h-80 mt-2 mb-2 justify-start">
       <div
@@ -180,7 +197,10 @@
         >
           키워드 순위
         </div>
-        <div class="w-full overflow-auto flex justify-center mb-2" v-if="words.length != 0">
+        <div
+          class="w-full overflow-auto flex justify-center mb-2"
+          v-if="words.length != 0"
+        >
           <div class="w-11/12 table-fixed text-center">
             <div class="flex w-full bg-gray-200">
               <div class="w-2/12 px-6 py-2 font-bold text-xs text-gray-500">
@@ -196,7 +216,11 @@
                 긍, 부정
               </div>
             </div>
-            <div class="flex w-full" v-for="(word, index) in words" v-bind:key="index">
+            <div
+              class="flex w-full"
+              v-for="(word, index) in words"
+              v-bind:key="index"
+            >
               <div
                 class="w-2/12 text-sm text-gray-500 border-t-2 border-gray-200"
               >
@@ -236,7 +260,7 @@
               >
                 {{ word.sentiment }}
               </div>
-              
+
               <div
                 v-if="word.sentiment == '매우부정'"
                 class="w-3/12 text-sm text-red-500 border-t-2 border-gray-200"
