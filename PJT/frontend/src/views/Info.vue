@@ -90,6 +90,7 @@
         align-middle
       "
     >
+      
       <div class="flex flex-col w-full h-full rounded-lg">
         <div class="flex flex-row h-14 w-full border-2 rounded-t-lg">
           <div
@@ -112,10 +113,12 @@
           </div>
           <div class="flex justify-center items-center h-full w-2/12 text-center mr-2">등록일</div>
         </div>
+
+
         <div v-if="reviewList">
           <div
             class="
-              flex flex-row
+              flex
               h-14
               w-full
               border-b-2 border-r-2 border-l-2
@@ -126,7 +129,7 @@
             :key="index"
             @click="showModal(review)"
           >
-            <div class="hidden md:flex justify-center items-center p-2 h-full w-8/12 border-r-2 mr-2">
+            <div class="hidden md:flex justify-center items-center text-center h-full w-8/12 border-r-2 mr-2">
               <p v-if="review.content.length >= 40">{{ review.content.substring(0, 40) }}...</p>
               <p v-else>{{ review.content }}</p>
             </div>
@@ -136,13 +139,13 @@
                 :increment="0.5"
                 @update:rating="rating = $event"
                 :show-rating="false"
-                :rating="review.starScore"
+                :rating="review.star_score"
                 :starSize="20"
                 :read-only="true"
               ></star-rating>
             </div>
-            <div class="flex justify-center items-center h-full w-2/12 text-center">
-              {{ review.regDate.split('T')[0] }}<br />{{ review.regDate.split('T')[1] }}
+            <div class="flex justify-center items-center h-full w-2/12 text-center mr-2">
+              {{ review.reg_date.split('T')[0] }}<br />{{ review.reg_date.split('T')[1] }}
             </div>
           </div>
         </div>
@@ -162,7 +165,6 @@
           작성된 리뷰가 없습니다.
         </div>
       <Modal v-if="isShow" @closeModal="closeModal" @deleteReview="deleteReview" :review="review" />
-      
       </div>
     </div>
   </div>
@@ -172,7 +174,6 @@ import { mapGetters } from "vuex";
 import StarRating from 'vue-star-rating';
 import { getReviewStore , getGoogleReviewScore} from '@/api/review.js';
 import Modal from '@/components/Modal.vue';
-import { reactive } from 'vue'
 
 export default {
   name: "info",
@@ -228,30 +229,8 @@ export default {
       await getReviewStore(
         param,
         (res) => {
-          //const sival = ref(res.object);
-          this.reviewList = reactive({sival:res.object});
-          console.log(this.reviewList.value);
-          //console.log(sival.value);
-          // const target = {
-          //   message: "hello",
-          //   nestedProxy: new Proxy({message:"nested"}, {}),
-          // };
-          // const proxy1 = new Proxy(target, {});
-          // console.log(proxy1)
-          // console.log({...proxy1})
-          // console.log(JSON.parse(JSON.stringify(res.object)))
-          // this.reviewList = JSON.parse(JSON.stringify(res.object));
-          // const handler = {
-          //   get(target, prop) {
-          //     return target[prop]
-          //   }
-          // }
-          // this.reviewList = new Proxy(res.object, handler)
-          //console.log(proxy)
-
-          //const str = JSON.stringify(res.object)
-          //this.reviewList = JSON.parse(str)
-          console.log("결과 배열", this.reviewList)
+          this.reviewList = res.object;
+          console.log(this.reviewList)
         },
         (error) => {
           console.log(error);
