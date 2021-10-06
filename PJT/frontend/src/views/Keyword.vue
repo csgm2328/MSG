@@ -2,7 +2,6 @@
   <div class="w-11/12">
     <div class="flex w-full justify-start">
       <div
-        id="test2"
         class="
           w-1/3
           h-12
@@ -182,6 +181,7 @@
         "
       >
         <div
+        v-if="words.length != 0"
           class="
             flex
             justify-center
@@ -189,7 +189,6 @@
             w-36
             p-2
             font-bold
-            ml-10
             mb-2
             bg-gray-100
             rounded
@@ -269,6 +268,20 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="
+          w-2/5
+          h-80
+          bg-white
+          rounded-lg
+          pt-2
+          flex flex-col
+          items-center
+          justify-center
+          text-gray-500
+        "
+        v-else>
+          키워드가 없습니다.
         </div>
       </div>
     </div>

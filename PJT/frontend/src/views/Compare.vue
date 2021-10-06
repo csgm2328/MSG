@@ -1,7 +1,7 @@
 <template>
-  <div class="w-11/12 h-full">
-    <div class="grid grid-cols-2 h-full">
-      <div class="flex flex-col mr-2">
+  <div class="w-11/12">
+    <div class="flex w-full">
+      <div class="flex flex-col w-1/2 mr-2">
         <div
           class="
             w-1/3
@@ -150,7 +150,7 @@
           </div>
         </div>
       </div>
-      <div class="flex flex-col">
+      <div class="flex flex-col w-1/2">
         <div
           id="test2"
           class="
@@ -164,7 +164,7 @@
             justify-start
           "
         >
-          <div class="pl-5" v-if="waitForvsWords == false">
+          <div class="h-12 pl-5" v-if="waitForvsWords == false">
             <div v-if="vsIsPos">
               <span style="color: dodgerblue; font-weight: 1000"
                 >긍정적인 평가 {{ vsWordsPercent }}%</span
@@ -179,7 +179,7 @@
               {{ vsStore.name }}의 대표 긍,부정
             </div>
           </div>
-          <div class="pl-3" v-else>
+          <div class="h-12 pl-3" v-else>
             <span style="color: dark; font-weight: 1000">
               가게를 선택해주세요</span
             >
@@ -300,9 +300,9 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="w-11/12 h-full">
+  <div class="w-full h-80 rounded-lg border-2 border-blue-500 border-opacity-50">
     <compare-chart />
+  </div>
   </div>
 </template>
 

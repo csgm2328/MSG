@@ -33,10 +33,12 @@
         </button>
         <!-- <button>키워드 분석</button> -->
       </div>
+      <div class="w-full h-full flex items-center justify-center">
       <keyword v-if="btn[0]" />
       <compare v-if="btn[1]" />
       <mention v-if="btn[2]" />
       <info v-if="btn[3]" />
+      </div>
     </div>
     <Footer />
   </div>
