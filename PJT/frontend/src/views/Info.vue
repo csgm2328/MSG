@@ -170,7 +170,7 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters , mapActions} from "vuex";
 import StarRating from 'vue-star-rating';
 import { getReviewStore , getGoogleReviewScore} from '@/api/review.js';
 import Modal from '@/components/Modal.vue';
@@ -199,7 +199,9 @@ export default {
     ...mapGetters(['store']),
   },
   methods: {
+    ...mapActions(['set_reviewValidation']),
     goReview(){
+      this.set_reviewValidation(true);
       this.$router.push("Review");
     },
 
