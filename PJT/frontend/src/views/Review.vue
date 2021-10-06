@@ -98,7 +98,7 @@ import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 import StarRating from 'vue-star-rating';
 import { addReview } from '@/api/review.js';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'Review',
@@ -124,6 +124,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['set_reviewValidation']),
     checkByte(obj) {
       // console.log(obj)
       const maxByte = 500; //최대 500바이트
@@ -219,6 +220,13 @@ export default {
     },
   },
   watch: {},
+  beforeRouteLeave(to, from, next) {
+    // just use `this` this.name = to.params.name next()
+    if (to.fullPath !== from.fullPath) {
+      this.set_reviewValidation(false);
+    }
+    next();
+  },
 };
 </script>
 

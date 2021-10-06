@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router';
 import store from '@/store/index';
 import { logout } from '@/common/logout.js';
 import { reissuUser } from '@/api/auth.js';
-// import Home from '../views/Home.vue';
 
 const routes = [
   {
@@ -27,7 +26,10 @@ const routes = [
     path: '/review',
     name: 'Review',
     component: () => import('@/views/Review.vue'),
-    meta: { auth: true },
+    meta: {
+      auth: true,
+      limitRoute : true,
+    },
   },
   {
     path: '/mypage',
@@ -62,13 +64,27 @@ router.beforeEach((to, from, next) => {
     }
   }
 
+  
+
   if (to.meta.auth) {
     if (!store.getters.isLogin) {
       alert('로그인이 필요한 서비스입니다.');
       next('/login');
       return;
     }
+    
+    if (to.meta.limitRoute) {
+      console.log("작동")
+      console.log(store.getters.isLogin)
+      console.log(store.getters.reviewValidation)
+      if (!store.getters.reviewValidation) {
+        alert('정상적인 접근이 아닙니다.');
+        next('Main')
+        return;
+      }
+    }
   }
+  
 
   if (store.getters.isLogin && !store.getters.type) {
     // 재발급 요청
