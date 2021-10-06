@@ -42,7 +42,7 @@
     <Search-List
       :list="searchList"
       :idx="idx"
-      :store="search"
+      :searchStore="search"
       :searchType="searchType"
       v-if="focusSearchBar"
       ref="refSearchList"

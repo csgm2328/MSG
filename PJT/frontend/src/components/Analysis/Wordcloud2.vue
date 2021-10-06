@@ -36,7 +36,7 @@ export default {
   },
   watch: {
     vsWords: function () {
-      console.log(this.vsWords);
+      // console.log(this.vsWords);
       this.genLayout();
     },
   },
@@ -44,7 +44,7 @@ export default {
     genLayout() {
       var d3 = require("d3"),
         cloud = require("d3-cloud");
-      console.log(this.vsWords);
+      // console.log(this.vsWords);
       var width = parseInt(this.$refs.inbox.clientWidth);
       var height = parseInt(this.$refs.inbox.clientHeight);
       cloud()

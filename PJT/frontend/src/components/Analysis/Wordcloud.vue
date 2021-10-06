@@ -36,7 +36,7 @@ export default {
   },
   watch: {
     words: function () {
-      console.log(this.words);
+      // console.log(this.words);
       this.genLayout();
     },
   },
@@ -44,7 +44,7 @@ export default {
     genLayout() {
       var d3 = require("d3"),
         cloud = require("d3-cloud");
-      console.log(this.words);
+      // console.log(this.words);
       var width = parseInt(this.$refs.inbox.clientWidth);
       var height = parseInt(this.$refs.inbox.clientHeight);
       cloud()
