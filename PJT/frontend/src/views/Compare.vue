@@ -5,7 +5,7 @@
         <div
           id="test2"
           class="
-            w-full
+            w-1/3
             h-12
             bg-white
             border-2 border-blue-500 border-opacity-50
@@ -15,21 +15,23 @@
             justify-start
           "
         >
-          <div v-if="isPos">
-            <span style="color: dodgerblue; font-weight: 1000"
-              >긍정적인 평가 {{ wordPercent }}%</span
-            >
-            <div style="font-size: small; opacity: 0.8; color: black">
-              {{ store.name }}의 대표 긍,부정
+          <div class="pl-5">
+            <div v-if="isPos">
+              <span class="text-base sm:text-sm" style="color: dodgerblue; font-weight: 1000"
+                >긍정적인 평가 {{ wordPercent }}%</span
+              >
+              <div style="font-size: small; opacity: 0.8; color: black">
+                {{ store.name }}의 대표 긍,부정
+              </div>
             </div>
-          </div>
-          <div v-else-if="isPos == false">
-            <span style="color: red; font-weight: 1000">부정적인 평가 {{ wordPercent }}%</span>
-            <div style="font-size: small; opacity: 0.8; color: black">
-              {{ store.name }}의 대표 긍,부정
+            <div v-else-if="isPos == false">
+              <span style="color: red; font-weight: 1000">부정적인 평가 {{ wordPercent }}%</span>
+              <div style="font-size: small; opacity: 0.8; color: black">
+                {{ store.name }}의 대표 긍,부정
+              </div>
             </div>
+            <div v-else class="text-base sm:text-sm">기다려주세요</div>
           </div>
-          <div v-else>기다려주세요</div>
         </div>
         <div class="flex w-full h-80 mt-2 mb-2 justify-center">
           <wordcloud />
@@ -53,7 +55,7 @@
         <div
           id="test2"
           class="
-            w-full
+            w-1/3
             h-12
             bg-white
             border-2 border-blue-500 border-opacity-50
@@ -63,7 +65,7 @@
             justify-start
           "
         >
-          <div v-if="waitForvsWords == false">
+          <div class="pl-5" v-if="waitForvsWords == false">
             <div v-if="vsIsPos">
               <span style="color: dodgerblue; font-weight: 1000"
                 >긍정적인 평가 {{ vsWordsPercent }}%</span
@@ -75,6 +77,9 @@
             <div style="font-size: small; opacity: 0.8; color: black">
               {{ vsStore.name }}의 대표 긍,부정
             </div>
+          </div>
+          <div class="pl-3" v-else>
+            <span style="color: dark; font-weight: 1000"> 가게를 선택해주세요</span>
           </div>
         </div>
         <div class="flex w-full h-80 mt-2 mb-2">
