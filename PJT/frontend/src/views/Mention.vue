@@ -58,11 +58,11 @@
       </div>
     </div>
     <!-- 차트 -->
-    <div class="flex w-full h-full mt-2 justify-start">
+    <div class="flex w-full h-2/3 mt-2 justify-start">
       <div
         class="
           w-2/3
-          h-2/3
+          h-full
           bg-white
           border-2 border-blue-500 border-opacity-50
           rounded-lg
@@ -72,12 +72,12 @@
           justify-start
         "
       >
-        <div id="columnOrientedData"></div>
+        <div id="dataChart"></div>
       </div>
       <div
         class="
           w-1/3
-          h-2/3
+          h-full
           bg-white
           border-2 border-blue-500 border-opacity-50
           rounded-lg
@@ -213,7 +213,7 @@ export default {
                 },
               },
             },
-            bindto: "#columnOrientedData",
+            bindto: "#dataChart",
           });
         },
         () => {
