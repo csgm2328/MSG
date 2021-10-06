@@ -61,4 +61,15 @@ async function getReviewCnt(userData, callback, errorCallback) {
     });
 }
 
-export { addReview, getReview, delReview, getReviewInMypage, getReviewCnt };
+async function getReviewStore(param, callback, errorCallback) {
+  await axiosServiceWithAuth
+    .get(`/review/storeReviewList?dong=${param.dong}&store=${param.storeName}`)
+    .then((res) => {
+      callback(res.data);
+    })
+    .catch((err) => {
+      errorCallback(err);
+    });
+}
+
+export { addReview, getReview, delReview, getReviewInMypage, getReviewCnt, getReviewStore };
