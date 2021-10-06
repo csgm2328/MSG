@@ -138,6 +138,11 @@ public class ElasticUtil {
 
                 insert("realtime", body);
             } else {
+//                System.out.println(searchHits.getHits());
+
+                for(SearchHit s : searchHits){
+                    System.out.println(s.getSourceAsMap());
+                }
 
                 id = searchHits.getHits()[0].getId();
                 int cnt = (int) searchHits.getHits()[0].getSourceAsMap().get("cnt");
