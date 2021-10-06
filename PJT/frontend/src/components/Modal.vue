@@ -18,39 +18,144 @@
     <div
       class="
         flex flex-col
-        w-4/6
-        md:w-2/5
-        h-4/6
+        w-10/12
+        h-5/6
+        md:w-8/12 md:h-4/6
         mx-auto
         fixed
-        rounded-lg
         translate-x-1/2 translate-y-1/2
         bg-white
         z-50
       "
       v-click-away="closeModal"
     >
-      <div class="flex relative justify-between items-center h-1/6 border-b-2 p-5">
-        <div class="flex text-xl font-extrabold">{{ review.dong }} {{ review.store }}</div>
-        <div class="absolute right-2 bottom-2">
-          <p class="text-xs">작성일 : {{ getDate }}</p>
+      <div class="flex flex-row h-5/6">
+        <div v-if="imgNameList.length > 0" class="hidden md:flex relative w-1/2">
+          <div class="absolute left-1 flex justify-center items-center h-full">
+            <button
+              class="h-10 w-10"
+              :class="{ 'cursor-default': isFirst, hidden: isFirst }"
+              :disabled="isFirst"
+              @click="prevImg"
+            >
+              <i class="fas fa-chevron-circle-left text-xl font-bold text-gray-200 opacity-70"></i>
+            </button>
+          </div>
+
+          <ul class="flex justify-center items-center h-full w-full bg-gray-900">
+            <li
+              v-for="(img, index) in imgNameList"
+              :key="index"
+              class="h-full w-auto rounded-tl-lg"
+              :class="{ hidden: index !== curImg }"
+            >
+              <img
+                class="h-full w-auto"
+                :src="'http://localhost:8080/img/' + img"
+                alt="이미지가 없습니다."
+              />
+            </li>
+          </ul>
+          <div class="absolute right-1 flex justify-center items-center h-full">
+            <button
+              class="h-10 w-10"
+              :class="{ 'cursor-default': isLast, hidden: isLast }"
+              :disabled="isLast"
+              @click="nextImg"
+            >
+              <i class="fas fa-chevron-circle-right text-xl font-bold text-gray-200 opacity-70"></i>
+            </button>
+          </div>
+        </div>
+        <div class="hidden md:flex relative w-1/2 border-r-2 justify-center items-center" v-else>
+          등록된 이미지가 없습니다.
+        </div>
+        <div class="flex md:border-l-2 flex-col w-full md:w-1/2">
+          <div class="flex flex-col justify-center relative h-1/6 border-b-2 p-2 md:p-5">
+            <div class="flex text-xl font-extrabold">{{ review.dong }} {{ review.store }}</div>
+            <div class="flex mt-1 md:hidden">
+              <star-rating
+                class="font-black"
+                :increment="0.5"
+                @update:rating="rating = $event"
+                :show-rating="true"
+                :rating="review.starScore"
+                :starSize="25"
+                :read-only="true"
+              ></star-rating>
+            </div>
+            <div class="absolute right-2 bottom-1 sm:bottom-2">
+              <p class="text-xs">{{ getDate }}</p>
+            </div>
+          </div>
+          <div
+            class="hidden md:flex flex-col items-center justify-center px-5 py-3 h-1/6 border-b-2"
+          >
+            <star-rating
+              :increment="0.5"
+              @update:rating="rating = $event"
+              :show-rating="false"
+              :rating="review.starScore"
+              :starSize="30"
+              :read-only="true"
+            ></star-rating>
+            <div class="text-xl font-black">
+              {{ review.starScore }}
+            </div>
+          </div>
+          <div class="flex flex-col md:flex-none h-5/6 md:h-4/6">
+            <div class="h-1/2 md:h-full p-5">{{ review.content }}</div>
+            <div class="h-1/2 flex md:hidden w-full border-t-2">
+              <div v-if="imgNameList.length > 0" class="flex relative w-full">
+                <div class="absolute left-1 flex justify-center items-center h-full">
+                  <button
+                    class="h-10 w-10"
+                    :class="{ 'cursor-default': isFirst, hidden: isFirst }"
+                    :disabled="isFirst"
+                    @click="prevImg"
+                  >
+                    <i
+                      class="fas fa-chevron-circle-left text-xl font-bold text-gray-200 opacity-70"
+                    ></i>
+                  </button>
+                </div>
+
+                <ul class="flex justify-center items-center h-full w-full bg-gray-900">
+                  <li
+                    v-for="(img, index) in imgNameList"
+                    :key="index"
+                    class="flex h-full w-auto rounded-tl-lg"
+                    :class="{ hidden: index !== curImg }"
+                  >
+                    <img
+                      class="flex h-full w-auto"
+                      :src="'http://localhost:8080/img/' + img"
+                      alt="이미지가 없습니다."
+                    />
+                  </li>
+                </ul>
+                <div class="absolute right-1 flex justify-center items-center h-full">
+                  <button
+                    class="h-10 w-10"
+                    :class="{ 'cursor-default': isLast, hidden: isLast }"
+                    :disabled="isLast"
+                    @click="nextImg"
+                  >
+                    <i
+                      class="fas fa-chevron-circle-right text-xl font-bold text-gray-200 opacity-70"
+                    ></i>
+                  </button>
+                </div>
+              </div>
+              <div class="flex relative w-full justify-center items-center" v-else>
+                등록된 이미지가 없습니다.
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="flex flex-col items-center justify-center px-5 py-3 border-b-2">
-        <star-rating
-          :increment="0.5"
-          @update:rating="rating = $event"
-          :show-rating="false"
-          :rating="review.starScore"
-          :starSize="35"
-          :read-only="true"
-        ></star-rating>
-        <div class="mt-3 text-xl font-black">
-          {{ review.starScore }}
-        </div>
-      </div>
-      <div class="flex h-4/6 border-b-2 p-5">{{ review.content }}</div>
-      <div class="flex justify-center items-center h-1/6 p-5">
+
+      <div class="flex justify-center items-center h-1/6 border-t-2 p-5">
         <button
           class="
             bg-red-600
@@ -101,12 +206,27 @@
 
 <script>
 import StarRating from 'vue-star-rating';
+import { getReviewImg } from '@/api/review.js';
+
 export default {
   name: 'MODAL',
   components: {
     StarRating,
   },
   props: ['review'],
+  data() {
+    return {
+      curImg: 0,
+      imgNameList: [],
+      isLast: false,
+      isFirst: false,
+    };
+  },
+  created() {
+    this.isFirst = true;
+    this.curImg = 0;
+    this.getImg();
+  },
   methods: {
     deleteReview(rid) {
       this.$emit('deleteReview', rid);
@@ -114,6 +234,37 @@ export default {
     },
     closeModal() {
       this.$emit('closeModal');
+    },
+    async getImg() {
+      await getReviewImg(
+        this.review.rid,
+        (res) => {
+          this.imgNameList = res.object.fileNameList;
+        },
+        (error) => {
+          alert('문제가 발생했습니다. 다시 시도해주세요.');
+          console.log(error);
+        }
+      );
+    },
+    nextImg() {
+      if (this.isFirst) {
+        this.isFirst = false;
+      }
+      this.curImg += 1;
+      if (this.curImg === this.imgNameList.length - 1) {
+        this.isLast = true;
+      }
+    },
+    prevImg() {
+      if (this.isLast) {
+        this.isLast = false;
+      }
+
+      this.curImg -= 1;
+      if (this.curImg === 0) {
+        this.isFirst = true;
+      }
     },
   },
   computed: {
