@@ -27,6 +27,7 @@ public class KeywordService {
         }
 
         List<AnalyzedKeyword> analyzedKeywords = new ArrayList<>();
+        Collections.sort(keywords, new KeywordComparator());
         for (KeywordDto keyword : keywords) {
             String sentiment = "중립";
             if (sentimentDict.containsKey(keyword.getWord())) {
