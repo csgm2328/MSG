@@ -1,6 +1,6 @@
 <template>
   <div class="w-11/12">
-    <div class="flex w-full h-80 mt-2 mb-2 justify-start">
+    <div class="flex w-full mt-2 mb-2 justify-start">
       <div
         id="googleMap"
         class="
@@ -60,12 +60,14 @@
           text-blue-400"
       >{{store.name}}
       </div>
+      <div class="flex w-auto">
       <star-rating
             :rating="rate"
             :read-only="true"
             :increment="0.1"
             :show-rating="false"
       ></star-rating>
+      </div>
       <div class="mt-4 text-center">{{store.address}}</div>
       <div class="mt-2 text-center">{{store.area}}</div>
       <div class="py-4 text-center">
