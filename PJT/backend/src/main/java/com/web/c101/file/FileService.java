@@ -1,5 +1,8 @@
 package com.web.c101.file;
 
+import com.web.c101.error.CustomException;
+import com.web.c101.error.ErrorCode;
+import com.web.c101.file.Response.FileResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -11,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,6 +27,26 @@ public class FileService {
     public Resource getFile(@PathVariable final String fileName) {
         Resource resource =  new FileSystemResource("C://upload//"+fileName);
         return resource;
+    }
+
+    public FileResponse getFileNameList(long rid) {
+        FileResponse fileResponse;
+
+        try {
+            List<ImgFile> imgFileList = imgFileDao.findFileByRid(rid);
+            List<String> fileNameList = new ArrayList<>();
+
+            for (ImgFile imgFile : imgFileList) {
+                fileNameList.add(imgFile.getFile_name());
+            }
+
+            fileResponse = FileResponse.builder().fileNameList(fileNameList).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new CustomException(ErrorCode.ERROR);
+        }
+
+        return fileResponse;
     }
 
     @Transactional
