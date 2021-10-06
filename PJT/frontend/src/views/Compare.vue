@@ -132,13 +132,14 @@ export default {
   },
   created() {
     this.countPosNeg();
+    this.set_vsStore(undefined);
     this.set_vsWords([]);
   },
   computed: {
     ...mapGetters(["words", "store", "vsStore"]),
   },
   methods: {
-    ...mapActions(["set_words", "set_vsWords"]),
+    ...mapActions(["set_words", "set_vsWords", "set_vsStore"]),
     countPosNeg() {
       let pos = 0;
       let neg = 0;
