@@ -61,7 +61,7 @@
       >{{store.name}}
       </div>
       <star-rating
-            :rating="3"
+            :rating="rate"
             :read-only="true"
             :increment="0.1"
             :show-rating="false"
@@ -90,8 +90,8 @@
         align-middle
       "
     >
-      <div class="flex flex-col w-full h-full bg-blue-50 rounded-lg">
-        <div class="flex flex-row h-14 border-2 rounded-t-lg">
+      <div class="flex flex-col w-full h-full rounded-lg">
+        <div class="flex flex-row h-14 w-full border-2 rounded-t-lg">
           <div
             class="
               hidden
@@ -99,7 +99,7 @@
               justify-center
               items-center
               h-full
-              w-72
+              w-8/12
               text-center
               border-r-2
               mr-2
@@ -107,16 +107,17 @@
           >
             내용
           </div>
-          <div class="flex justify-center items-center h-full w-28 text-center border-r-2 mr-2">
+          <div class="flex justify-center items-center h-full w-2/12 text-center border-r-2 mr-2">
             별점
           </div>
-          <div class="flex justify-center items-center h-full w-32 text-center mr-2">등록일</div>
+          <div class="flex justify-center items-center h-full w-2/12 text-center mr-2">등록일</div>
         </div>
         <div v-if="reviewList">
           <div
             class="
               flex flex-row
               h-14
+              w-full
               border-b-2 border-r-2 border-l-2
               cursor-pointer
               hover:bg-indigo-200
@@ -125,11 +126,11 @@
             :key="index"
             @click="showModal(review)"
           >
-            <div class="hidden md:flex justify-center items-center p-2 h-full w-72 border-r-2 mr-2">
+            <div class="hidden md:flex justify-center items-center p-2 h-full w-8/12 border-r-2 mr-2">
               <p v-if="review.content.length >= 40">{{ review.content.substring(0, 40) }}...</p>
               <p v-else>{{ review.content }}</p>
             </div>
-            <div class="flex justify-center items-center h-full w-28 border-r-2 mr-2">
+            <div class="flex justify-center items-center h-full w-2/12 border-r-2 mr-2">
               <star-rating
                 class="flex justify-center items-center h-full"
                 :increment="0.5"
@@ -140,7 +141,7 @@
                 :read-only="true"
               ></star-rating>
             </div>
-            <div class="flex justify-center items-center h-full w-32 text-center">
+            <div class="flex justify-center items-center h-full w-2/12 text-center">
               {{ review.regDate.split('T')[0] }}<br />{{ review.regDate.split('T')[1] }}
             </div>
           </div>
@@ -155,7 +156,7 @@
             h-14
             border-b-2 border-r-2 border-l-2
             cursor-pointer
-            hover:bg-indigo-200
+            hover:bg-blue-50
           "
         >
           작성된 리뷰가 없습니다.
@@ -169,9 +170,9 @@
 <script>
 import { mapGetters } from "vuex";
 import StarRating from 'vue-star-rating';
-//import Pagination from '@/components/Pagination.vue';
-import { getReviewStore } from '@/api/review.js';
+import { getReviewStore , getGoogleReviewScore} from '@/api/review.js';
 import Modal from '@/components/Modal.vue';
+import { reactive } from 'vue'
 
 export default {
   name: "info",
@@ -179,9 +180,9 @@ export default {
     StarRating,
     Modal
   },
-  data: function(){
+  data(){
     return {
-      //store : {},
+      rate: 0,
       reviewList: [],
       isShow: false,
       center:{lat:0,lng:0},
@@ -189,20 +190,36 @@ export default {
   },
   created() {
     //this.store = this.$store.state.store;
+    this.getScore();
+    this.getReview();
     this.isShow = false;
   },
   computed : {
     ...mapGetters(['store']),
   },
-  mounted(){
-    this.getReviewStore();
-  },
   methods: {
     goReview(){
       this.$router.push("Review");
     },
-    
-    async getReviewStore() {
+
+    async getScore(){
+      await getGoogleReviewScore(
+        this.store.area + this.store.name,
+        (res) => {
+          if(res.object == null){
+            this.rate = res.object;
+          } else {
+            this.rate = res.object;
+          }
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    },
+
+    async getReview() {
+
       let param = {
         dong : this.store.area,
         storeName : this.store.name
@@ -211,8 +228,30 @@ export default {
       await getReviewStore(
         param,
         (res) => {
-          this.reviewList = res.object.content;
-          console.log(res)
+          //const sival = ref(res.object);
+          this.reviewList = reactive({sival:res.object});
+          console.log(this.reviewList.value);
+          //console.log(sival.value);
+          // const target = {
+          //   message: "hello",
+          //   nestedProxy: new Proxy({message:"nested"}, {}),
+          // };
+          // const proxy1 = new Proxy(target, {});
+          // console.log(proxy1)
+          // console.log({...proxy1})
+          // console.log(JSON.parse(JSON.stringify(res.object)))
+          // this.reviewList = JSON.parse(JSON.stringify(res.object));
+          // const handler = {
+          //   get(target, prop) {
+          //     return target[prop]
+          //   }
+          // }
+          // this.reviewList = new Proxy(res.object, handler)
+          //console.log(proxy)
+
+          //const str = JSON.stringify(res.object)
+          //this.reviewList = JSON.parse(str)
+          console.log("결과 배열", this.reviewList)
         },
         (error) => {
           console.log(error);

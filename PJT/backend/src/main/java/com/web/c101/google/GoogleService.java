@@ -18,7 +18,10 @@ public class GoogleService {
         float score = 0f;
 
         try {
-            score = googledao.findTop1ByGoogleKeyword(store).getGoogleStarAvg();
+            Google temp = googledao.findTop1ByGoogleKeyword(store);
+            if(temp != null){
+                score = temp.getGoogleStarAvg();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             throw new CustomException(ErrorCode.ERROR);
