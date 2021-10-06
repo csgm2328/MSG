@@ -14,7 +14,7 @@ function getSearch(search, callback, errorCallback) {
 
 function updateSearch(search, callback, errorCallback) {
   axiosService
-    .get("/search/updateCnt", { params: { name: search.name, area: search.area } })
+    .put("/search/updateCnt", search )
     .then((res) => {
       callback(res.data);
     })
