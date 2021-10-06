@@ -52,6 +52,14 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  if (to.href === '/login') {
+    if (store.getters.isLogin) {
+      alert('이미 로그인한 회원입니다.');
+      next('Main');
+      return;
+    }
+  }
+
   if (to.meta.auth) {
     if (!store.getters.isLogin) {
       alert('로그인이 필요한 서비스입니다.');
