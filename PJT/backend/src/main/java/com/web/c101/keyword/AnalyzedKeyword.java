@@ -1,8 +1,11 @@
 package com.web.c101.keyword;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.Builder;
+import lombok.ToString;
 
 @Builder
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class AnalyzedKeyword {
     private String keyword;
     private int count;
