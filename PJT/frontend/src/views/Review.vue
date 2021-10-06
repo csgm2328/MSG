@@ -118,7 +118,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['id']),
+    ...mapGetters(['id', 'store']),
     currentText() {
       return this.rating;
     },
@@ -193,8 +193,8 @@ export default {
       let formData = new FormData();
 
       formData.append('mid', this.id);
-      formData.append('dong', '상무대점');
-      formData.append('store', '맥도날드');
+      formData.append('dong', this.store.area);
+      formData.append('store', this.store.name);
       formData.append('star_score', this.rating);
       formData.append('content', this.content);
       formData.append('flag', true);
@@ -208,8 +208,9 @@ export default {
 
       addReview(
         formData,
-        (res) => {
-          console.log(res);
+        () => {
+          alert("저장되었습니다.");
+          this.$router.go(-1);
         },
         () => {
           alert('리뷰 등록 오류가 발생했습니다.');

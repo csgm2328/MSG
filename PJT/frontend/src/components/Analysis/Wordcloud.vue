@@ -19,35 +19,38 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "Wordcloud",
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapGetters(["words"]),
+  },
   mounted() {
-    this.genLayout();
+    if (this.words.length != 0) {
+      this.genLayout();
+    }
+  },
+  watch: {
+    words: function () {
+      console.log(this.words);
+      this.genLayout();
+    },
   },
   methods: {
     genLayout() {
       var d3 = require("d3"),
         cloud = require("d3-cloud");
-
-      var width = this.$refs.inbox.clientWidth;
-      var height = this.$refs.inbox.clientHeight;
-      
-      var layout = cloud()
+      console.log(this.words);
+      var width = parseInt(this.$refs.inbox.clientWidth);
+      var height = parseInt(this.$refs.inbox.clientHeight);
+      cloud()
         .size([width, height])
         .words(
-          [
-            { text: "Hello", size: 20 },
-            { text: "Bye", size: 30 },
-            { text: "Good", size: 10 },
-            { text: "Bad", size: 25 },
-            { text: "Title", size: 50 },
-            { text: "Style", size: 40 },
-            { text: "Vue", size: 30 },
-            { text: "Javascript", size: 24 },
-            { text: "HTML", size: 10 },
-            { text: "CSS", size: 34 },
-          ].map(function (d) {
-            return { text: d.text, size: d.size};
+          this.words.map(function (d) {
+            return { text: d.keyword, size: d.count + 20, sentiment: d.sentiment };
           })
         )
         .padding(5)
@@ -58,34 +61,43 @@ export default {
         .fontSize(function (d) {
           return d.size;
         })
-        .on("end", draw);
-
-      layout.start();
+        .on("end", draw)
+        .spiral("archimedean")
+        .start();
 
       function draw(words) {
+        d3.select("#word-cloud").select("svg").remove();
+
         d3.select("#word-cloud")
           .append("svg")
-          .attr("width", layout.size()[0])
-          .attr("height", layout.size()[1])
+          .attr("width", width)
+          .attr("height", height)
           .append("g")
-          .attr(
-            "transform",
-            "translate(" +
-              layout.size()[0] / 2 +
-              "," +
-              layout.size()[1] / 2 +
-              ")"
-          )
+          .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
           .selectAll("text")
           .data(words)
           .enter()
           .append("text")
+          .style("font-family", "overwatch")
+          .style("fill-opacity", 1)
           .style("font-size", function (d) {
             return d.size + "px";
           })
-          .style("font-family", "Impact")
+          .attr("transform", (d) => {
+            return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+          })
           .style("fill", function (d) {
-            return d.size > 25 ? "#ff3300" : "#3333ff";
+            if (d.sentiment == "매우긍정") {
+              return "#0100FF";
+            } else if (d.sentiment == "긍정") {
+              return "#00D8FF";
+            } else if (d.sentiment == "중립") {
+              return "#FFBB00";
+            } else if (d.sentiment == "부정") {
+              return "#FF5E00";
+            } else if (d.sentiment == "매우부정") {
+              return "#FF0000";
+            }
           })
           .attr("text-anchor", "middle")
           .attr("transform", function (d) {
