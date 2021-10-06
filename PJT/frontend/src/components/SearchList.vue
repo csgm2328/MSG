@@ -42,7 +42,7 @@
         class="flex pl-10 py-2 h-full w-full hover:bg-gray-300 cursor-pointer"
         @click="addStore"
       >
-        추가하기
+        맛집 추가 요청
       </div>
     </div>
   </div>

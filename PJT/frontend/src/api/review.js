@@ -84,4 +84,15 @@ async function getReviewImg(userData, callback, errorCallback) {
     });
 }
 
-export { addReview, getReview, delReview, getReviewInMypage, getReviewCnt, getReviewImg, getReviewStore};
+async function getGoogleReview(data, callback, errorCallback) {
+  await axiosServiceWithAuth
+    .get(`/google/review`, {params : { store : data}})
+    .then((res) => {
+      callback(res.data);
+    })
+    .catch((err) => {
+      errorCallback(err);
+    });
+}
+
+export { addReview, getReview, delReview, getReviewInMypage, getReviewCnt, getReviewImg, getReviewStore, getGoogleReview};
