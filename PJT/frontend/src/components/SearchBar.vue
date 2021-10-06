@@ -6,7 +6,7 @@
         items-center
         bg-blue-50
         h-4/5
-        border-2 border-msg-content
+        border-2
         rounded
         focus-within:ring-1 focus-within:ring-indigo-600
       "
@@ -69,6 +69,9 @@ export default {
       idx: -1,
       searchList: [],
     };
+  },
+  created() {
+    this.searchList = [];
   },
   methods: {
     changeSearch(e) {
