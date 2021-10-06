@@ -1,21 +1,6 @@
 <template>
   <!-- <div class="flex w-full h-32 mt-2 justify-center"> -->
-  <div
-    class="
-      w-full
-      h-64
-      bg-white
-      border-2 border-blue-500 border-opacity-50
-      rounded-lg
-      pt-2
-      mr-2
-      flex
-      justify-center
-      inline-block
-      align-middle
-    "
-    ref="chart"
-  >
+  <div class="w-full h-64 bg-white rounded-lg pt-2 mr-2 align-middle" ref="chart">
     <div id="columnOrientedData" class="flex flex-wrap content-center w-11/12 h-full"></div>
   </div>
   <!-- </div> -->
@@ -25,24 +10,29 @@
 import bb, { line, pie } from "billboard.js";
 import "billboard.js/dist/theme/insight.css";
 import { mapGetters } from "vuex";
+
 export default {
   name: "Chart",
   data() {
     return {
       data: undefined,
       types: { line: line(), pie: pie() },
-      words: [],
     };
   },
   mounted() {
     this.genChart();
   },
+  watch: {
+    words: function () {
+      console.log(this.words);
+      this.genChart();
+    },
+  },
   computed: {
-    ...mapGetters(["getWords"]),
+    ...mapGetters(["words"]),
   },
   methods: {
     genChart() {
-      this.words = this.getWords;
       this.data = bb.generate({
         data: {
           columns: this.wordsToChart(),

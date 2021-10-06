@@ -109,7 +109,7 @@ public class SearchController {
     @GetMapping("/search/keyword")
     @ApiOperation(value = "키워드 분석")
     public Object getKeywords(@RequestParam String name, @RequestParam String area){
-        String store = area + "_" + name.replace(" ", "_");
+        String store = area + name.replace(" ", "_");
         log.info("키워드 분석 :" + store);
         BasicResponse result = new BasicResponse();
         result.status = true;

@@ -23,31 +23,30 @@ import { mapGetters } from "vuex";
 export default {
   name: "Wordcloud",
   data() {
-    return {
-      words: [],
-    };
+    return {};
   },
   computed: {
-    ...mapGetters(["getWords"]),
+    ...mapGetters(["words"]),
   },
   mounted() {
-    this.genLayout();
+    if (this.words.length != 0) {
+      this.genLayout();
+    }
   },
-  // watch: {
-  //   words: function () {
-  //     console.log(this.words);
-  //     this.genLayout();
-  //   },
-  // },
+  watch: {
+    words: function () {
+      console.log(this.words);
+      this.genLayout();
+    },
+  },
   methods: {
     genLayout() {
-      this.words = this.getWords;
       var d3 = require("d3"),
         cloud = require("d3-cloud");
-
+      console.log(this.words);
       var width = parseInt(this.$refs.inbox.clientWidth);
       var height = parseInt(this.$refs.inbox.clientHeight);
-      var layout = cloud()
+      cloud()
         .size([width, height])
         .words(
           this.words.map(function (d) {
@@ -67,7 +66,8 @@ export default {
         .start();
 
       function draw(words) {
-        console.log(layout);
+        d3.select("#word-cloud").select("svg").remove();
+
         d3.select("#word-cloud")
           .append("svg")
           .attr("width", width)
@@ -92,9 +92,9 @@ export default {
             } else if (d.sentiment == "긍정") {
               return "#00D8FF";
             } else if (d.sentiment == "중립") {
-              return "#747474";
-            } else if (d.sentiment == "부정") {
               return "#FFBB00";
+            } else if (d.sentiment == "부정") {
+              return "#FF5E00";
             } else if (d.sentiment == "매우부정") {
               return "#FF0000";
             }

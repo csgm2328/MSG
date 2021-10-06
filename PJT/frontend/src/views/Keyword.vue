@@ -16,17 +16,21 @@
       >
         <div v-if="waitForWords == false">
           <div v-if="isPos">
-            <span style="color: dodgerblue; font-weight: 1000">긍정적인 평가 20%</span>
+            <span style="color: dodgerblue; font-weight: 1000"
+              >긍정적인 평가 {{ wordPercent }}%</span
+            >
           </div>
           <div v-else>
-            <span>부정적인 평가 {{ wordPercent }}%</span>
+            <span style="color: red; font-weight: 1000">부정적인 평가 {{ wordPercent }}%</span>
           </div>
-          <div style="font-size: small; opacity: 0.8; color: black">{{ name }}의 대표 긍,부정</div>
+          <div style="font-size: small; opacity: 0.8; color: black">
+            {{ store.name }} 의 대표 긍,부정
+          </div>
         </div>
       </div>
     </div>
     <div class="flex w-full h-80 mt-2 mb-2 justify-start">
-      <wordcloud v-bind:words="words" />
+      <wordcloud />
       <div
         class="
           w-2/5
@@ -52,11 +56,11 @@
           rounded-lg
           pt-2
           mr-2
-          flex
+          flex flex-col
           justify-center
         "
       >
-        <div class="object-top">키워드 감성 통계</div>
+        <div>키워드 감성 통계</div>
         <chart v-bind:words="words" />
       </div>
       <div
@@ -115,18 +119,11 @@ export default {
       wordPercent: 0,
     };
   },
-  props: {
-    name: {
-      type: String,
-      default: "커피빈",
-    },
-    area: {
-      type: String,
-      default: "원마운트",
-    },
+  computed: {
+    ...mapGetters(["store"]),
   },
   methods: {
-    ...mapActions(["get_words"]),
+    ...mapActions(["set_words"]),
     countPosNeg() {
       let pos = 0;
       let neg = 0;
@@ -141,26 +138,26 @@ export default {
           continue;
         }
       }
-      if (pos >= neg) {
-        this.wordPercent = (pos * 100) / total;
+      if (total != 0) {
+        if (pos >= neg) {
+          this.wordPercent = (pos * 100) / total;
+        } else {
+          this.isPos = false;
+          this.wordPercent = (neg * 100) / total;
+        }
       } else {
-        this.isPos = false;
-        this.wordPercent = (neg * 100) / total;
+        this.wordPercent = 0;
       }
       this.waitForWords = false;
     },
   },
   created() {
-    let store = { name: this.name, area: this.area };
-    getKeywords(store, (res) => {
+    getKeywords(this.store, (res) => {
       this.words = res.object;
       this.countPosNeg();
-      this.get_words(res.object);
+      this.set_words(res.object);
     });
   },
-  computed:{
-    ...mapGetters(['store'])
-  }
 };
 </script>
 
