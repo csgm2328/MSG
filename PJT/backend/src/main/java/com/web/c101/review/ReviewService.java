@@ -139,6 +139,13 @@ public class ReviewService {
         return list;
     }
 
+    /*
+    *
+    * dsal;dkjlasdlskddalskdslkdslkdsldk
+    *
+    * */
+
+
     public List<ReviewDto> getStoreReview(String dong, String store) {
 
         List<ReviewDto> list = null;

@@ -6,6 +6,7 @@ import loading from './loading';
 import page from './page';
 import store from './store';
 import analysis from './analysis';
+import review from './review';
 
 export default new Vuex.Store({
   modules: {
@@ -15,10 +16,11 @@ export default new Vuex.Store({
     store,
     analysis,
     page,
+    review,
   },
   plugins: [
     createPersistedState({
-      paths: ['user', 'header', 'loading', 'store', 'analysis', 'page'],
+      paths: ['user', 'header', 'loading', 'store', 'analysis', 'page', 'review'],
     }),
   ],
 });
