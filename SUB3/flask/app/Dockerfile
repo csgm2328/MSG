@@ -19,6 +19,7 @@ RUN pip3 install re
 RUN pip3 install datetime
 RUN pip3 install paramiko
 RUN pip3 install scp
+RUN pip3 install pymysql
 
 RUN pip3 install powernad
 RUN pip3 install jsonpickle
