@@ -17,7 +17,7 @@ public interface ReviewDao extends JpaRepository<Review, Long> {
 
     List<Review> findReviewByDongAndStore(String dong, String store);
 
-    Slice<Review> findAllByFlag(boolean flag, Pageable pageable);
+    Slice<Review> findReviewByMidAndFlagIsTrue(Long mid, Pageable pageable);
 
     long countReviewByMidAndFlagIsTrue(Long mid);
 
