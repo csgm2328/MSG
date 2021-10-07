@@ -270,8 +270,6 @@ from transformers.optimization import get_cosine_schedule_with_warmup
 
 device = torch.device('cpu')
 bertmodel, vocab = get_pytorch_kobert_model()
-tokenizer = get_tokenizer()
-tok = nlp.data.BERTSPTokenizer(tokenizer, vocab, lower=False)
 
 class BERTDataset(Dataset):
     def __init__(self, dataset, sent_idx, label_idx, bert_tokenizer, max_len,
@@ -329,8 +327,12 @@ class BERTClassifier(nn.Module):
 model = BERTClassifier(bertmodel,  dr_rate=0.5).to(device)
 model.load_state_dict(torch.load('./koBERT/model1st.pth',map_location=device))
 
+tokenizer = get_tokenizer()
+tok = nlp.data.BERTSPTokenizer(tokenizer, vocab, lower=False)
+
 def predict(predict_sentence):
 
+    result = []
     data = [predict_sentence, '0']
     dataset_another = [data]
 
@@ -354,8 +356,81 @@ def predict(predict_sentence):
 
         return np.argmax(logits)
 
+def predictMany(predict_sentence):
+    result = []
+    dataset_another = []
+    for sen in predict_sentence:
+      data = [sen, '0']
+      dataset_another.append(data)
+
+    another_test = BERTDataset(dataset_another, 0, 1, tok, max_len, True, False)
+    test_dataloader = torch.utils.data.DataLoader(another_test, batch_size=batch_size, num_workers=2)
+    
+    model.eval()
+
+    for batch_id, (token_ids, valid_length, segment_ids, label) in enumerate(test_dataloader):
+        token_ids = token_ids.long().to(device)
+        segment_ids = segment_ids.long().to(device)
+
+        valid_length= valid_length
+        label = label.long().to(device)
+
+        out = model(token_ids, valid_length, segment_ids)
+
+
+        test_eval=[]
+        for i in out:
+            logits=i
+            logits = logits.detach().cpu().numpy()
+            result.append(np.argmax(logits))
+    return result
+
 
 ##############################koBERT######################################
+
+##############################mySQL##########################################
+
+import pymysql
+import sys
+import pandas as pd
+from ast import literal_eval
+import random
+
+def insert(df){
+    csv_data = df;
+    port = "3306"
+    #DB Connection 생성
+    conn = pymysql.connect(host = "j5c101.p.ssafy.io", user = "root", passwd="white123", db="trend", charset='utf8mb4')
+    cursor = conn.cursor()
+
+    query = "INSERT INTO google (gid, google_keyword,google_review_date,google_stars,google_star_avg,google_review_txt,google_emotion) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+    
+    csv_data = csv_data.loc[~csv_data['google_review_date'].isnull()]
+    csv_data = csv_data.loc[~csv_data['google_stars'].isnull()]
+    csv_data = csv_data.loc[~csv_data['google_review_txt'].isnull()]
+    csv_data = csv_data.loc[~csv_data['google_star_avg'].isnull()]
+    
+    list = []
+    
+    for keyword, date, stars, avg, txt in zip(csv_data['google_keyword'],csv_data['google_review_date'],csv_data['google_stars'],csv_data['google_star_avg'],csv_data['google_review_txt']):
+      for d, s, t, p in zip(date,stars,txt,predict):
+        temp = []
+        a = random.randint(0,99999999999999999)
+        temp.append(a)
+        temp.append(keyword)
+        temp.append(d)
+        temp.append(int(s[4:5]))
+        temp.append(avg)
+        temp.append(t)
+        temp.append(p)
+        list.append(temp)
+    
+    cursor.executemany(query, list_q)
+    conn.commit()
+}
+
+
+##############################mySQL##########################################
 
 
 ##############################GOOGLE MAP######################################
@@ -388,10 +463,10 @@ def crawling():
     time.sleep(1)
 
     df = pd.read_csv('./crawl/google_map_data/GoogleMap용_가게정보_part_3.csv', sep=',', encoding='utf-8')
-    start = 0
-    end = start + 10
+    #start = 0
+    #end = start + 10
 
-    df = df[start:end]
+    #df = df[start:end]
 
     review_stars_list = [] # 개별 평점
     review_time_list = [] # 개별 리뷰 작성 시간
@@ -441,8 +516,9 @@ def crawling():
                 rev_dict['Review Rate'].append(review_rate)
                 rev_dict['Review Time'].append(review_time)
                 rev_dict['Review Text'].append(review)
-                rev_dict['Review Emotion'].append(predict(review)) # kobert 예측부
+                #rev_dict['Review Emotion'].append(predict(review)) # kobert 예측부
                 review_text_list.append(review)
+            rev_dict['Review Emotion'].append(predictMany(review_text_list))
             res = pd.DataFrame(rev_dict)
     #         print(res)
             review_stars_list.append(rev_dict['Review Rate'])
@@ -469,6 +545,8 @@ def crawling():
     df['google_star_avg'] = star_avg_list  # 상세페이지에서 평가한 별점 평균
     df['google_review_txt'] = review_list  # 상세페이지에 나온 리뷰 텍스트들
     df['google_emotion'] = review_emot
+    
+    insert(df);
     
     # ElasticSearch용
     import os
@@ -503,12 +581,17 @@ def crawling():
     
 ##############################GOOGLE MAP######################################
 
+
+
+
+
+
 ##############################Sender ########################################
 
 
 sched = BackgroundScheduler(daemon=True)
-sched.add_job(crawling,'cron', minutes=5)
-#sched.add_job(crawling,'cron', day_of_week='thu',hour='0')
+#sched.add_job(crawling,'cron', minutes=5)
+sched.add_job(crawling,'cron', day_of_week='wed',hour='0')
 sched.start()
 
 import flask
