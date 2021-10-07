@@ -9,18 +9,19 @@ const routes = [
     alias: ['/main'],
     name: 'Main',
     component: () => import('@/views/Main.vue'),
+    meta: { nonSearchBar: true },
   },
   {
     path: '/login',
     name: 'Login',
     component: () => import('@/views/Login.vue'),
-    meta: { limit: true },
+    meta: { limit: true, nonSearchBar: true },
   },
   {
     path: '/signup',
     name: 'Signup',
     component: () => import('@/views/Signup.vue'),
-    meta: { limit: true },
+    meta: { limit: true, nonSearchBar: true },
   },
   {
     path: '/review',
@@ -28,7 +29,7 @@ const routes = [
     component: () => import('@/views/Review.vue'),
     meta: {
       auth: true,
-      limitRoute : true,
+      limitRoute: true,
     },
   },
   {
@@ -64,7 +65,11 @@ router.beforeEach((to, from, next) => {
     }
   }
 
-  
+  if (to.meta.nonSearchBar) {
+    store.dispatch('set_analysisType', 0);
+  } else {
+    store.dispatch('set_analysisType', 1);
+  }
 
   if (to.meta.auth) {
     if (!store.getters.isLogin) {
@@ -72,16 +77,15 @@ router.beforeEach((to, from, next) => {
       next('/login');
       return;
     }
-    
+
     if (to.meta.limitRoute) {
       if (!store.getters.reviewValidation) {
         alert('정상적인 접근이 아닙니다.');
-        next('Main')
+        next('Main');
         return;
       }
     }
   }
-  
 
   if (store.getters.isLogin && !store.getters.type) {
     // 재발급 요청

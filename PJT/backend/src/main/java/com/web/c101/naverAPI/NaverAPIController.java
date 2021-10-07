@@ -32,6 +32,10 @@ public class NaverAPIController {
         List<Integer> list = naverAPIService.getSearchAmount(query);
 
         final BasicResponse result = new BasicResponse();
+        if( list.size() == 0){
+            for(int i =0; i<30; i++)
+                list.add(0);
+        }
         result.status = true;
         result.data = "Success";
         result.object = list;
