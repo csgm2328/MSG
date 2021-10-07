@@ -17,7 +17,9 @@
       >
         <div flex items-stretch>
           <div class="py-4 text-center text-lg text-gray-400">분석 기간</div>
-          <div class="py-4 text-center text-2xl font-bold text-purple-500">{{ period }}</div>
+          <div class="py-4 text-center text-2xl font-bold text-purple-500">
+            {{ period }}
+          </div>
         </div>
         <div id="today-amount"></div>
       </div>
@@ -35,8 +37,12 @@
         "
       >
         <div flex items-stretch>
-          <div class="py-4 text-center text-lg text-gray-400">NAVER 데이터랩 오늘의 언급량</div>
-          <div class="py-4 text-center text-3xl font-bold text-red-400">{{ today }}</div>
+          <div class="py-4 text-center text-lg text-gray-400">
+            NAVER 데이터랩 오늘의 언급량
+          </div>
+          <div class="py-4 text-center text-3xl font-bold text-red-400">
+            {{ today }}
+          </div>
         </div>
       </div>
       <div
@@ -52,8 +58,12 @@
         "
       >
         <div flex items-stretch>
-          <div class="py-4 text-center text-lg text-gray-400">가장 많이 언급된 날</div>
-          <div class="py-4 text-center text-3xl font-bold text-green-400">{{ maxdate }}</div>
+          <div class="py-4 text-center text-lg text-gray-400">
+            가장 많이 언급된 날
+          </div>
+          <div class="py-4 text-center text-3xl font-bold text-green-400">
+            {{ maxdate }}
+          </div>
         </div>
       </div>
     </div>
@@ -84,61 +94,66 @@
           pt-2
           flex
           justify-center
-          
         "
       >
-        <div class="w-full overflow-auto flex">
+        <div class="w-full overflow-auto flex justify-center mb-2">
           <div class="text-center text-lg text-gray-400">{{ keyword }}</div>
           <div class="flex w-full text-center bg-gray-200">
-              <div class="w-2/3 px-6 py-2 font-bold text-xs text-gray-500">
-                구글 리뷰
+            <div class="w-2/3 px-6 py-2 font-bold text-xs text-gray-500">
+              구글 리뷰
+            </div>
+            <div class="w-1/3 px-6 py-2 font-bold text-xs text-gray-500">
+              긍, 부정
+            </div>
+          </div>
+          <div class="flex w-full" v-for="(review, index) in Greview" v-bind:key="index">
+            <div class="flex" v-if="review.google_review_txt.length > 0">
+              <div
+                class="
+                  w-2/3
+                  text-sm text-center text-gray-500
+                  border-t-2 border-gray-200
+                "
+              >
+                {{ review.google_review_txt }}
               </div>
-              <div class="w-1/3 px-6 py-2 font-bold text-xs text-gray-500">
-                긍, 부정
+              <div
+                v-if="review.google_emotion == 2"
+                class="
+                  w-1/3
+                  h-full
+                  text-center text-sm text-blue-500
+                  border-t-2 border-gray-200
+                  inline-block
+                  align-middle
+                "
+              >
+                긍정
+              </div>
+              <div
+                v-else-if="review.google_emotion == 1"
+                class="
+                  w-1/3
+                  text-sm text-center text-gray-500
+                  border-t-2 border-gray-200
+                "
+              >
+                중립
+              </div>
+              <div
+                v-else
+                class="
+                  w-1/3
+                  text-center text-sm text-red-500
+                  border-t-2 border-gray-200
+                  inline-block
+                  align-middle
+                "
+              >
+                부정
               </div>
             </div>
-          <div v-for="(review, index) in Greview" v-bind:key="index">
-              <div class="flex" v-if="review.google_review_txt.length > 0">
-                <div
-                  class="w-2/3 text-sm text-center text-gray-500 border-t-2 border-gray-200"
-                >
-                  {{ review.google_review_txt }}
-                </div>
-                <div
-                  v-if="review.google_emotion == 2"
-                  class="
-                    w-1/3
-                    h-full
-                    text-center
-                    text-sm text-blue-500
-                    border-t-2 border-gray-200
-                    inline-block
-                    align-middle
-                  "
-                >
-                  긍정
-                </div>
-                <div
-                  v-else-if="review.google_emotion == 1"
-                  class="w-1/3 text-sm text-center text-gray-500 border-t-2 border-gray-200"
-                >
-                  중립
-                </div>
-                <div
-                  v-else
-                  class="
-                    w-1/3
-                    text-center
-                    text-sm text-red-500
-                    border-t-2 border-gray-200
-                    inline-block
-                    align-middle
-                  "
-                >
-                  부정
-                </div>
-              </div>
-            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -169,7 +184,7 @@ export default {
   computed: {
     ...mapGetters(["store", "isLoading"]),
   },
-  created(){
+  created() {
     getGoogleReview(
       this.store.area + this.store.name,
       (res) => {
@@ -191,7 +206,9 @@ export default {
 
           var dates = ["x"];
           for (let i = 0; i < 30; i++) {
-            var temp = new Date(this.preMonth.setDate(this.preMonth.getDate() + 1));
+            var temp = new Date(
+              this.preMonth.setDate(this.preMonth.getDate() + 1)
+            );
             dates.push(temp.toISOString().split("T")[0]);
           }
           // console.log(dates);
