@@ -72,7 +72,7 @@
       <div
         class="
           w-2/3
-          h-80
+          h-96
           bg-white
           border-2 border-blue-500 border-opacity-50
           rounded-lg
@@ -87,7 +87,7 @@
       <div
         class="
           w-1/3
-          h-80
+          h-96
           bg-white
           border-2 border-blue-500 border-opacity-50
           rounded-lg
