@@ -51,7 +51,7 @@
             >
               <img
                 class="h-full w-auto"
-                :src="'http://localhost:8080/img/' + img"
+                :src="'http://j5c101.p.ssafy.io:8080/img/' + img"
                 alt="이미지가 없습니다."
               />
             </li>
