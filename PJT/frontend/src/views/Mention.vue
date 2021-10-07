@@ -107,7 +107,7 @@
             </div>
           </div>
           <div class="flex w-full" v-for="(review, index) in Greview" v-bind:key="index">
-            <div class="flex" v-if="review.google_review_txt.length > 0">
+            <div class="flex w-full" v-if="review.google_review_txt.length > 0">
               <div
                 class="
                   w-2/3
