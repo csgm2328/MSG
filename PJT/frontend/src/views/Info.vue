@@ -174,7 +174,7 @@
 <script>
 import { mapGetters , mapActions} from "vuex";
 import StarRating from 'vue-star-rating';
-import { getReviewStore , getGoogleReviewScore} from '@/api/review.js';
+import { getReviewStore , getGoogleReviewScore, delReview} from '@/api/review.js';
 import Modal from '@/components/Modal.vue';
 
 export default {
@@ -201,12 +201,26 @@ export default {
     ...mapGetters(['store']),
   },
   methods: {
-    ...mapActions(['set_reviewValidation']),
+    ...mapActions(['set_totalReviewCnt','set_reviewValidation', 'toggle_isDel']),
     goReview(){
       this.set_reviewValidation(true);
       this.$router.push("Review");
     },
-
+    deleteReview(rid) {
+      delReview(
+        rid,
+        () => {
+          this.toggle_isDel(true);
+          this.set_totalReviewCnt(this.totalReviewCnt - 1);
+          this.getReview();
+          alert('리뷰 삭제가 완료되었습니다.');
+          this.closeModal();
+        },
+        () => {
+          alert('오류가 발생했습니다.');
+        }
+      );
+    },
     async getScore(){
       await getGoogleReviewScore(
         this.store.area + this.store.name,
