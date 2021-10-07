@@ -71,7 +71,7 @@
       <div class="mt-4 text-center">{{store.address}}</div>
       <div class="mt-2 text-center">{{store.area}}</div>
       <div class="py-4 text-center">
-      <button class="bg-white text-center hover:bg-blue-200 font-bold rounded py-2 px-4 mr-2" @click="goReview">
+      <button class="bg-white text-center bg-blue-200 hover:bg-blue-500 font-bold rounded py-2 px-4 mr-2" @click="goReview">
           리뷰 등록
         </button>
       </div>
