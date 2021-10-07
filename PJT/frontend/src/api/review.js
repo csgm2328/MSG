@@ -18,7 +18,7 @@ async function addReview(review, callback, errorCallback) {
 async function getReviewInMypage(userData, callback, errorCallback) {
   await axiosServiceWithAuth
     .get(
-      `/review/userReviewList?mid=${userData.mid}&page=${userData.page}&size=${userData.size}&sort=${userData.sort}&sort=rid,desc`
+      `/review/userReviewList/${userData.mid}?page=${userData.page}&size=${userData.size}&sort=${userData.sort}&sort=rid,desc`
     )
     .then((res) => {
       callback(res.data);
@@ -61,7 +61,6 @@ async function getReviewCnt(userData, callback, errorCallback) {
     });
 }
 
-
 async function getReviewStore(param, callback, errorCallback) {
   await axiosServiceWithAuth
     .get(`/review/storeReviewList?dong=${param.dong}&store=${param.storeName}`)
@@ -86,7 +85,7 @@ async function getReviewImg(userData, callback, errorCallback) {
 
 async function getGoogleReview(data, callback, errorCallback) {
   await axiosServiceWithAuth
-    .get(`/google/review`, {params : { store : data}})
+    .get(`/google/review`, { params: { store: data } })
     .then((res) => {
       callback(res.data);
     })
@@ -106,4 +105,14 @@ async function getGoogleReviewScore(data, callback, errorCallback) {
     });
 }
 
-export { addReview, getReview, delReview, getReviewInMypage, getReviewCnt, getReviewImg, getReviewStore, getGoogleReview, getGoogleReviewScore};
+export {
+  addReview,
+  getReview,
+  delReview,
+  getReviewInMypage,
+  getReviewCnt,
+  getReviewImg,
+  getReviewStore,
+  getGoogleReview,
+  getGoogleReviewScore,
+};

@@ -99,11 +99,11 @@ public class ReviewService {
 
     }
 
-    public Slice<Review> getReviewListByPages(Pageable pageable) {
+    public Slice<Review> getReviewListByPages(Long mid, Pageable pageable) {
         Slice<Review> reviewPage = null;
 
         try {
-            reviewPage = reviewdao.findAllByFlag(true, pageable);
+            reviewPage = reviewdao.findReviewByMidAndFlagIsTrue(mid, pageable);
         } catch (Exception e) {
             e.printStackTrace();
             throw new CustomException(ErrorCode.ERROR);
