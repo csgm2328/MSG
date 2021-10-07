@@ -391,10 +391,10 @@ export default {
       }
       if (total != 0) {
         if (pos >= neg) {
-          this.wordPercent = (pos * 100) / total;
+          this.wordPercent = Math.round(((pos * 100) / total) * 10 ) / 10;
         } else {
           this.isPos = false;
-          this.wordPercent = (neg * 100) / total;
+          this.wordPercent = Math.round(((neg * 100) / total) * 10 ) / 10;
         }
       } else {
         this.wordPercent = 0;
@@ -424,10 +424,10 @@ export default {
       if (total != 0) {
         if (pos >= neg) {
           this.vsIsPos = true;
-          this.vsWordsPercent = (pos * 100) / total;
+          this.vsWordsPercent = Math.round(((pos * 100) / total) * 10 ) / 10;
         } else {
           this.vsIsPos = false;
-          this.vsWordsPercent = (neg * 100) / total;
+          this.vsWordsPercent = Math.round(((neg * 100) / total) * 10 ) / 10;
         }
       } else {
         this.vsWordsPercent = 0;

@@ -90,8 +90,6 @@ router.beforeEach((to, from, next) => {
     }
 
     if (to.meta.limitRoute) {
-      console.log(store.getters.isLogin);
-      console.log(store.getters.reviewValidation);
       if (!store.getters.reviewValidation) {
         alert('정상적인 접근이 아닙니다.');
         next('Main');

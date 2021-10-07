@@ -63,7 +63,7 @@ public class KeywordService {
     private static class KeywordComparator implements Comparator<KeywordDto> {
         @Override
         public int compare(KeywordDto o1, KeywordDto o2) {
-            return Integer.compare(Integer.parseInt(o1.getCount()), Integer.parseInt(o2.getCount()));
+            return Integer.compare(Integer.parseInt(o2.getCount()), Integer.parseInt(o1.getCount()));
         }
     }
 }
