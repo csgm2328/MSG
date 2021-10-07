@@ -164,8 +164,10 @@ public class ReviewService {
             list = new ArrayList<>();
 
             for(Review R  : reviewList) {
-                tmp = ReviewAdaptor.entityToDto(R);
-                list.add(tmp);
+                if(R.getFlag()) {
+                    tmp = ReviewAdaptor.entityToDto(R);
+                    list.add(tmp);
+                }
             }
 
         } catch (Exception e) {
