@@ -90,17 +90,17 @@ public class ReviewController {
 //        return result;
 //    }
 
-    @GetMapping("/userReviewList")
+    @GetMapping("/userReviewList/{mid}")
     @ApiOperation(value = "사용자 리뷰 목록")
-    public Object getUserReview(final Pageable pageable) {
-        System.out.println(pageable.toString());
+    public Object getUserReview(@PathVariable("mid") String mid, final Pageable pageable) {
+        System.out.println(mid);
 
         log.info("사용자 작성 리뷰 목록");
         final BasicResponse result = new BasicResponse();
         result.status = true;
         result.data = "success";
 
-        Slice<Review> reviewPages = service.getReviewListByPages(pageable);
+        Slice<Review> reviewPages = service.getReviewListByPages(Long.parseLong(mid), pageable);
 
         if (reviewPages.isEmpty()) {
             result.object = false;
