@@ -46,17 +46,17 @@
 </template>
 
 <script>
-import Header from "@/components/Header.vue";
-import Footer from "@/components/Footer.vue";
-import Keyword from "@/views/Keyword.vue";
-import Compare from "@/views/Compare.vue";
-import Info from "@/views/Info.vue";
-import Mention from "@/views/Mention.vue";
-import Loading from "@/components/Loading.vue";
-import { mapActions, mapGetters } from "vuex";
+import Header from '@/components/Header.vue';
+import Footer from '@/components/Footer.vue';
+import Keyword from '@/views/Keyword.vue';
+import Compare from '@/views/Compare.vue';
+import Info from '@/views/Info.vue';
+import Mention from '@/views/Mention.vue';
+import Loading from '@/components/Loading.vue';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  name: "Analysis",
+  name: 'Analysis',
   components: {
     Header,
     Footer,
@@ -76,7 +76,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["isLoading"]),
+    ...mapGetters(['isLoading']),
     keywordClasses: function () {
       return {
         blue: this.btn[0],
@@ -100,16 +100,14 @@ export default {
   },
   created() {
     this.btn = [true, false, false, false];
-    this.set_analysisType(1);
   },
   methods: {
-    ...mapActions(["set_analysisType"]),
+    ...mapActions(['set_analysisType']),
     key() {
       if (!this.btn[0]) {
         for (var i = 0; i < 4; i++) {
           this.btn[i] = false;
         }
-        this.set_analysisType(1);
         this.btn[0] = true;
       }
     },
@@ -127,7 +125,6 @@ export default {
         for (var i = 0; i < 4; i++) {
           this.btn[i] = false;
         }
-        this.set_analysisType(3);
         this.btn[2] = true;
       }
     },
@@ -136,7 +133,6 @@ export default {
         for (var i = 0; i < 4; i++) {
           this.btn[i] = false;
         }
-        this.set_analysisType(4);
         this.btn[3] = true;
       }
     },
