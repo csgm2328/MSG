@@ -142,7 +142,7 @@ public class ReviewController {
         log.info("지역에 따른 맛집 리뷰 목록");
         final BasicResponse result = new BasicResponse();
 
-        List<ReviewDto> list = service.getStoreReview(dong, store);
+        List<Review> list = service.getStoreReview(dong, store);
 
         if(list != null) {
 

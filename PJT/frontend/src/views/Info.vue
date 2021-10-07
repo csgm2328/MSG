@@ -141,13 +141,13 @@
                 :increment="0.5"
                 @update:rating="rating = $event"
                 :show-rating="false"
-                :rating="review.star_score"
+                :rating="review.starScore"
                 :starSize="20"
                 :read-only="true"
               ></star-rating>
             </div>
             <div class="flex justify-center items-center h-full w-2/12 text-center mr-2">
-              {{ review.reg_date.split('T')[0] }}<br />{{ review.reg_date.split('T')[1] }}
+              {{ review.regDate.split('T')[0] }}<br />{{ review.regDate.split('T')[1] }}
             </div>
           </div>
         </div>

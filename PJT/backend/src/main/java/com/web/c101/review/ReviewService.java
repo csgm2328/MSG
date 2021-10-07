@@ -146,13 +146,11 @@ public class ReviewService {
     * */
 
 
-    public List<ReviewDto> getStoreReview(String dong, String store) {
+    public List<Review> getStoreReview(String dong, String store) {
 
-        List<ReviewDto> list = null;
-
+        //List<ReviewDto> list = null;
+        List<Review> reviewList = null;
         try{
-
-            List<Review> reviewList;
 
             if(dong == null){
                 reviewList = reviewdao.findReviewByStore(store);
@@ -160,21 +158,21 @@ public class ReviewService {
                 reviewList = reviewdao.findReviewByDongAndStore(dong, store);
             }
 
-            ReviewDto tmp;
-            list = new ArrayList<>();
-
-            for(Review R  : reviewList) {
-                if(R.getFlag()) {
-                    tmp = ReviewAdaptor.entityToDto(R);
-                    list.add(tmp);
-                }
-            }
+//            ReviewDto tmp;
+//            list = new ArrayList<>();
+//
+//            for(Review R  : reviewList) {
+//                if(R.getFlag()) {
+//                    tmp = ReviewAdaptor.entityToDto(R);
+//                    list.add(tmp);
+//                }
+//            }
 
         } catch (Exception e) {
             throw new CustomException(ErrorCode.KAKAO_LOGIN_EXCEPTION);
         }
 
-        return list;
+        return reviewList;
     }
 
 }
