@@ -157,6 +157,7 @@
 
       <div class="flex justify-center items-center h-1/6 border-t-2 p-5">
         <button
+          v-if="review.mid == this.id"
           class="
             bg-red-600
             text-white text-base
@@ -206,6 +207,7 @@
 
 <script>
 import StarRating from 'vue-star-rating';
+import { mapGetters } from 'vuex';
 import { getReviewImg } from '@/api/review.js';
 
 export default {
@@ -223,6 +225,7 @@ export default {
     };
   },
   created() {
+    console.log(this.review.mid, this.id);
     this.curImg = 0;
     this.getImg();
   },
@@ -274,6 +277,7 @@ export default {
     },
   },
   computed: {
+    ...mapGetters(['id']),
     getDate: function () {
       let dateArr = this.review.regDate.split('T');
       return `${dateArr[0]}\n${dateArr[1]}`;
