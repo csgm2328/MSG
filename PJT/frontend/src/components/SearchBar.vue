@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import { getSearch } from '@/api/search.js';
 import SearchList from './SearchList.vue';
 
@@ -71,7 +72,23 @@ export default {
     };
   },
   created() {
+    this.search = '';
+
+    if (this.store && this.searchType === 1) {
+      this.search = this.store.name;
+    }
+
     this.searchList = [];
+  },
+  watch: {
+    vsStore: function (val) {
+      if (val && this.searchType === 2) {
+        this.search = val.name;
+      }
+    },
+  },
+  computed: {
+    ...mapGetters(['store', 'vsStore']),
   },
   methods: {
     changeSearch(e) {

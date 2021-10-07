@@ -42,6 +42,7 @@ const routes = [
     path: '/analysis',
     name: 'Analysis',
     component: () => import('@/views/Analysis.vue'),
+    meta: { analysis: true },
   },
   {
     path: '/addstore',
@@ -63,6 +64,16 @@ router.beforeEach((to, from, next) => {
       next('Main');
       return;
     }
+  }
+
+  if (to.name === 'Main') {
+    store.dispatch('set_store', { name: '' });
+  }
+
+  if (to.name === 'Analysis' && !store.getters.store.name) {
+    alert('잘못된 접근입니다.');
+    next('Main');
+    return;
   }
 
   if (to.meta.nonSearchBar) {

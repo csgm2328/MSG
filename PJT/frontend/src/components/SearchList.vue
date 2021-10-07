@@ -46,7 +46,6 @@ export default {
   methods: {
     ...mapActions(['set_store', 'set_vsStore']),
     go(item) {
-      console.log('item', item);
       updateSearch(
         item,
         () => {
@@ -80,9 +79,6 @@ export default {
         this.$refs[oldVal].classList.remove('bg-gray-300');
       }
       this.$refs[val].classList.add('bg-gray-300');
-    },
-    list: function (val, oldVal) {
-      console.log('??', val, oldVal);
     },
   },
 };

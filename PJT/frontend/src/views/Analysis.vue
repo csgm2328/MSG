@@ -109,6 +109,7 @@ export default {
           this.btn[i] = false;
         }
         this.btn[0] = true;
+        this.set_analysisType(1);
       }
     },
     comp() {
@@ -126,6 +127,7 @@ export default {
           this.btn[i] = false;
         }
         this.btn[2] = true;
+        this.set_analysisType(1);
       }
     },
     info() {
@@ -134,6 +136,7 @@ export default {
           this.btn[i] = false;
         }
         this.btn[3] = true;
+        this.set_analysisType(1);
       }
     },
   },
