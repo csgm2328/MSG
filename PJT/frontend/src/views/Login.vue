@@ -60,7 +60,7 @@ export default {
               this.set_nickname(res.object.nickname);
               this.toggle_isLogin(true);
 
-              this.$router.go(-1);
+              this.$router.push('Main');
             } else {
               alert('회원가입이 필요합니다. \n회원가입 페이지로 이동합니다.');
               this.$router.push('Signup');
