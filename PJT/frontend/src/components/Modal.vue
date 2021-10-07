@@ -129,7 +129,7 @@
                   >
                     <img
                       class="flex h-full w-auto"
-                      :src="'http://localhost:8080/img/' + img"
+                      :src="'http://j5c101.p.ssafy.io/api/img/' + img"
                       alt="이미지가 없습니다."
                     />
                   </li>
