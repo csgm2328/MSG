@@ -96,7 +96,7 @@
           justify-center
         "
       >
-        <div class="w-full overflow-auto justify-center mb-2">
+        <div class="w-11/12 overflow-auto justify-center mb-2">
           <div class="text-center text-lg text-gray-400">{{ keyword }}</div>
           <div class="flex w-full text-center bg-gray-200">
             <div class="w-2/3 px-6 py-2 font-bold text-xs text-gray-500">
