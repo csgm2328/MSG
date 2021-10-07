@@ -84,10 +84,11 @@
           pt-2
           flex
           justify-center
-          overflow-auto
         "
       >
-        <div class="w-full">
+        <div class="w-full flex
+          justify-center
+          overflow-auto">
           <div class="text-center text-lg text-gray-400">{{ keyword }}</div>
           <div class="flex w-full text-center bg-gray-200">
               <div class="w-2/3 px-6 py-2 font-bold text-xs text-gray-500">
