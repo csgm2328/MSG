@@ -267,10 +267,6 @@ elasticsearch를 실행하고 'bin/elasticsearch-setup-passwords interactive' �
 
 ### Redis
 
- - reqiuerd
-   	- scp==0.14.1 
-   	- paramiko==2.7.2 
-   	- pandas==1.3.3
 
 ```sh
 # 1.apt-get 업데이트 & make & gcc 설치
