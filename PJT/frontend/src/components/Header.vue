@@ -5,21 +5,21 @@
       class="fixed top-0 left-0 right-0 bottom-0 w-full h-screen z-30 bg-gray-700 opacity-75"
     ></div>
     <div class="flex items-center ml-5">
-      <router-link to="/Main" class="h-full flex items-center" @click="this.set_analysisType(1)">
+      <router-link to="/Main" class="h-full flex items-center">
         <img class="h-3/5 w-auto flex items-center" src="@/images/logo.png" />
         <span class="font-extrabold text-3xl items-center flex">MSG</span>
       </router-link>
 
-      <div class="hidden ml-10 md:flex items-center">
+      <div
+        v-if="analysisType === 1 || analysisType === 2"
+        class="hidden ml-10 md:flex items-center"
+      >
         <Search-bar class="w-80" :searchType="1" />
       </div>
-      <div v-if="analysisType == 2" class="hidden ml-10 md:flex items-center">
-        vs
-      </div>
-      <div v-if="analysisType == 2" class="hidden ml-10 md:flex items-center">
+      <div v-if="analysisType === 2" class="hidden ml-10 md:flex items-center">vs</div>
+      <div v-if="analysisType === 2" class="hidden ml-10 md:flex items-center">
         <Search-bar class="w-80" :searchType="2" />
       </div>
-
     </div>
     <div class="flex md:hidden" v-click-away="onClickOutside">
       <SideBar
@@ -154,10 +154,8 @@ export default {
       'set_nickname',
       'toggle_isLoading',
       'set_type',
-      'set_analysisType'
     ]),
     processing() {
-      this.set_analysisType(1);
       if (this.type === 'login' && !this.code) {
         this.toggle_isLoading(false);
         this.set_type('');
@@ -170,13 +168,11 @@ export default {
       }
     },
     goLogout() {
-      this.set_analysisType(1);
       this.toggle_isLoading(true);
       this.set_type('logout');
       logout(this.id);
     },
     logoutAfterProcessing() {
-      this.set_analysisType(1);
       this.toggle_isLogin(false);
       this.set_id('');
       this.set_nickname('');

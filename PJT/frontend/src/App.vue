@@ -7,22 +7,17 @@
 
 <script>
 import Loading from '@/components/Loading.vue';
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'APP',
   components: {
     Loading,
   },
-  created(){
-    this.set_analysisType(1);
-  },
+  created() {},
   computed: {
     ...mapGetters(['isLoading']),
   },
-  methods:{
-    ...mapActions(['set_analysisType']),
-  }
 };
 </script>
 

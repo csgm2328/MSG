@@ -25,7 +25,7 @@ public class FileService {
     ImgFileDao imgFileDao;
 
     public Resource getFile(@PathVariable final String fileName) {
-        Resource resource =  new FileSystemResource("C://upload//"+fileName);
+        Resource resource =  new FileSystemResource("//home//ubuntu//upload//"+fileName);
         return resource;
     }
 
@@ -52,7 +52,7 @@ public class FileService {
     @Transactional
     public void addFile(ImgFileDto newFile) throws IllegalStateException, IOException {
 
-        String path = "C:\\upload";
+        String path = "//home//ubuntu//upload";
         File Folder = new File(path);
         if(!Folder.exists()) Folder.mkdir();
 
@@ -68,7 +68,7 @@ public class FileService {
                 UUID uuid = UUID.randomUUID();
 
                 fileName = uuid.toString()+"_"+multipartFile.getOriginalFilename();
-                multipartFile.transferTo(new File( path +"\\"+fileName));
+                multipartFile.transferTo(new File( path +"//"+fileName));
                 ImgFile file = ImgFile.builder().
                         file_name(fileName).
                         file_size(Long.toString(multipartFile.getSize())).
@@ -85,7 +85,7 @@ public class FileService {
         List<ImgFile> imgList = imgFileDao.findFileByRid(rid); //연관된 파일 검색
 
         for (ImgFile imgFile : imgList) {
-            File file = new File("C:\\upload"+"\\"+imgFile.getFile_name()); //연관된 파일 삭제
+            File file = new File("//home//ubuntu//upload//"+imgFile.getFile_name()); //연관된 파일 삭제
             if(file.exists()) file.delete();
         }
     }
