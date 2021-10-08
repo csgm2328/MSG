@@ -57,7 +57,7 @@ This section should list any major frameworks that you built your project using.
     * [Nginx](https://www.nginx.com/)
     
 * DB
-    * [MariaDB](https://mariadb.org/)
+    * [MySQL](https://www.mysql.com/)
     * [Redis](https://redis.io/)
     * [Elasticsearch](https://www.elastic.co/kr/?ultron=B-Stack-Trials-APJ-Exact&gambit=Stack-Core&blade=adwords-s&hulk=cpc&Device=c&thor=elasticsearch&gclid=EAIaIQobChMIksKFhpi38wIVx66WCh0TuQfvEAAYASAAEgLhlvD_BwE)
     
