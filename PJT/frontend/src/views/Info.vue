@@ -248,7 +248,7 @@ export default {
         param,
         (res) => {
           this.reviewList = res.object;
-          console.log(this.reviewList)
+          // console.log(this.reviewList)
         },
         (error) => {
           console.log(error);

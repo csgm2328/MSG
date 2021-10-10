@@ -203,9 +203,9 @@ export default {
         formData.append('multipartFiles', element.file);
       });
 
-      for (let key of formData.entries()) {
-        console.log(`${key}`);
-      }
+      // for (let key of formData.entries()) {
+      //   console.log(`${key}`);
+      // }
 
       addReview(
         formData,

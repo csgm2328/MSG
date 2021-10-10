@@ -84,7 +84,7 @@ export default {
   },
   methods: {
     add() {
-      console.log(this.name + ", " + this.area);
+      // console.log(this.name + ", " + this.area);
 
       if (
         this.area[this.area.length - 1] != "동" &&
@@ -99,7 +99,7 @@ export default {
           area: this.area,
         },
         (res) => {
-          console.log(res);
+          // console.log(res);
           alert("추가 요청이 완료되었습니다.");
         },
         () => {

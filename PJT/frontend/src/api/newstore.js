@@ -1,7 +1,6 @@
 import { axiosService } from '@/api/index.js';
 
 function addNewStore(store,callback, errorCallback) {
-    console.log(store)
     axiosService
         .post('/newStore/add', store)
         .then((res) => {

@@ -105,7 +105,7 @@ router.beforeEach((to, from, next) => {
       (res) => {
         // 재발급 요청에 성공할 경우
         if (res.object) {
-          console.log('토큰 재발급 성공');
+          // console.log('토큰 재발급 성공');
         } else {
           // 재발급 요청에 실패했을 경우
           alert('로그인 유효기간이 만료되었습니다. \n다시 로그인해주세요.');

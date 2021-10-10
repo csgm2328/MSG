@@ -225,7 +225,7 @@ export default {
     };
   },
   created() {
-    console.log(this.review.mid, this.id);
+    // console.log(this.review.mid, this.id);
     this.curImg = 0;
     this.getImg();
   },

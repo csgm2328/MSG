@@ -341,7 +341,7 @@ export default {
       getGoogleReview(
         this.vsStore.area + this.vsStore.name,
         (res) => {
-          console.log("res", res.object);
+          // console.log("res", res.object);
           this.vsGreview = res.object;
         },
         () => {
