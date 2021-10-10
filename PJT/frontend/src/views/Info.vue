@@ -93,7 +93,7 @@
       "
     >
       
-      <div class="flex flex-col w-full h-full rounded-lg">
+      <div class="flex flex-col w-full h-full rounded-lg overflow-auto mb-2">
         <div class="flex flex-row h-14 w-full border-2 rounded-t-lg">
           <div
             class="
