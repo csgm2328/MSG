@@ -176,7 +176,7 @@
             </div>
             <div class="flex w-full" v-for="(word, index) in words" v-bind:key="index">
               <div class="w-2/12 text-sm text-gray-500 border-t-2 border-gray-200">
-                {{ index }}
+                {{ index + 1 }}
               </div>
               <div class="w-5/12 text-sm text-gray-500 border-t-2 border-gray-200">
                 {{ word.keyword }}
