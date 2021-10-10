@@ -67,7 +67,7 @@ router.beforeEach((to, from, next) => {
   }
 
   if (to.name === 'Main') {
-    store.dispatch('set_store', { name: '' });
+    store.dispatch('set_store', { name: '' , latitude:0 , longitude:0 });
   }
 
   if (to.name === 'Analysis' && !store.getters.store.name) {
