@@ -98,7 +98,7 @@ export default {
           name: this.name,
           area: this.area,
         },
-        (res) => {
+        () => {
           // console.log(res);
           alert("추가 요청이 완료되었습니다.");
         },
