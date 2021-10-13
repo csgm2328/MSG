@@ -86,11 +86,32 @@ export default {
     add() {
       // console.log(this.name + ", " + this.area);
 
-      if (
-        this.name[this.name.length - 1] == "동" ||
-        this.area[this.area.length - 1] == "점"
-      ) {
-        addNewStore(
+      // if (
+      //   this.name[this.name.length - 1] == "동" ||
+      //   this.area[this.area.length - 1] == "점"
+      // ) {
+      //   addNewStore(
+      //     {
+      //       name: this.name,
+      //       area: this.area,
+      //     },
+      //     () => {
+      //       // console.log(res);
+      //       alert("추가 요청이 완료되었습니다.");
+      //     },
+      //     () => {
+      //       alert("오류가 발생했습니다.");
+      //     }
+      //   );
+      //   this.name = "";
+      //   this.area = "";
+        
+      // } else {
+      //   alert("'지역'에 동 / 점을 정확히 기입해주세요.");
+      //   return;
+      // }
+
+      addNewStore(
           {
             name: this.name,
             area: this.area,
@@ -105,11 +126,6 @@ export default {
         );
         this.name = "";
         this.area = "";
-        
-      } else {
-        alert("'지역'에 동 / 점을 정확히 기입해주세요.");
-        return;
-      }
     },
   },
 };
