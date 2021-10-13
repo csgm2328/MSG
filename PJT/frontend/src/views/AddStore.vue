@@ -91,6 +91,7 @@ export default {
         this.area[this.area.length - 1] != "점"
       ) {
         alert("'지역'에 동 / 점을 정확히 기입해주세요.");
+        return;
       }
 
       addNewStore(
