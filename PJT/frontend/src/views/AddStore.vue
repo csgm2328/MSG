@@ -92,23 +92,23 @@ export default {
       ) {
         alert("'지역'에 동 / 점을 정확히 기입해주세요.");
         return;
+      } else {
+        addNewStore(
+          {
+            name: this.name,
+            area: this.area,
+          },
+          () => {
+            // console.log(res);
+            alert("추가 요청이 완료되었습니다.");
+          },
+          () => {
+            alert("오류가 발생했습니다.");
+          }
+        );
+        this.name = "";
+        this.area = "";
       }
-
-      addNewStore(
-        {
-          name: this.name,
-          area: this.area,
-        },
-        () => {
-          // console.log(res);
-          alert("추가 요청이 완료되었습니다.");
-        },
-        () => {
-          alert("오류가 발생했습니다.");
-        }
-      );
-      this.name = "";
-      this.area = "";
     },
   },
 };
