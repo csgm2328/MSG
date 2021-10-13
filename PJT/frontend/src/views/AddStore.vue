@@ -87,12 +87,9 @@ export default {
       // console.log(this.name + ", " + this.area);
 
       if (
-        this.name[this.name.length - 1] != "동" &&
-        this.area[this.area.length - 1] != "점"
+        this.name[this.name.length - 1] == "동" ||
+        this.area[this.area.length - 1] == "점"
       ) {
-        alert("'지역'에 동 / 점을 정확히 기입해주세요.");
-        return;
-      } else {
         addNewStore(
           {
             name: this.name,
@@ -108,6 +105,10 @@ export default {
         );
         this.name = "";
         this.area = "";
+        
+      } else {
+        alert("'지역'에 동 / 점을 정확히 기입해주세요.");
+        return;
       }
     },
   },
